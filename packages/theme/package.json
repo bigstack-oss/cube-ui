@@ -1,0 +1,29 @@
+{
+  "name": "@lizzy-liang-bigstack/theme",
+  "private": false,
+  "license": "Apache-2.0",
+  "version": "0.0.6",
+  "description": "Cube Design System Tokens",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "tsup": "catalog:",
+    "tailwindcss": "catalog:"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

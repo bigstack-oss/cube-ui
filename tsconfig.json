@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "compilerOptions": {
+    /* Language & environment */
+    "target": "ES2022",
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "jsx": "react-jsx",
+
+    /* Modules — bundler-aligned (tsup, Vite, Storybook) */
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "moduleDetection": "force",
+    "resolveJsonModule": true,
+    "allowImportingTsExtensions": false,
+    "verbatimModuleSyntax": true,
+
+    /* Strictness */
+    "strict": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUncheckedIndexedAccess": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+
+    /* Emit — typecheck only at package level; tsup emits JS + .d.ts */
+    "noEmit": true,
+    "declaration": true,
+    "declarationMap": true,
+
+    /* Interop & performance */
+    "esModuleInterop": true,
+    "isolatedModules": true,
+    "skipLibCheck": true
+  },
+  "exclude": ["node_modules", "dist", "storybook-static"]
+}
