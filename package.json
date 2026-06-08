@@ -1,0 +1,68 @@
+{
+  "name": "@lizzy-liang-bigstack/root",
+  "private": true,
+  "license": "Apache-2.0",
+  "version": "0.0.1",
+  "description": "Cube Design System Monorepo",
+  "type": "module",
+  "engines": {
+    "node": ">=v24.15",
+    "pnpm": ">=10.33"
+  },
+  "scripts": {
+    "// --- CODE QUALITY & VERIFICATION ---": "",
+    "tsc": "pnpm -r tsc",
+    "eslint": "eslint .",
+    "test": "pnpm -r test",
+    "eslint:fix": "eslint . --fix",
+    "eslint:inspect": "eslint --inspect-config .eslintrc.js",
+    "prettier": "prettier --check \"{**/*,*}.{js,ts,tsx,json,scss,md}\"",
+    "prettier:fix": "prettier --write \"{**/*,*}.{js,ts,tsx,json,scss,md}\"",
+    "format": "pnpm prettier:fix && pnpm eslint:fix",
+    "lint": "pnpm tsc && pnpm eslint && pnpm prettier",
+    "prepare": "husky",
+    "// --- MONOREPO ORCHESTRATION & BUILD ---": "",
+    "build": "pnpm --filter \"@lizzy-liang-bigstack/*\" build",
+    "ui:build": "pnpm --filter @lizzy-liang-bigstack/ui build",
+    "// --- MONOREPO REBOOT & ECOSYSTEM RESET ---": "",
+    "refresh": "rm -rf node_modules packages/*/node_modules pnpm-lock.yaml && pnpm install && pnpm build",
+    "// --- DEPLOYMENT & CI/CD PUBLISHING ---": "",
+    "publish:theme": "pnpm --filter @lizzy-liang-bigstack/theme publish --access public --no-git-checks",
+    "publish:ui": "pnpm --filter @lizzy-liang-bigstack/ui publish --access public --no-git-checks",
+    "release": "pnpm lint && pnpm build && pnpm publish:theme && pnpm publish:ui",
+    "// --- LOCAL DEVELOPMENT & PREVIEW ---": "",
+    "ui:dev": "pnpm --filter @lizzy-liang-bigstack/ui dev",
+    "ui:storybook": "pnpm --filter @lizzy-liang-bigstack/ui storybook",
+    "ui:build-storybook": "pnpm --filter @lizzy-liang-bigstack/ui build-storybook"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^20.5.0",
+    "@commitlint/config-conventional": "^20.5.0",
+    "@eslint/js": "^9.17.0",
+    "@typescript-eslint/parser": "^8.59.0",
+    "eslint": "^9.17.0",
+    "eslint-config-prettier": "^9.1.2",
+    "eslint-import-resolver-typescript": "^4.4.4",
+    "eslint-plugin-import": "^2.31.0",
+    "eslint-plugin-react-hooks": "^5.0.0",
+    "eslint-plugin-react-refresh": "^0.4.16",
+    "eslint-plugin-storybook": "10.3.5",
+    "eslint-plugin-tailwindcss": "^3.17.5",
+    "globals": "^17.5.0",
+    "google-auth-library": "^10.6.2",
+    "google-spreadsheet": "^5.2.0",
+    "husky": "^9.1.7",
+    "prettier": "^3.8.3",
+    "prettier-plugin-tailwindcss": "^0.7.2",
+    "typescript": "~6.0.3",
+    "typescript-eslint": "^8.59.0"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild"
+    ],
+    "ignoredBuiltDependencies": [
+      "unrs-resolver"
+    ]
+  }
+}

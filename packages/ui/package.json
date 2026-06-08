@@ -1,0 +1,100 @@
+{
+  "name": "@lizzy-liang-bigstack/ui",
+  "private": false,
+  "license": "Apache-2.0",
+  "version": "0.0.6",
+  "description": "Cube UI Components Library",
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "style": "./dist/index.css",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    },
+    "./icons": {
+      "types": "./dist/icons.d.ts",
+      "import": "./dist/icons.mjs",
+      "require": "./dist/icons.js"
+    },
+    "./styles.css": "./dist/index.css"
+  },
+  "files": [
+    "dist"
+  ],
+  "sideEffects": [
+    "**/*.css"
+  ],
+  "scripts": {
+    "build": "pnpm icons:generate && pnpm build:js && pnpm build:css",
+    "build:js": "tsup",
+    "build:css": "postcss src/tailwind.css -o dist/index.css",
+    "icons:generate": "node scripts/generate-icons.mjs",
+    "// --- LOCAL DEVELOPMENT ---": "",
+    "dev": "pnpm icons:generate && tsup --watch",
+    "typecheck": "tsc --noEmit",
+    "// --- DOCUMENTATION & ISOLATED TESTING ---": "",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
+  },
+  "dependencies": {
+    "@fontsource/inter": "catalog:",
+    "@fontsource/noto-sans-tc": "catalog:",
+    "@fontsource/urbanist": "catalog:",
+    "@lizzy-liang-bigstack/theme": "workspace:^",
+    "@storybook/react": "^10.3.5",
+    "@storybook/react-vite": "^10.3.5",
+    "@types/lodash": "catalog:",
+    "autoprefixer": "catalog:",
+    "chart.js": "^4.4.8",
+    "class-variance-authority": "catalog:",
+    "classnames": "^2.5.1",
+    "dayjs": "catalog:",
+    "i18next": "catalog:",
+    "lodash": "catalog:",
+    "prop-types": "^15.8.1",
+    "react-chartjs-2": "^5.3.0",
+    "react-i18next": "catalog:",
+    "storybook": "^10.3.5",
+    "tailwind-merge": "catalog:",
+    "tailwindcss": "catalog:",
+    "vite-plugin-svgr": "catalog:"
+  },
+  "devDependencies": {
+    "@storybook/addon-docs": "^10.3.5",
+    "@svgr/cli": "catalog:",
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
+    "code-inspector-plugin": "catalog:",
+    "postcss": "catalog:",
+    "postcss-cli": "^11.0.1",
+    "tsup": "catalog:",
+    "vite": "catalog:"
+  },
+  "peerDependencies": {
+    "react": "catalog:",
+    "react-dom": "catalog:"
+  },
+  "peerDependenciesMeta": {
+    "react": {
+      "optional": false
+    },
+    "react-dom": {
+      "optional": false
+    }
+  },
+  "format": [
+    "cjs",
+    "esm"
+  ],
+  "outExtension": {
+    "cjs": ".js",
+    "esm": ".mjs"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
