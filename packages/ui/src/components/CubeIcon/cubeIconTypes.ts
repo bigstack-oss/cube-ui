@@ -1,14 +1,19 @@
-import type { ComponentProps, ReactElement } from 'react'
+import type {
+  ForwardRefExoticComponent,
+  ReactElement,
+  RefAttributes,
+  SVGProps,
+} from 'react'
 
-import type SvgComponentInstance from '*.svg?react'
+export const cubeIconSizes = ['xs', 'sm', 'md-sm', 'md', 'lg', 'xl'] as const
 
-export const allCubeIconSizes = ['xs', 'sm', 'md-sm', 'md', 'lg', 'xl'] as const
+export type CubeIconSize = (typeof cubeIconSizes)[number]
 
-export type CubeIconSize = (typeof allCubeIconSizes)[number]
+export type SvgComponent = ForwardRefExoticComponent<
+  SVGProps<SVGSVGElement> & RefAttributes<SVGSVGElement>
+>
 
-export type SvgComponent = typeof SvgComponentInstance
-
-export type SvgElement = ReactElement<ComponentProps<SvgComponent>>
+export type SvgElement = ReactElement<SVGProps<SVGSVGElement>>
 
 export type CubeIconFrameProps = {
   className?: string

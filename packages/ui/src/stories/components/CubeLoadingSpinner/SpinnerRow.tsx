@@ -8,8 +8,8 @@ export const SpinnerRow = (props: SpinnerRowProps) => {
   const { children, title } = props
 
   return (
-    <div className="flex items-center">
-      <div className="primary-body2 w-20">{title}</div>
+    <div className="gap-x-10 flex items-center">
+      <div className="w-20 primary-body1 font-semibold">{title}</div>
       {children}
     </div>
   )
