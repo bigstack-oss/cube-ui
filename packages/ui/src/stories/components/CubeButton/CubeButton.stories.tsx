@@ -1,49 +1,20 @@
-import type { ComponentProps } from 'react'
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import { ArgTypes, Description, Title } from '@storybook/addon-docs/blocks'
-import { formatUnionType } from '../../internals/utils/formatType'
-import { CubeButton } from '../../components/CubeButton/CubeButton'
+import { StoryLayout } from '../../../internals/components/StoryLayout/StoryLayout'
+import { formatUnionType } from '../../../internals/utils/formatType'
+import { CubeButton } from '../../../components/CubeButton/CubeButton'
 import {
-  allCubeButtonSizes,
-  allCubeButtonTypes,
-  allCubeButtonUsages,
-} from '../../components/CubeButton/cubeButtonTypes'
-import { StoryLayout } from '../../internals/components/StoryLayout/StoryLayout'
+  cubeButtonSizes,
+  cubeButtonTypes,
+  cubeButtonUsages,
+} from '../../../components/CubeButton/cubeButtonTypes'
 import { ButtonVariantTable } from './ButtonVariantTable'
-import ButtonSkeletonTable from './ButtonSkeletonTable'
-
-const documentedProps = [
-  'htmlType',
-  'type',
-  'size',
-  'usage',
-  'disabled',
-  'loading',
-  'children',
-  'Icon',
-] as const
-
-const CubeButtonDocsPage = () => (
-  <>
-    <Title />
-    <Description />
-    <ArgTypes include={[...documentedProps]} sort="alpha" />
-  </>
-)
+import { ButtonSkeletonTable } from './ButtonSkeletonTable'
 
 const meta: Meta<typeof CubeButton> = {
   title: 'Atoms/Button',
   component: CubeButton,
-  tags: ['autodocs'],
   parameters: {
-    controls: { disable: true },
-    docs: {
-      page: CubeButtonDocsPage,
-      description: {
-        component:
-          'Buttons allow users to take actions, and make choices, with a single tap.',
-      },
-    },
+    controls: { expanded: true },
   },
   argTypes: {
     htmlType: {
@@ -52,59 +23,60 @@ const meta: Meta<typeof CubeButton> = {
         type: { summary: formatUnionType(['button', 'submit', 'reset']) },
       },
       defaultValue: { summary: 'button' },
+      control: { disable: true },
     },
     type: {
       description: 'The type of the button.',
-      table: { type: { summary: formatUnionType(allCubeButtonTypes) } },
+      table: { type: { summary: formatUnionType(cubeButtonTypes) } },
       defaultValue: { summary: 'primary' },
+      control: { disable: true },
     },
     size: {
       description: 'The size of the button.',
-      table: { type: { summary: formatUnionType(allCubeButtonSizes) } },
+      table: { type: { summary: formatUnionType(cubeButtonSizes) } },
       defaultValue: { summary: 'md' },
+      control: { disable: true },
     },
     usage: {
       description: 'The usage of the button.',
-      table: { type: { summary: formatUnionType(allCubeButtonUsages) } },
+      table: { type: { summary: formatUnionType(cubeButtonUsages) } },
       defaultValue: { summary: 'text-only' },
+      control: { disable: true },
     },
     disabled: {
       description: 'Whether the button is disabled.',
       table: { type: { summary: 'boolean' } },
       defaultValue: { summary: 'false' },
+      control: { disable: true },
     },
     loading: {
       description: 'Whether the button is loading.',
       table: { type: { summary: 'boolean' } },
       defaultValue: { summary: 'false' },
+      control: { disable: true },
     },
     children: {
       description:
         'Required when usage is text-only, icon-left, or icon-right.',
       table: { type: { summary: 'string' } },
+      control: { disable: true },
     },
     Icon: {
       description:
         'Required when usage is icon-only, icon-left, or icon-right.',
       table: { type: { summary: 'SvgComponent' } },
+      control: { disable: true },
     },
   },
 }
 
 export default meta
 
-type ButtonStoryArgs = ComponentProps<typeof CubeButton> & {
-  buttonText: string
-}
-
-type Story = StoryObj<ButtonStoryArgs>
+type Story = StoryObj<typeof CubeButton>
 
 export const Gallery: Story = {
-  args: {
-    buttonText: 'Call to action',
-  },
-  render: (props: ButtonStoryArgs) => {
-    const { buttonText } = props
+  render: () => {
+    const buttonText = 'Call to action'
 
     return (
       <StoryLayout

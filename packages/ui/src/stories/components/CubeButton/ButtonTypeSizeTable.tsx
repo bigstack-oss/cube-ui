@@ -3,7 +3,7 @@ import { twMerge } from 'tailwind-merge'
 import type {
   CubeButtonSize,
   CubeButtonType,
-} from '../../components/CubeButton/cubeButtonTypes'
+} from '../../../components/CubeButton/cubeButtonTypes'
 import { ButtonStateRow } from './ButtonStateRow'
 
 const UsageText = (props: PropsWithChildren) => {

@@ -1,5 +1,5 @@
 {
-  "name": "@lizzy-liang-bigstack/theme",
+  "name": "@cube/theme",
   "private": false,
   "license": "Apache-2.0",
   "version": "0.0.6",
@@ -17,7 +17,7 @@
   ],
   "scripts": {
     "build": "tsup",
-    "typecheck": "tsc --noEmit"
+    "tsc": "tsc"
   },
   "devDependencies": {
     "tsup": "catalog:",

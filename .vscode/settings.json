@@ -1,0 +1,62 @@
+{
+  "editor.quickSuggestions": {
+    "strings": "on"
+  },
+  "files.associations": {
+    "*.css": "tailwindcss"
+  },
+  "tailwindCSS.classAttributes": [
+    "class",
+    "className",
+    ".*Style.*",
+    ".*Styles.*",
+    ".*Class.*",
+    ".*Classes.*",
+    ".*ClassName.*"
+  ],
+  // reference: https://github.com/paolotiu/tailwind-intellisense-regex-list?tab=readme-ov-file#classnames
+  "tailwindCSS.experimental.classRegex": [
+    ["classnames\\(([^)]*)\\)", "[\"'`]([^\"'`]*)[\"'`]"],
+    ["classNames\\(([^)]*)\\)", "[\"'`]([^\"'`]*)[\"'`]"],
+    ["cva\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]"],
+    ["twMerge\\(([^)]*)\\)", "[\"'`]([^\"'`]*)[\"'`]"],
+    ["twJoin\\(([^)]*)\\)", "[\"'`]([^\"'`]*)[\"'`]"],
+    ["(\\w+)?Class(Name)?"]
+  ],
+  "cSpell.words": [
+    "autoprefixer",
+    "axios",
+    "barchart",
+    "Bigstack",
+    "chartjs",
+    "convergerd",
+    "Datacenters",
+    "firmwares",
+    "fixpacks",
+    "fontsource",
+    "hoverable",
+    "keyclock",
+    "Multipath",
+    "noto",
+    "Nullary",
+    "reweight",
+    "reweighted",
+    "rollbackability",
+    "rollbackable",
+    "svgr",
+    "Svgs",
+    "tseslint",
+    "unrollbackable",
+    "vcpu",
+    "vite",
+    "vitejs",
+    "vitest"
+  ],
+  "i18n-ally.localesPaths": [
+    "packages/cube-frontend-i18n/src/resources/ui-library",
+    "packages/cube-frontend-i18n/src/resources/web-app"
+  ],
+  "i18n-ally.keystyle": "nested",
+  "i18n-ally.displayLanguage": "en-US",
+  "i18n-ally.enabledFrameworks": ["react-i18next", "i18next"]
+}
