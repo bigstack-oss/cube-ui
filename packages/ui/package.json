@@ -35,7 +35,11 @@
     "build:storybook": "storybook build",
     "icons:generate": "node scripts/generate-icons.mjs",
     "storybook": "pnpm icons:generate && storybook dev -p 6006 --no-open",
-    "chromatic": "pnpm build:storybook && npx chromatic --project-token=$CHROMATIC_PROJECT_TOKEN --storybook-build-dir=storybook-static"
+    "chromatic": "pnpm build:storybook && npx chromatic --project-token=$CHROMATIC_PROJECT_TOKEN --storybook-build-dir=storybook-static",
+    "tsc": "tsc",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage"
   },
   "dependencies": {
     "@fontsource/inter": "catalog:",
@@ -63,14 +67,21 @@
   "devDependencies": {
     "@storybook/addon-docs": "^10.3.5",
     "@svgr/cli": "catalog:",
+    "@testing-library/jest-dom": "catalog:",
+    "@testing-library/react": "catalog:",
+    "@testing-library/user-event": "catalog:",
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",
+    "@vitest/coverage-v8": "catalog:",
     "chromatic": "^17.5.0",
     "code-inspector-plugin": "catalog:",
+    "jest-axe": "catalog:",
+    "jsdom": "catalog:",
     "postcss": "catalog:",
     "postcss-cli": "^11.0.1",
     "tsup": "catalog:",
-    "vite": "catalog:"
+    "vite": "catalog:",
+    "vitest": "catalog:"
   },
   "peerDependencies": {
     "react": "catalog:",
