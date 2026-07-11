@@ -23,11 +23,13 @@
     "ui:deploy-storybook": "pnpm --filter @cube/ui chromatic",
     "ui:publish": "pnpm --filter @cube/ui publish --access public --no-git-checks",
     "theme:publish": "pnpm --filter @cube/theme publish --access public --no-git-checks",
-    "release": "pnpm lint && pnpm test && pnpm build && pnpm theme:publish && pnpm ui:publish",
+    "version": "pnpm build && changeset version",
+    "release": "changeset publish && git push --follow-tags",
     "refresh": "rm -rf node_modules packages/*/node_modules pnpm-lock.yaml && pnpm install && pnpm build",
     "prepare": "husky"
   },
   "devDependencies": {
+    "@changesets/cli": "^2.31.0",
     "@commitlint/cli": "^20.5.0",
     "@commitlint/config-conventional": "^20.5.0",
     "@eslint/js": "^9.17.0",

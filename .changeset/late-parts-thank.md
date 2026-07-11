@@ -1,0 +1,5 @@
+---
+'@cube/ui': patch
+---
+
+Init
