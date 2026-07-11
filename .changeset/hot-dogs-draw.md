@@ -1,0 +1,5 @@
+---
+'@cube/theme': patch
+---
+
+Init
