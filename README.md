@@ -16,6 +16,27 @@ packages/
                 └── Button.tsx  ← refactored to use theme tokens
 ```
 
+## Testing
+
+`@cube/ui` is tested with [Vitest](https://vitest.dev) + [React Testing Library](https://testing-library.com/react), running in a jsdom environment. Tests are colocated with the component they cover (e.g. `CubeButton.test.tsx` next to `CubeButton.tsx`).
+
+```bash
+# Run the full suite once (also what CI runs)
+pnpm --filter @cube/ui test
+
+# Watch mode while developing
+pnpm --filter @cube/ui test:watch
+
+# Run with coverage (report is also written to packages/ui/coverage/)
+pnpm --filter @cube/ui test:coverage
+```
+
+The root `pnpm test` runs this across every workspace package via `pnpm -r test`.
+
+Each suite favors user-facing assertions (roles, labels, fired events) over implementation details, and includes a [`jest-axe`](https://github.com/nickcolley/jest-axe) accessibility check per component (`expect(await axe(container)).toHaveNoViolations()`). Note: we type `jest-axe` ourselves in `src/types/jest-axe.d.ts` rather than installing `@types/jest-axe`, since that package hard-references `@types/jest` and clobbers Vitest's own global types.
+
+Every push/PR runs `.github/workflows/ci.yml`, which installs and runs `pnpm test`.
+
 ## Release Process
 
 This monorepo uses [Changesets](https://github.com/changesets/changesets) to manage package versioning and changelogs. Both `@cube/theme` and `@cube/ui` are versioned together (they always share the same version number).

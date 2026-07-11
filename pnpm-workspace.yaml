@@ -6,18 +6,24 @@ catalog:
   '@fontsource/inter': '^5.2.8'
   '@fontsource/noto-sans-tc': '^5.2.8'
   '@fontsource/urbanist': '^5.2.7'
+  '@testing-library/jest-dom': '^6.9.1'
+  '@testing-library/react': '^16.3.2'
+  '@testing-library/user-event': '^14.6.1'
   '@types/lodash': ^4.17.24
   '@types/pluralize': '^0.0.33'
   '@svgr/cli': '^8.1.0'
   '@types/react': ^19.2.14
   '@types/react-dom': ^19.0.0
   '@vitejs/plugin-react-swc': '^4.3.0'
+  '@vitest/coverage-v8': '^4.1.10'
   axios: '1.15.2'
   autoprefixer: ^10.4.20
   class-variance-authority: ^0.7.1
   code-inspector-plugin: '^1.5.1'
   dayjs: ^1.11.20
   i18next: '^26.0.6'
+  jest-axe: '^10.0.0'
+  jsdom: '^29.1.1'
   lodash: ^4.18.1
   'pluralize': '^8.0.0'
   postcss: ^8.5.10
