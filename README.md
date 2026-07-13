@@ -37,6 +37,73 @@ Each suite favors user-facing assertions (roles, labels, fired events) over impl
 
 Every push/PR runs `.github/workflows/ci.yml`, which installs and runs `pnpm test`.
 
+## Local Development (Linking a Consumer App)
+
+To try out unpublished `@cube/ui` changes inside a real consumer app - without publishing a new npm version every time and without repeatedly reinstalling - link `packages/ui` directly into the consumer via pnpm's `link:` protocol.
+
+### 1. Start the watcher (cube-ui side)
+
+```bash
+# From the cube-ui root
+pnpm ui:watch
+```
+
+This generates icons and compiles the CSS once upfront, then starts `tsup --watch` to rebuild `dist/` on every TS/TSX change. Leave this running in a dedicated terminal — the consumer reads from `dist/`, not `src/`, so no changes propagate without it.
+
+> **CSS changes are not watched.** If you edit `src/tailwind.css`, run `pnpm --filter @cube/ui build:css` manually to recompile it, then restart the consumer's dev server.
+
+### 2. Link it into the consumer
+
+In the consumer app's `package.json`, point the dependency at this repo's `packages/ui` directory using the `link:` protocol (a relative or absolute path):
+
+```json
+"dependencies": {
+  "@cube/ui": "link:../relative/path/to/cube-ui/packages/ui"
+}
+```
+
+Then run `pnpm install` in the consumer to apply the link.
+
+> **Don't use the `pnpm link` / `pnpm link --global` CLI commands for this.** In a pnpm workspace, they were found to write the link into the _workspace root_ `package.json` (and even add a workspace-wide `overrides` entry) instead of the specific package you meant to link from - silently affecting every package in that workspace, not just the one you're testing in. Hand-editing the `link:` entry in the target package's own `package.json` is the reliable way to scope it correctly.
+
+### 3. Consumer-side Vite config (if the consumer uses Vite)
+
+```ts
+resolve: {
+  dedupe: ['react', 'react-dom'],
+},
+optimizeDeps: {
+  exclude: ['@cube/ui'],
+},
+```
+
+### 4. Unlink when you're done
+
+When you're ready to go back to the published npm version:
+
+1. Remove the `link:` entry from the consumer's `package.json` and restore the real version string:
+   ```json
+   "@cube/ui": "0.0.6"
+   ```
+2. Delete the stale symlink and reinstall:
+   ```bash
+   rm -rf node_modules/@cube/ui
+   pnpm install
+   ```
+3. Stop `pnpm ui:watch` in the cube-ui terminal.
+
+> Before committing in the consumer repo, always check `git diff package.json` and `git diff pnpm-lock.yaml` to confirm the `link:` entry is gone — it points at a path that only exists on your machine and will break CI and every other developer's install.
+
+### Risks and how to avoid them
+
+| Risk                                                                      | Why it happens                                                                                                                                                                                                                                         | Fix                                                                                                                                                                                                                                                                                        |
+| ------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| **Duplicate React instances** (`Invalid hook call` at runtime)            | `link:` is a symlink to `packages/ui`'s real path on disk. Node resolves its peer deps (`react`/`react-dom`) from _that_ real path upward, landing on `cube-ui`'s own installed React (already present for Storybook/tests) instead of the consumer's. | Add `resolve.dedupe: ['react', 'react-dom']` to the consumer's bundler config (step 3).                                                                                                                                                                                                    |
+| **Stale component in the consumer despite rebuilding**                    | Vite pre-bundles/caches dependencies under `node_modules` and doesn't watch inside them by default, so a freshly rebuilt `dist/` may not be picked up.                                                                                                 | `optimizeDeps.exclude: ['@cube/ui']` (step 3); if it's still stale, delete the consumer's `node_modules/.vite` cache and restart its dev server.                                                                                                                                           |
+| **Silently testing against - or shipping - the wrong `@cube/ui` version** | Leaving the `link:` entry in place after you're done, or switching back to a registry version by only editing the version string in `package.json`, isn't guaranteed to fully clear pnpm's previously-resolved/symlinked state for that package.       | To fully revert: remove the `@cube/ui` line from the consumer's `package.json` entirely (don't just edit the version string in place), delete `node_modules/@cube/ui` in the consumer if it still exists, then re-add the real version (`pnpm add @cube/ui@<version>`) and `pnpm install`. |
+| **Accidentally committing the local link**                                | The `link:` entry - and the `pnpm-lock.yaml` diff it produces - points at a path that only exists on your machine. Committed as-is, it breaks CI and every other developer's install.                                                                  | Before committing anything in the consumer repo, check `git status`/`git diff` on its `package.json` and `pnpm-lock.yaml` and revert the `@cube/ui` entry if it's still pointing at `link:...`.                                                                                            |
+| **Testing against a broken/half-built `dist/`**                           | If the watcher isn't running (or crashed), the consumer keeps reading whatever was last successfully built, silently going stale.                                                                                                                      | Keep `pnpm ui:watch` running for the whole session; if in doubt, run `pnpm build` once to get a known-good baseline.                                                                                                                                                                       |
+
 ## Release Process
 
 This monorepo uses [Changesets](https://github.com/changesets/changesets) to manage package versioning and changelogs. Both `@cube/theme` and `@cube/ui` are versioned together (they always share the same version number).
@@ -72,9 +139,9 @@ This requires an `NPM_TOKEN` repository secret (Settings → Secrets and variabl
 # 1. Pull the latest main branch
 git pull origin main
 
-# 2.Build and apply pending changesets
-# This bumps package.json versions and generates CHANGELOG.md in each package,
-# then deletes the consumed .changeset/*.md files.
+# 2. Build and apply pending changesets
+#    This bumps package.json versions and generates CHANGELOG.md in each package,
+#    then deletes the consumed .changeset/*.md files.
 pnpm version
 
 # 3. Commit the version bumps and changelogs

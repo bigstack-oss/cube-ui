@@ -20,6 +20,7 @@
     "prettier:fix": "prettier --write \"{**/*,*}.{js,ts,tsx,json,scss,md}\"",
     "build": "pnpm --filter \"@cube/*\" build",
     "ui:dev": "pnpm --filter @cube/ui storybook",
+    "ui:watch": "pnpm --filter @cube/ui build:watch",
     "ui:deploy-storybook": "pnpm --filter @cube/ui chromatic",
     "ui:publish": "pnpm --filter @cube/ui publish --access public --no-git-checks",
     "theme:publish": "pnpm --filter @cube/theme publish --access public --no-git-checks",
