@@ -32,6 +32,8 @@
     "build": "pnpm icons:generate && pnpm build:js && pnpm build:css",
     "build:js": "tsup",
     "build:css": "postcss src/tailwind.css -o dist/index.css",
+    "build:watch": "pnpm icons:generate && pnpm build:css && tsup --watch",
+    "dev": "tsup --watch & postcss src/tailwind.css -o dist/index.css --watch & wait",
     "build:storybook": "storybook build",
     "icons:generate": "node scripts/generate-icons.mjs",
     "storybook": "pnpm icons:generate && storybook dev -p 6006 --no-open",
