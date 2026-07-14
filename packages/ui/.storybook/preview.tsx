@@ -1,4 +1,6 @@
+import React from 'react'
 import type { Preview } from '@storybook/react'
+import { CubeUiLocaleProvider, type CubeUiLocale } from '../src/i18n'
 import '@fontsource/inter/400.css'
 import '@fontsource/inter/500.css'
 import '@fontsource/inter/600.css'
@@ -13,11 +15,40 @@ import '@fontsource/noto-sans-tc/800.css'
 import '../src/tailwind.css'
 
 const preview: Preview = {
+  globalTypes: {
+    locale: {
+      name: 'Locale',
+      description: 'Preview components in a @cube/ui locale',
+      toolbar: {
+        icon: 'globe',
+        title: 'Locale',
+        items: [
+          { value: 'en-US', title: 'English' },
+          { value: 'zh-TW', title: '繁體中文' },
+        ],
+        dynamicTitle: true,
+      },
+    },
+  },
+  initialGlobals: {
+    locale: 'en-US',
+  },
+  decorators: [
+    (Story, context) => {
+      const locale = context.globals.locale as CubeUiLocale
+      return (
+        <CubeUiLocaleProvider locale={locale}>
+          <Story />
+        </CubeUiLocaleProvider>
+      )
+    },
+  ],
   parameters: {
     layout: 'fullscreen',
     options: {
       storySort: {
         order: [
+          'Overview',
           'Design Tokens',
           ['Color', 'Typography', 'Icon'],
           'Atoms',

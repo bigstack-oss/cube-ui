@@ -19,6 +19,7 @@
     "prettier": "prettier --check \"{**/*,*}.{js,ts,tsx,json,scss,md}\"",
     "prettier:fix": "prettier --write \"{**/*,*}.{js,ts,tsx,json,scss,md}\"",
     "build": "pnpm --filter \"@cube/*\" build",
+    "i18n:sync": "pnpm --filter @cube/ui i18n:sync",
     "ui:dev": "pnpm --filter @cube/ui storybook",
     "ui:watch": "pnpm --filter @cube/ui build:watch",
     "ui:deploy-storybook": "pnpm --filter @cube/ui chromatic",

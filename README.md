@@ -37,6 +37,72 @@ Each suite favors user-facing assertions (roles, labels, fired events) over impl
 
 Every push/PR runs `.github/workflows/ci.yml`, which installs and runs `pnpm test`.
 
+## Internationalization
+
+`@cube/ui` ships its own dictionary (`en-US` + `zh-TW`) and keeps its own [i18next](https://www.i18next.com) instance, separate from whatever i18n setup the consuming app uses - the library works standalone regardless of the consumer's own i18n choices (or lack of one). This section is the implementation guide for consumers of the published package; see [`CubeUiLocaleProvider`](packages/ui/src/i18n/CubeUiLocaleProvider.tsx), [`useCubeUiTranslation`](packages/ui/src/i18n/useCubeUiTranslation.ts), and [`addCubeUiTranslations`](packages/ui/src/i18n/addCubeUiTranslations.ts) for the underlying implementation, or the `Overview/i18n` story in Storybook (`pnpm ui:dev`) for a live, interactive example of everything below.
+
+### 1. Wrap your app in `CubeUiLocaleProvider` (required)
+
+This is the only required step. Wrap the part of your app that renders `@cube/ui` components, passing whichever locale your app is currently using - `@cube/ui` components read this to render their built-in strings (e.g. loading/empty states) in the matching language:
+
+```tsx
+import { CubeUiLocaleProvider } from '@cube/ui'
+;<CubeUiLocaleProvider locale={activeLocale /* 'en-US' | 'zh-TW' */}>
+  <App />
+</CubeUiLocaleProvider>
+```
+
+- If you never render this provider, `@cube/ui` still works - it defaults to `en-US`.
+- `locale` can change at runtime (e.g. tied to your app's own language-switcher state); `@cube/ui` components re-render with the new strings immediately, no remount needed.
+- Only components that actually own translated strings react to this - most components have no user-facing text of their own and are unaffected either way.
+
+### 2. Adding a locale or overriding a default string (optional)
+
+Use `addCubeUiTranslations` to register a locale `@cube/ui` doesn't ship by default, or to override specific default strings for one it does ship. Call this once, e.g. at your app's entry point, before rendering. `resources` is checked against `@cube/ui`'s real key set - **passing an unknown or misspelled key is a TypeScript compile error**, not a silent no-op:
+
+```tsx
+import { addCubeUiTranslations } from '@cube/ui'
+
+// Add a locale @cube/ui doesn't ship. Keys you omit fall back to en-US.
+addCubeUiTranslations('fr-FR', { 'component.common.loading': 'Chargement' })
+
+// Override one of the shipped default strings.
+addCubeUiTranslations('en-US', { 'component.common.loading': 'Please wait' })
+```
+
+### 3. Reading `@cube/ui`'s own strings directly (rare)
+
+`useCubeUiTranslation` is the hook `@cube/ui`'s components use internally to look up their own strings - most consumers never call it directly. Reach for it only if you're building your own component and want to reuse one of `@cube/ui`'s existing strings (e.g. its shared "Loading" label) for visual consistency, instead of maintaining a duplicate string in your own app's i18n setup:
+
+```tsx
+import { useCubeUiTranslation } from '@cube/ui'
+
+const { t } = useCubeUiTranslation()
+t('component.common.loading') // -> 'Loading' / '載入中', following the active CubeUiLocaleProvider locale
+```
+
+### Key naming convention
+
+Keys are flat, dot-separated strings (not nested JSON objects) in the form `component.<name>.<label>`, camelCase, e.g. `component.pagination.goTo`.
+
+### Maintaining the dictionary via Google Sheets
+
+Translations are maintained in a shared Google Sheet and synced to `packages/ui/src/i18n/resources/{en-US,zh-TW}.json` with a script:
+
+```bash
+# 1. One-time setup: authenticate and enable the Sheets API
+gcloud auth application-default login \
+  --scopes="https://www.googleapis.com/auth/cloud-platform,https://www.googleapis.com/auth/spreadsheets.readonly"
+
+# 2. Copy the config template and fill in the real sheet id + worksheet title
+cp packages/ui/i18nSheetConfig.json.local.example packages/ui/i18nSheetConfig.json.local
+
+# 3. Sync
+pnpm i18n:sync
+```
+
+The target worksheet should have `key`, `en-US`, and `zh-TW` columns - one row per translation key.
+
 ## Local Development (Linking a Consumer App)
 
 To try out unpublished `@cube/ui` changes inside a real consumer app - without publishing a new npm version every time and without repeatedly reinstalling - link `packages/ui` directly into the consumer via pnpm's `link:` protocol.

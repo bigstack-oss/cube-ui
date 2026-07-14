@@ -1,0 +1,5 @@
+{
+  "component.common.loading": "Loading",
+  "component.common.noData": "No Data",
+  "storybook.common.variants": "Variants"
+}
