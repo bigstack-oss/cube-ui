@@ -40,7 +40,7 @@ export const Gallery: Story = {
     return (
       <StoryLayout title="Loading Spinner">
         <StoryLayout.Section title="Variants">
-          <div className="gap-y-10 flex flex-col">
+          <div className="flex flex-col gap-y-10">
             <SpinnerRow title="Dot 45˚">
               <CubeLoadingSpinner {...props} variant="dot45" />
             </SpinnerRow>

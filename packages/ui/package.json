@@ -41,7 +41,8 @@
     "tsc": "tsc",
     "test": "vitest run",
     "test:watch": "vitest",
-    "test:coverage": "vitest run --coverage"
+    "test:coverage": "vitest run --coverage",
+    "i18n:sync": "node scripts/syncI18n.ts"
   },
   "dependencies": {
     "@fontsource/inter": "catalog:",
@@ -77,6 +78,8 @@
     "@vitest/coverage-v8": "catalog:",
     "chromatic": "^17.5.0",
     "code-inspector-plugin": "catalog:",
+    "google-auth-library": "^10.6.2",
+    "google-spreadsheet": "^5.2.0",
     "jest-axe": "catalog:",
     "jsdom": "catalog:",
     "postcss": "catalog:",
