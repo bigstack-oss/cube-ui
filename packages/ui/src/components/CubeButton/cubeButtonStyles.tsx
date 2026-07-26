@@ -3,7 +3,7 @@ import type { ClassValue } from 'class-variance-authority/types'
 import type { CubeButtonUsage } from './cubeButtonTypes'
 
 export const button = cva(
-  'gap-x-2 font-urbanist font-semibold flex shrink-0 items-center justify-center rounded-[5px] whitespace-nowrap transition-colors',
+  'flex shrink-0 items-center justify-center gap-x-2 whitespace-nowrap rounded-[5px] font-urbanist font-semibold transition-colors',
   {
     variants: {
       type: {
@@ -12,23 +12,23 @@ export const button = cva(
           'hover:bg-functional-hover-primary',
         ],
         secondary: [
-          'border-primary bg-grey-0 text-primary border',
+          'border border-primary bg-grey-0 text-primary',
           'hover:border-functional-hover-primary hover:bg-functional-hover-secondary',
         ],
         ghost: [
-          'text-primary bg-transparent',
+          'bg-transparent text-primary',
           'hover:bg-functional-hover-secondary',
         ],
         warning: [
-          'border-status-negative bg-grey-0 text-status-negative border',
+          'border border-status-negative bg-grey-0 text-status-negative',
           'hover:bg-status-negative hover:text-grey-0',
         ],
         light: ['bg-secondary text-dark-400', 'hover:bg-secondary-400'],
       },
       size: {
-        sm: 'secondary-body3 px-3 h-[26px] py-[5px]',
-        md: 'secondary-body2 px-4 py-2 h-[34px]',
-        lg: 'secondary-body2 px-5 py-3 h-[42px]',
+        sm: 'secondary-body3 h-[26px] px-3 py-[5px]',
+        md: 'secondary-body2 h-[34px] px-4 py-2',
+        lg: 'secondary-body2 h-[42px] px-5 py-3',
       },
       usage: {} as Record<NonNullable<CubeButtonUsage>, ClassValue>,
       loading: {
@@ -82,14 +82,14 @@ export const button = cva(
         type: 'ghost',
         disabled: true,
         className: [
-          'text-functional-disable-text bg-transparent',
+          'bg-transparent text-functional-disable-text',
           'text-functional-disable-text hover:bg-transparent',
         ],
       },
       {
         type: 'ghost',
         loading: true,
-        className: 'text-functional-border-darker bg-transparent',
+        className: 'bg-transparent text-functional-border-darker',
       },
       {
         type: 'warning',
@@ -163,7 +163,7 @@ export const loadingSpinner = cva(undefined, {
      */
     usage: {
       'text-only':
-        'absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2',
+        'absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2',
     } as Record<NonNullable<CubeButtonUsage>, ClassValue>,
   },
 })

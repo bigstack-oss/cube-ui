@@ -1,0 +1,177 @@
+/**
+ * CubeCOS - the full, canonical palette.
+ *
+ * Applied at `:root`, so it's also the fallback for consumers who don't call
+ * `CubeThemeProvider`. See `index.css` in this folder for how theme files
+ * compose.
+ */
+
+:root,
+[data-cube-theme='cubeCOS'] {
+  --cube-color-primary-DEFAULT: #4c68f9;
+  --cube-color-primary-0: #f9faff;
+  --cube-color-primary-50: #e8ebfe;
+  --cube-color-primary-100: #d6ddfe;
+  --cube-color-primary-150: #c5cefd;
+  --cube-color-primary-200: #b4c0fd;
+  --cube-color-primary-300: #91a2fb;
+  --cube-color-primary-400: #6f85fa;
+  --cube-color-primary-500: #4c68f9;
+  --cube-color-primary-600: #3e59e4;
+  --cube-color-primary-700: #3049ce;
+  --cube-color-primary-800: #213ab9;
+  --cube-color-primary-850: #1a32ae;
+
+  --cube-color-secondary-DEFAULT: #57e2e2;
+  --cube-color-secondary-0: #effcfc;
+  --cube-color-secondary-50: #e0f9f9;
+  --cube-color-secondary-100: #d1f7f7;
+  --cube-color-secondary-150: #c1f4f4;
+  --cube-color-secondary-200: #b2f2f2;
+  --cube-color-secondary-300: #94ecec;
+  --cube-color-secondary-400: #75e7e7;
+  --cube-color-secondary-500: #57e2e2;
+  --cube-color-secondary-600: #4acccc;
+  --cube-color-secondary-700: #3cb6b6;
+  --cube-color-secondary-800: #2f9f9f;
+  --cube-color-secondary-850: #289494;
+
+  --cube-color-dark-0: #fbfbfc;
+  --cube-color-dark-50: #e8e9eb;
+  --cube-color-dark-100: #d5d6da;
+  --cube-color-dark-150: #c3c4c9;
+  --cube-color-dark-200: #b0b2b8;
+  --cube-color-dark-300: #8a8d97;
+  --cube-color-dark-400: #656975;
+  --cube-color-dark-500: #3f4453;
+  --cube-color-dark-600: #323642;
+  --cube-color-dark-700: #262932;
+  --cube-color-dark-800: #191b21;
+  --cube-color-dark-850: #131419;
+
+  --cube-color-grey-0: #ffffff;
+  --cube-color-grey-50: #fbfbfd;
+  --cube-color-grey-100: #f7f7fa;
+  --cube-color-grey-150: #f3f4f8;
+  --cube-color-grey-200: #eff0f5;
+  --cube-color-grey-300: #e7e8f1;
+  --cube-color-grey-400: #dfe1ec;
+  --cube-color-grey-500: #d7d9e7;
+  --cube-color-grey-600: #c2c5da;
+  --cube-color-grey-700: #adb1ce;
+  --cube-color-grey-800: #989dc1;
+  --cube-color-grey-850: #8e93bb;
+
+  --cube-color-blue-0: #f3fcff;
+  --cube-color-blue-50: #e0f6ff;
+  --cube-color-blue-100: #ccf1ff;
+  --cube-color-blue-150: #b9ebff;
+  --cube-color-blue-200: #a5e6ff;
+  --cube-color-blue-300: #7fdaff;
+  --cube-color-blue-400: #58cfff;
+  --cube-color-blue-500: #31c4ff;
+  --cube-color-blue-600: #27ade2;
+  --cube-color-blue-700: #1d95c5;
+  --cube-color-blue-800: #147ea8;
+  --cube-color-blue-850: #0f729a;
+
+  --cube-color-green-0: #effffb;
+  --cube-color-green-50: #d7fbf2;
+  --cube-color-green-100: #bff7e9;
+  --cube-color-green-150: #a7f2e0;
+  --cube-color-green-200: #8feed7;
+  --cube-color-green-300: #60e6c6;
+  --cube-color-green-400: #30ddb4;
+  --cube-color-green-500: #00d5a2;
+  --cube-color-green-600: #00aa82;
+  --cube-color-green-700: #008061;
+  --cube-color-green-800: #005541;
+  --cube-color-green-850: #004031;
+
+  --cube-color-yellow-0: #fffbef;
+  --cube-color-yellow-50: #fef5d7;
+  --cube-color-yellow-100: #fef0bf;
+  --cube-color-yellow-150: #fdeaa7;
+  --cube-color-yellow-200: #fde58f;
+  --cube-color-yellow-300: #fbd960;
+  --cube-color-yellow-400: #face30;
+  --cube-color-yellow-500: #f9c300;
+  --cube-color-yellow-600: #c89d00;
+  --cube-color-yellow-700: #977600;
+  --cube-color-yellow-800: #665000;
+  --cube-color-yellow-850: #4e3d00;
+
+  --cube-color-red-0: #fff6f6;
+  --cube-color-red-50: #ffe7e7;
+  --cube-color-red-100: #ffd7d7;
+  --cube-color-red-150: #ffc8c8;
+  --cube-color-red-200: #ffb9b9;
+  --cube-color-red-300: #ff9a9a;
+  --cube-color-red-400: #ff7c7c;
+  --cube-color-red-500: #ff5d5d;
+  --cube-color-red-600: #f34a4a;
+  --cube-color-red-700: #e73838;
+  --cube-color-red-800: #db2525;
+  --cube-color-red-850: #d51c1c;
+
+  --cube-color-scene-background: #f7f7fa;
+  --cube-color-scene-gradient-1: #2700c3;
+  --cube-color-scene-gradient-2: #4c68f9;
+  --cube-color-scene-gradient-3: #31c4ff;
+  --cube-color-scene-gradient-4: #57e2e2;
+
+  --cube-color-functional-title: #282d39;
+  --cube-color-functional-text: #3f4453;
+  --cube-color-functional-text-light: #858a9a;
+  --cube-color-functional-hover-primary: #607aff;
+  --cube-color-functional-hover-secondary: #e8ebfe;
+  --cube-color-functional-hover-grey: #fbfbfd;
+  --cube-color-functional-hover-grey-darker: #eff0f5;
+  --cube-color-functional-border-divider: #dfe1ec;
+  --cube-color-functional-border-darker: #a9afbc;
+  --cube-color-functional-disable: #e4e9f3;
+  --cube-color-functional-disable-text: #d7d9e7;
+  --cube-color-functional-disable-light: #f0f4ff;
+  --cube-color-functional-skeleton: #eef0f6;
+
+  --cube-color-status-positive: #00d5a2;
+  --cube-color-status-positive-text: #00be90;
+  --cube-color-status-negative: #ff5d5d;
+  --cube-color-status-warning: #f9c300;
+  --cube-color-status-paused: #ff9920;
+  --cube-color-status-neutral: #4c68f9;
+  --cube-color-status-over-limit: #9b426e;
+
+  --cube-color-chart-1: #57e2e2;
+  --cube-color-chart-2: #647dff;
+  --cube-color-chart-3: #58cfff;
+  --cube-color-chart-4: #face30;
+  --cube-color-chart-5: #147ea8;
+  --cube-color-chart-6: #ff9a9a;
+  --cube-color-chart-7: #989dc1;
+  --cube-color-chart-8: #00d5a2;
+  --cube-color-chart-9: #3049ce;
+  --cube-color-chart-10: #3cb6b6;
+  --cube-color-chart-11: #ffb56a;
+  --cube-color-chart-12: #827cff;
+  --cube-color-chart-13: #c29868;
+  --cube-color-chart-14: #1d95c5;
+  --cube-color-chart-15: #b4c0fd;
+  --cube-color-chart-16: #da7bba;
+  --cube-color-chart-17: #84d3d3;
+  --cube-color-chart-18: #6a7ee3;
+  --cube-color-chart-19: #81dbff;
+  --cube-color-chart-20: #eaea24;
+  --cube-color-chart-21: #57a5ee;
+  --cube-color-chart-22: #f4788b;
+  --cube-color-chart-23: #6d79ba;
+  --cube-color-chart-24: #62cfb5;
+  --cube-color-chart-25: #2055a4;
+  --cube-color-chart-26: #75e7e7;
+  --cube-color-chart-27: #ffcb7c;
+  --cube-color-chart-28: #ce91ec;
+  --cube-color-chart-29: #5eb5d8;
+  --cube-color-chart-30: #a25889;
+  --cube-color-chart-31: #869aff;
+  --cube-color-chart-32: #988072;
+}

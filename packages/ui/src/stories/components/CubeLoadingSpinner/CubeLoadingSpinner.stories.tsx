@@ -1,17 +1,39 @@
 import { type ComponentProps } from 'react'
 import type { Meta, StoryObj } from '@storybook/react-vite'
+import {
+  Controls,
+  Description,
+  Primary,
+  Title,
+} from '@storybook/addon-docs/blocks'
 import type { PropsWithClassName } from '../../../utils/react-types'
 import { formatUnionType } from '../../../internals/utils/formatType'
 import { StoryLayout } from '../../../internals/components/StoryLayout/StoryLayout'
 import { cubeLoadingSpinnerVariants } from '../../../components/CubeLoadingSpinner/cubeLoadingSpinnerTypes'
 import { CubeLoadingSpinner } from '../../../components/CubeLoadingSpinner'
 import { SpinnerRow } from './SpinnerRow'
+import { PlaygroundLayout } from '../../../internals/components/StoryLayout/PlaygroundLayout'
+
+const CubeLoadingSpinnerDocs = () => {
+  return (
+    <>
+      <Title />
+      <Description />
+      <Primary />
+      <Controls />
+    </>
+  )
+}
 
 const meta: Meta<typeof CubeLoadingSpinner> = {
   title: 'Atoms/Loading Spinner',
   component: CubeLoadingSpinner,
+  tags: ['autodocs'],
   parameters: {
     controls: { expanded: true },
+    docs: {
+      page: CubeLoadingSpinnerDocs,
+    },
   },
   argTypes: {
     variant: {
@@ -19,7 +41,8 @@ const meta: Meta<typeof CubeLoadingSpinner> = {
       table: {
         type: { summary: formatUnionType(cubeLoadingSpinnerVariants) },
       },
-      control: { disable: true },
+      control: 'select',
+      options: cubeLoadingSpinnerVariants,
     },
     className: {
       table: { type: { summary: 'string' } },
@@ -35,7 +58,31 @@ type LoadingSpinnerStoryArgs = ComponentProps<typeof CubeLoadingSpinner> &
 
 type Story = StoryObj<LoadingSpinnerStoryArgs>
 
+export const Playground: Story = {
+  tags: ['!dev'],
+  decorators: [
+    (Story) => (
+      <PlaygroundLayout>
+        <Story />
+      </PlaygroundLayout>
+    ),
+  ],
+  args: {
+    variant: 'dot45',
+  },
+}
+
 export const Gallery: Story = {
+  tags: ['!autodocs'],
+  parameters: {
+    actions: { disable: true },
+    controls: { disable: true },
+    interactions: { disable: true },
+    options: {
+      rightPanelWidth: 0,
+      bottomPanelHeight: 0,
+    },
+  },
   render: (props) => {
     return (
       <StoryLayout title="Loading Spinner">

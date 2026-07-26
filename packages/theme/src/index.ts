@@ -12,3 +12,4 @@ export {
   type Typography,
   type TypographyClassName,
 } from './utils/typography/typography'
+export type { CubeThemeName } from './types'

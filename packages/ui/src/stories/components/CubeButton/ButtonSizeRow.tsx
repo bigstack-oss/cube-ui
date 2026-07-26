@@ -1,13 +1,14 @@
 import type { PropsWithChildren } from 'react'
 import type { CubeButtonSize } from '../../../components/CubeButton/cubeButtonTypes'
+import { SubHeading } from '../../../internals/components/SubHeading'
 import { ButtonTypeSizeTable } from './ButtonTypeSizeTable'
 
 const SizeText = (props: PropsWithChildren) => {
   const { children } = props
   return (
-    <span className="primary-body1 font-semibold text-functional-title flex items-center justify-start">
+    <SubHeading className="flex items-center justify-start">
       {children}
-    </span>
+    </SubHeading>
   )
 }
 

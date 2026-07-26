@@ -1,18 +1,19 @@
 import type { PropsWithChildren } from 'react'
 import { CubeButtonSkeleton } from '../../../components/CubeButton/CubeButtonSkeleton'
+import { SubHeading } from '../../../internals/components/SubHeading'
 
 const DescriptionText = (props: PropsWithChildren) => {
   const { children } = props
   return (
-    <span className="primary-body2 font-semibold flex items-center justify-center">
+    <SubHeading className="flex items-center justify-center text-nowrap">
       {children}
-    </span>
+    </SubHeading>
   )
 }
 
 export const ButtonSkeletonTable = () => {
   return (
-    <div className="gap-x-5 grid grid-cols-[50px_126px_62px_156px_156px] gap-y-[34px]">
+    <div className="grid grid-cols-[50px_126px_62px_156px_156px] gap-x-5 gap-y-[34px]">
       <DescriptionText />
       <DescriptionText>Text only</DescriptionText>
       <DescriptionText>Icon only</DescriptionText>

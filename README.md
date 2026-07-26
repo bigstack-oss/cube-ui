@@ -4,16 +4,61 @@
 
 ```
 packages/
-├── theme/
-│   ├── package.json
-│   └── src/
-│       └── index.css        ← raw CSS custom properties
-└── ui/
-    └── src/
-        ├── styles.css        ← new; replaces tailwind.css (v3 syntax)
-        └── components/
-            └── Button/
-                └── Button.tsx  ← refactored to use theme tokens
+│
+├── theme/                          ← publishes @cube/theme
+│   ├── src/
+│   │   ├── index.ts                ← 📦 public API: controls what gets packed and published
+│   │   ├── cubePreset.ts           ← Tailwind preset (colors, spacing, …)
+│   │   ├── cubeTheme.ts            ← theme token definitions
+│   │   ├── plugins/                ← custom Tailwind plugins
+│   │   └── utils/                  ← shared helpers (typography, animations, …)
+│   ├── tsup.config.ts              ← build entry / output format
+│   └── package.json
+│
+└── ui/                             ← publishes @cube/ui
+    ├── src/
+    │   ├── index.ts                ← 📦 public API: controls what gets packed and published
+    │   │
+    │   ├── components/             ← UI components (one folder per component)
+    │   │   └── CubeButton/
+    │   │       ├── CubeButton.tsx
+    │   │       ├── CubeButton.test.tsx   ← 🧪 tests sit next to the component they cover
+    │   │       └── index.ts              ← re-exports for the component folder
+    │   │
+    │   ├── i18n/                   ← internationalization module
+    │   │   ├── index.ts            ← 📦 i18n public API (re-exported via src/index.ts)
+    │   │   ├── resources/          ← translation JSON files (en-US, zh-TW, …)
+    │   │   ├── *.test.tsx          ← 🧪 i18n unit tests
+    │   │   └── *.ts / *.tsx        ← provider, hooks, types
+    │   │
+    │   ├── icons/
+    │   │   ├── assets/             ← raw SVG source files (monochrome + colored)
+    │   │   └── src/                ← ⚙️ auto-generated React icon components (do not edit)
+    │   │
+    │   ├── stories/                ← Storybook stories (not published)
+    │   │   ├── components/         ← per-component stories
+    │   │   ├── designTokens/       ← design token showcase stories
+    │   │   └── overview/           ← narrative / overview pages
+    │   │
+    │   ├── internals/              ← shared helpers used only inside this package (not published)
+    │   │   ├── components/         ← story-only UI helpers (StoryLayout, CaptionText, …)
+    │   │   └── utils/              ← internal utility hooks and functions
+    │   │
+    │   ├── types/                  ← ambient type declarations (jest-axe, vitest matchers, …)
+    │   └── tailwind.css            ← CSS entry point (Tailwind directives + base styles)
+    │
+    ├── scripts/
+    │   ├── generate-icons.mjs      ← ⚙️ converts SVGs in icons/assets → icons/src (run before build)
+    │   └── syncI18n.ts             ← pulls translation strings from Google Sheets
+    │
+    ├── i18nSheetConfig.json.local          ← 🔒 your local i18n sheet config (git-ignored)
+    ├── i18nSheetConfig.json.local.example  ← template — copy and fill in your sheet ID
+    │
+    ├── .storybook/                 ← Storybook configuration
+    ├── tsup.config.ts              ← build entry / output format
+    ├── vitest.config.ts            ← test runner configuration
+    ├── tailwind.config.ts          ← Tailwind configuration for the package
+    └── package.json
 ```
 
 ## Testing

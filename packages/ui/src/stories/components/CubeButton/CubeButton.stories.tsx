@@ -1,4 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
+import {
+  Controls,
+  Description,
+  Primary,
+  Title,
+} from '@storybook/addon-docs/blocks'
 import { StoryLayout } from '../../../internals/components/StoryLayout/StoryLayout'
 import { formatUnionType } from '../../../internals/utils/formatType'
 import { CubeButton } from '../../../components/CubeButton/CubeButton'
@@ -9,12 +15,28 @@ import {
 } from '../../../components/CubeButton/cubeButtonTypes'
 import { ButtonVariantTable } from './ButtonVariantTable'
 import { ButtonSkeletonTable } from './ButtonSkeletonTable'
+import { PlaygroundLayout } from '../../../internals/components/StoryLayout/PlaygroundLayout'
+
+const CubeButtonDocs = () => {
+  return (
+    <>
+      <Title />
+      <Description />
+      <Primary />
+      <Controls />
+    </>
+  )
+}
 
 const meta: Meta<typeof CubeButton> = {
   title: 'Atoms/Button',
   component: CubeButton,
+  tags: ['autodocs'],
   parameters: {
     controls: { expanded: true },
+    docs: {
+      page: CubeButtonDocs,
+    },
   },
   argTypes: {
     htmlType: {
@@ -29,37 +51,40 @@ const meta: Meta<typeof CubeButton> = {
       description: 'The type of the button.',
       table: { type: { summary: formatUnionType(cubeButtonTypes) } },
       defaultValue: { summary: 'primary' },
-      control: { disable: true },
+      control: 'select',
+      options: cubeButtonTypes,
     },
     size: {
       description: 'The size of the button.',
       table: { type: { summary: formatUnionType(cubeButtonSizes) } },
       defaultValue: { summary: 'md' },
-      control: { disable: true },
+      control: 'select',
+      options: cubeButtonSizes,
     },
     usage: {
       description: 'The usage of the button.',
       table: { type: { summary: formatUnionType(cubeButtonUsages) } },
       defaultValue: { summary: 'text-only' },
-      control: { disable: true },
+      control: 'select',
+      options: cubeButtonUsages,
     },
     disabled: {
       description: 'Whether the button is disabled.',
       table: { type: { summary: 'boolean' } },
       defaultValue: { summary: 'false' },
-      control: { disable: true },
+      control: 'boolean',
     },
     loading: {
       description: 'Whether the button is loading.',
       table: { type: { summary: 'boolean' } },
       defaultValue: { summary: 'false' },
-      control: { disable: true },
+      control: 'boolean',
     },
     children: {
       description:
         'Required when usage is text-only, icon-left, or icon-right.',
       table: { type: { summary: 'string' } },
-      control: { disable: true },
+      control: 'text',
     },
     Icon: {
       description:
@@ -74,7 +99,36 @@ export default meta
 
 type Story = StoryObj<typeof CubeButton>
 
+export const Playground: Story = {
+  tags: ['!dev'],
+  decorators: [
+    (Story) => (
+      <PlaygroundLayout>
+        <Story />
+      </PlaygroundLayout>
+    ),
+  ],
+  args: {
+    children: 'Call to action',
+    type: 'primary',
+    size: 'md',
+    usage: 'text-only',
+    disabled: false,
+    loading: false,
+  },
+}
+
 export const Gallery: Story = {
+  tags: ['!autodocs'],
+  parameters: {
+    actions: { disable: true },
+    controls: { disable: true },
+    interactions: { disable: true },
+    options: {
+      rightPanelWidth: 0,
+      bottomPanelHeight: 0,
+    },
+  },
   render: () => {
     const buttonText = 'Call to action'
 

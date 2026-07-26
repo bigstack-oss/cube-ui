@@ -1,0 +1,27 @@
+/**
+ * Per-product brand palettes, exposed as CSS custom properties.
+ *
+ * `cubeTheme.ts` maps every Tailwind color token to one of these variables,
+ * so switching `data-cube-theme` on any ancestor element (via
+ * `CubeThemeProvider`) repaints every `bg-primary-*` / `text-grey-*` / etc.
+ * class already on the page - no rebuild required.
+ *
+ * `tailwind.css` imports this file directly from `src` at build time (same
+ * reason `tailwind.config.ts` imports `cubePreset` from `src` instead of
+ * `dist`), and `postcss-import` inlines it into the published `dist/index.css`,
+ * so consumers never need to resolve `@bigstack/cube-theme` at runtime.
+ *
+ * `cubeCOS.css` must load first - it's the full, canonical theme (applied at
+ * `:root`, so it's also the fallback for consumers who don't call
+ * `CubeThemeProvider`). Every other theme file only needs to override the
+ * tokens that actually differ for that product - anything left unset
+ * inherits `cubeCOS`'s value via normal CSS cascade (both rules can match
+ * the same root element; the more specific/later declaration wins per
+ * property, not per selector block).
+ *
+ * To add a new palette: add a `CubeThemeName` entry in `@bigstack/cube-ui`'s
+ * `src/theme/types.ts`, add a `your-theme.css` file here, and import it below.
+ */
+
+@import './cubeCOS.css';
+@import './cubeEMP.css';
