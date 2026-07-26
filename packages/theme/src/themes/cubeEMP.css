@@ -1,0 +1,40 @@
+/**
+ * CubeEMP - PLACEHOLDER palette used to prove the theme-switching mechanism
+ * in Storybook. Replace these values with the real product's palette once
+ * available.
+ *
+ * Only overrides the tokens that differ from CubeCOS (primary/secondary);
+ * everything else (grey, status, chart, etc.) inherits CubeCOS's value via
+ * normal CSS cascade. See `index.css` in this folder for how theme files
+ * compose.
+ */
+
+[data-cube-theme='cubeEMP'] {
+  --cube-color-primary-DEFAULT: #8259f6;
+  --cube-color-primary-0: #fbf9ff;
+  --cube-color-primary-50: #f1ebfe;
+  --cube-color-primary-100: #e7defe;
+  --cube-color-primary-150: #dcd0fd;
+  --cube-color-primary-200: #d1c3fc;
+  --cube-color-primary-300: #b7a0fa;
+  --cube-color-primary-400: #9c7df8;
+  --cube-color-primary-500: #8259f6;
+  --cube-color-primary-600: #6d3fe0;
+  --cube-color-primary-700: #5829c9;
+  --cube-color-primary-800: #4415b3;
+  --cube-color-primary-850: #3a0da3;
+
+  --cube-color-secondary-DEFAULT: #ff9c00;
+  --cube-color-secondary-0: #fff9ef;
+  --cube-color-secondary-50: #fff0d6;
+  --cube-color-secondary-100: #ffe7be;
+  --cube-color-secondary-150: #ffdda5;
+  --cube-color-secondary-200: #ffd48d;
+  --cube-color-secondary-300: #ffc15d;
+  --cube-color-secondary-400: #ffaf2e;
+  --cube-color-secondary-500: #ff9c00;
+  --cube-color-secondary-600: #e48900;
+  --cube-color-secondary-700: #c97600;
+  --cube-color-secondary-800: #ad6400;
+  --cube-color-secondary-850: #9e5b00;
+}

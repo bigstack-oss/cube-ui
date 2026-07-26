@@ -36,7 +36,7 @@ export const OverrideInput = (props: OverrideInputProps) => {
         Override
       </CubeButton>
       <CubeButton type="secondary" onClick={handleClear}>
-        Clear
+        Restore
       </CubeButton>
     </div>
   )

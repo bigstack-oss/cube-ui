@@ -1,12 +1,13 @@
 import type { PropsWithChildren } from 'react'
+import { SubHeading } from '../../../internals/components/SubHeading'
 import { ButtonSizeRow } from './ButtonSizeRow'
 
 const TypeText = (props: PropsWithChildren) => {
   const { children } = props
   return (
-    <span className="primary-body1 font-semibold text-functional-title flex items-center justify-center">
+    <SubHeading className="flex items-center justify-center">
       {children}
-    </span>
+    </SubHeading>
   )
 }
 
@@ -31,7 +32,7 @@ export const ButtonVariantTable = (props: ButtonVariantTableProps) => {
   const { buttonText } = props
 
   return (
-    <div className="gap-14 grid grid-cols-[repeat(6,auto)] grid-rows-[100px_repeat(auto)]">
+    <div className="grid grid-cols-[repeat(6,auto)] grid-rows-[100px_repeat(auto)] gap-14">
       <VariantHeaderRow />
       <ButtonSizeRow
         sizeText="MD"

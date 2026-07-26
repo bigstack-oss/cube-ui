@@ -4,8 +4,8 @@ import { IconGallery } from './IconGallery'
 import { IconGalleryItem } from './IconGalleryItem'
 import { coloredIcons } from './utils'
 
-const meta: Meta<typeof IconGalleryItem> = {
-  title: 'Design Tokens/Icons/Colored',
+const meta = {
+  title: 'Design Tokens/Icons',
   parameters: {
     controls: { expanded: true },
   },
@@ -17,13 +17,13 @@ const meta: Meta<typeof IconGalleryItem> = {
       control: { disable: true },
     },
   },
-}
+} satisfies Meta<typeof IconGalleryItem>
 
 export default meta
 
 type Story = StoryObj<React.ComponentProps<typeof CubeIconFrame>>
 
-export const Gallery: Story = {
+export const Colored: Story = {
   render: (props) => {
     const { size, onClick } = props
     return (

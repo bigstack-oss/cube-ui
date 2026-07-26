@@ -2,15 +2,15 @@ import type { PropsWithChildren } from 'react'
 import { twMerge } from 'tailwind-merge'
 import type { PropsWithClassName } from '../../types/react-types'
 
-type VariantTitleProps = PropsWithChildren<PropsWithClassName>
+type HeadingProps = PropsWithChildren<PropsWithClassName>
 
-export const VariantTitle = (props: VariantTitleProps) => {
+export const Heading = (props: HeadingProps) => {
   const { children, className } = props
 
   return (
     <h3
       className={twMerge(
-        'primary-body1 font-semibold text-functional-title',
+        'secondary-h3 font-semibold text-functional-title',
         className,
       )}
     >
