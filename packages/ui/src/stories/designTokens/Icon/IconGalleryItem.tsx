@@ -13,11 +13,11 @@ export const IconGalleryItem = (props: IconGalleryItemProps) => {
   const { name, size, className, Component, onIconClick } = props
 
   return (
-    <div className="h-24 w-36 gap-y-2 p-3 pt-4 hover:bg-grey-200 flex flex-col items-center justify-start border transition-colors">
+    <div className="flex h-24 w-36 flex-col items-center justify-start gap-y-2 border p-3 pt-4 transition-colors hover:bg-grey-200">
       <CubeIconFrame size={size} className={className} onClick={onIconClick}>
         <Component />
       </CubeIconFrame>
-      <span className="secondary-body6 text-functional-text-light max-w-full text-center break-all">
+      <span className="secondary-body6 max-w-full break-all text-center text-functional-text-light">
         {name}
       </span>
     </div>

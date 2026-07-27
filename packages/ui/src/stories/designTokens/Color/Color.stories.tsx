@@ -102,6 +102,8 @@ const ColorSections = () => (
             <ColorBox
               key={n}
               colorName={String(n)}
+              // Dynamically generated - the rule can't statically resolve it.
+              // eslint-disable-next-line tailwindcss/no-custom-classname
               bgClassName={`bg-chart-${n}`}
             />
           ))}

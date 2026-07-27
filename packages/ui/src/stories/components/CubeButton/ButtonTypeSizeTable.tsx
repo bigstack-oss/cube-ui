@@ -9,7 +9,7 @@ import { ButtonStateRow } from './ButtonStateRow'
 const UsageText = (props: PropsWithChildren) => {
   const { children } = props
   return (
-    <span className="primary-body2 text-functional-title flex items-center justify-center">
+    <span className="primary-body2 flex items-center justify-center text-functional-title">
       {children}
     </span>
   )
@@ -44,7 +44,7 @@ export const ButtonTypeSizeTable = (props: ButtonTypeSizeTableProps) => {
   const { size, type, buttonText, showUsageHeader, showState } = props
 
   const className = twMerge(
-    'gap-y-6 grid shrink-0 gap-x-[18px]',
+    'grid shrink-0 gap-x-[18px] gap-y-6',
     showState
       ? 'grid-cols-[90px_minmax(140px,1fr),minmax(62px,1fr),minmax(156px,1fr),minmax(156px,1fr)]'
       : 'grid-cols-[minmax(140px,1fr),minmax(62px,1fr),minmax(156px,1fr),minmax(156px,1fr)]',

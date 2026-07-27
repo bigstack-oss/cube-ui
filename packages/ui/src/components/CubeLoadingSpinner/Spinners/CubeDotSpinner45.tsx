@@ -9,18 +9,18 @@ export const CubeDotSpinner45 = (props: PropsWithClassName) => {
     <div
       className={twMerge(
         // The size of container must be equal to the size of dots.
-        'size-4 text-cosmos-primary relative inline',
+        'relative inline size-4 text-cosmos-primary',
         className,
       )}
     >
-      <Dot45 className="animate-cos-dot-spinner-45-vector-0 absolute rotate-0" />
-      <Dot45 className="animate-cos-dot-spinner-45-vector-1 absolute rotate-45" />
-      <Dot45 className="animate-cos-dot-spinner-45-vector-2 absolute rotate-90" />
-      <Dot45 className="animate-cos-dot-spinner-45-vector-3 absolute rotate-[135deg]" />
-      <Dot45 className="animate-cos-dot-spinner-45-vector-4 absolute rotate-180" />
-      <Dot45 className="animate-cos-dot-spinner-45-vector-5 absolute rotate-[225deg]" />
-      <Dot45 className="animate-cos-dot-spinner-45-vector-6 absolute rotate-[270deg]" />
-      <Dot45 className="animate-cos-dot-spinner-45-vector-7 absolute rotate-[315deg]" />
+      <Dot45 className="absolute rotate-0 animate-cos-dot-spinner-45-vector-0" />
+      <Dot45 className="absolute rotate-45 animate-cos-dot-spinner-45-vector-1" />
+      <Dot45 className="absolute rotate-90 animate-cos-dot-spinner-45-vector-2" />
+      <Dot45 className="absolute rotate-[135deg] animate-cos-dot-spinner-45-vector-3" />
+      <Dot45 className="absolute rotate-180 animate-cos-dot-spinner-45-vector-4" />
+      <Dot45 className="absolute rotate-[225deg] animate-cos-dot-spinner-45-vector-5" />
+      <Dot45 className="absolute rotate-[270deg] animate-cos-dot-spinner-45-vector-6" />
+      <Dot45 className="absolute rotate-[315deg] animate-cos-dot-spinner-45-vector-7" />
     </div>
   )
 }

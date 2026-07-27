@@ -31,7 +31,7 @@ export const IconGallery = (props: IconGalleryItemProps) => {
 
   return (
     <StoryLayout title={title} desc={desc}>
-      <div className="gap-y-8 flex flex-col">
+      <div className="flex flex-col gap-y-8">
         {/** TODO: replace with CubeInput */}
         <CubeInput
           placeholder='Search for an icon (e.g. "home")'
