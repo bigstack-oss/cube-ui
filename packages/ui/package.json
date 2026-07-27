@@ -40,7 +40,7 @@
     "build:watch": "pnpm icons:generate && pnpm build:css && tsup --watch",
     "dev": "tsup --watch & postcss src/tailwind.css -o dist/index.css --watch & wait",
     "build:storybook": "storybook build",
-    "icons:generate": "node scripts/generate-icons.mjs",
+    "icons:generate": "node scripts/generate-icons.ts",
     "storybook": "pnpm icons:generate && storybook dev -p 6006 --no-open",
     "chromatic": "pnpm build:storybook && npx chromatic --project-token=$CHROMATIC_PROJECT_TOKEN --storybook-build-dir=storybook-static",
     "tsc": "tsc",
