@@ -11,7 +11,7 @@ export const CubeSkeleton = (props: CubeSkeletonProps) => {
   return (
     <div
       className={twMerge(
-        'cos-skeleton animate-cos-skeleton rounded-[5px]',
+        'cube-skeleton animate-cube-skeleton rounded-[5px]',
         className,
       )}
       style={style}

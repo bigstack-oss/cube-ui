@@ -1,7 +1,4 @@
-// Since `tailwind.config.js` is excluded from both tsconfig and Vite,
-// we currently need to import values from the `/src` folder.
-// More details: https://github.com/tailwindlabs/tailwindcss/issues/11097#issuecomment-1526886184
-import { cubePreset } from '../theme/src/index'
+import { cubePreset } from './src/theme/tokens/cubePreset'
 import type { Config } from 'tailwindcss'
 
 const config: Config = {

@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { CubeThemeProvider } from './CubeThemeProvider'
-import type { CubeThemeName } from '@cube/theme'
+import type { CubeThemeName } from './tokens/types'
 
 afterEach(() => {
   delete document.documentElement.dataset.cubeTheme

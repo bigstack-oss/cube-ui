@@ -1,5 +1,4 @@
 packages:
-  - 'packages/theme'
   - 'packages/ui'
 
 catalog:

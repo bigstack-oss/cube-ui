@@ -1,8 +1,8 @@
 import type { CustomThemeConfig } from 'tailwindcss/types/config'
 import defaultTheme from 'tailwindcss/defaultTheme'
 import type { FlattenedObjectKeys } from './utils/genericTypes'
-import { cosAnimationKeyframes } from './utils/animationKeyframes'
-import { cosAnimations } from './utils/animations'
+import { cubeAnimationKeyframes } from './utils/animationKeyframes'
+import { cubeAnimations } from './utils/animations'
 
 export const cubeTheme = {
   screens: {
@@ -221,10 +221,10 @@ export const cubeTheme = {
     semibold: '600',
   },
   keyframes: {
-    ...cosAnimationKeyframes,
+    ...cubeAnimationKeyframes,
   },
   animation: {
-    ...cosAnimations,
+    ...cubeAnimations,
   },
 } satisfies Partial<CustomThemeConfig>
 

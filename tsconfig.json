@@ -32,7 +32,6 @@
     "skipLibCheck": true,
 
     "paths": {
-      "@theme/*": ["./packages/theme/src/index.ts"],
       "@ui/*": ["./packages/ui/src/index.ts"],
       "@icons/*": ["./packages/ui/src/icons/index.ts"]
     }

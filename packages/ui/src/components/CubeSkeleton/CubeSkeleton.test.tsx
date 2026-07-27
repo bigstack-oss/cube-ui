@@ -5,13 +5,13 @@ describe('CubeSkeleton', () => {
   it('renders a placeholder element with the skeleton animation class', () => {
     const { container } = render(<CubeSkeleton />)
 
-    expect(container.firstChild).toHaveClass('animate-cos-skeleton')
+    expect(container.firstChild).toHaveClass('animate-cube-skeleton')
   })
 
   it('merges a custom className', () => {
     const { container } = render(<CubeSkeleton className="w-10" />)
 
-    expect(container.firstChild).toHaveClass('animate-cos-skeleton', 'w-10')
+    expect(container.firstChild).toHaveClass('animate-cube-skeleton', 'w-10')
   })
 
   it('applies an inline style when provided', () => {

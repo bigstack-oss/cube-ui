@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import type { CubeThemeName } from '@cube/theme'
+import type { CubeThemeName } from '../../../theme'
 import { StoryLayout } from '../../../internals/components/StoryLayout/StoryLayout'
 import { ColorScale } from './ColorScale'
 import { ColorPaletteRow } from './ColorPaletteRow'

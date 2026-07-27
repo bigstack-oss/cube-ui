@@ -24,7 +24,6 @@
     "ui:watch": "pnpm --filter @cube/ui build:watch",
     "ui:deploy-storybook": "pnpm --filter @cube/ui chromatic",
     "ui:publish": "pnpm --filter @cube/ui publish --access public --no-git-checks",
-    "theme:publish": "pnpm --filter @cube/theme publish --access public --no-git-checks",
     "version": "pnpm build && changeset version",
     "release": "changeset publish && git push --follow-tags",
     "refresh": "rm -rf node_modules packages/*/node_modules pnpm-lock.yaml && pnpm install && pnpm build",

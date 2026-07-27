@@ -33,6 +33,16 @@ export default tseslint.config(
             callees: ['classnames', 'classNames', 'cva', 'twMerge', 'twJoin'],
             config: 'packages/ui/tailwind.config.ts',
             classRegex: '^(\\w+)?[cC]lass(Name)?$',
+            // Default cssFiles globs omit dist/build but not storybook-static,
+            // whose stale CSS would otherwise "validate" renamed/removed classes.
+            cssFiles: [
+              '**/*.css',
+              '!**/node_modules',
+              '!**/.*',
+              '!**/dist',
+              '!**/build',
+              '!**/storybook-static/**',
+            ],
           },
         },
       },
