@@ -8,7 +8,7 @@ import { MonochromeHome01, MonochromeChevronDown } from '@icons/index.ts'
 const StateText = (props: PropsWithChildren) => {
   const { children } = props
   return (
-    <span className="primary-body2 text-functional-title flex items-center justify-start">
+    <span className="primary-body2 flex items-center justify-start text-functional-title">
       {children}
     </span>
   )

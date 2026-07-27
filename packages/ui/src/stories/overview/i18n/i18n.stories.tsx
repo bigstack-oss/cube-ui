@@ -44,7 +44,8 @@ export default meta
 type Story = StoryObj
 
 // TODO: swap in the real Google Sheet URL once it's shared.
-const TRANSLATION_SHEET_URL = 'https://docs.google.com/spreadsheets/d/REPLACE_WITH_SHEET_ID'
+const TRANSLATION_SHEET_URL =
+  'https://docs.google.com/spreadsheets/d/REPLACE_WITH_SHEET_ID'
 
 // ---- Live demo pieces. Each one mirrors the code sample directly above it,
 // so contributors can see the exact API call and its visual result together. ----
@@ -341,8 +342,8 @@ addCubeUiTranslations('fr-FR', {
           </CaptionText>
           <CaptionText>
             <strong>Workflow:</strong> add or edit translations in the sheet
-            first, then run <InlineCode>pnpm i18n:sync</InlineCode> to pull
-            the sheet&apos;s contents down into the local{' '}
+            first, then run <InlineCode>pnpm i18n:sync</InlineCode> to pull the
+            sheet&apos;s contents down into the local{' '}
             <InlineCode>src/i18n/resources/*.json</InlineCode> files. Don&apos;t
             hand-edit those JSON files directly - the next sync will overwrite
             them.

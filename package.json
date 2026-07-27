@@ -43,7 +43,7 @@
     "eslint-plugin-react-hooks": "^5.0.0",
     "eslint-plugin-react-refresh": "^0.4.16",
     "eslint-plugin-storybook": "10.3.5",
-    "eslint-plugin-tailwindcss": "^3.17.5",
+    "eslint-plugin-tailwindcss": "3.17.5",
     "globals": "^17.5.0",
     "google-auth-library": "^10.6.2",
     "google-spreadsheet": "^5.2.0",

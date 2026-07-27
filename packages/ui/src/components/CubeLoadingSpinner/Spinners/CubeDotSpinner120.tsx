@@ -9,13 +9,13 @@ export const CubeDotSpinner120 = (props: PropsWithClassName) => {
     // The size of container must be equal to the size of dots.
     <div
       className={twMerge(
-        'size-4 text-cosmos-primary relative inline',
+        'relative inline size-4 text-cosmos-primary',
         className,
       )}
     >
-      <Dot120 className="animate-cos-dot-spinner-120-vector-0 absolute rotate-0" />
-      <Dot120 className="animate-cos-dot-spinner-120-vector-1 absolute rotate-[135deg]" />
-      <Dot120 className="animate-cos-dot-spinner-120-vector-2 absolute rotate-[270deg]" />
+      <Dot120 className="absolute rotate-0 animate-cos-dot-spinner-120-vector-0" />
+      <Dot120 className="absolute rotate-[135deg] animate-cos-dot-spinner-120-vector-1" />
+      <Dot120 className="absolute rotate-[270deg] animate-cos-dot-spinner-120-vector-2" />
     </div>
   )
 }

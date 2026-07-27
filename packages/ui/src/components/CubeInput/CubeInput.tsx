@@ -54,7 +54,7 @@ export const CubeInput = forwardRef<HTMLInputElement, CubeInputProps>(
       if (isLoading) return <CubeInputSkeleton type="label" />
 
       return (
-        <div className="primary-body2 space-x-1 flex items-center">
+        <div className="primary-body2 flex items-center space-x-1">
           <label
             htmlFor={inputId}
             className="font-semibold text-functional-title"
@@ -87,7 +87,7 @@ export const CubeInput = forwardRef<HTMLInputElement, CubeInputProps>(
       })()
 
       return (
-        <span className="right-0 h-4 -translate-x-4 gap-2 absolute flex shrink-0 items-center justify-center overflow-hidden">
+        <span className="absolute right-0 flex h-4 shrink-0 -translate-x-4 items-center justify-center gap-2 overflow-hidden">
           {errorIcon}
           {customIcon}
         </span>

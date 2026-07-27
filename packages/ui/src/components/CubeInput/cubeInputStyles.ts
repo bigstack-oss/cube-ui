@@ -5,7 +5,7 @@ export const input = cva(
     'primary-body2 w-full truncate rounded-[6px] py-[9px] outline-none',
     'bg-grey-0',
     'text-functional-text placeholder:text-functional-border-darker',
-    'border-functional-border-divider border',
+    'border border-functional-border-divider',
     'hover:border-functional-hover-primary focus:border-functional-hover-primary',
   ],
   {
@@ -37,8 +37,8 @@ export const input = cva(
 export const customIcon = cva('icon-md', {
   variants: {
     disabled: {
-      true: 'text-functional-border-divider cursor-default',
-      false: 'text-functional-text cursor-pointer',
+      true: 'cursor-default text-functional-border-divider',
+      false: 'cursor-pointer text-functional-text',
     },
   },
 })

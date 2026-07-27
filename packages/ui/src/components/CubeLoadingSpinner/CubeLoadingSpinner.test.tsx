@@ -17,6 +17,8 @@ describe('CubeLoadingSpinner', () => {
 
   it('forwards the className to the wrapping container', () => {
     const { container } = render(
+      // Deliberately not a real Tailwind class - just verifying passthrough.
+      // eslint-disable-next-line tailwindcss/no-custom-classname
       <CubeLoadingSpinner variant="dot45" className="custom-class" />,
     )
 
