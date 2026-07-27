@@ -6,5 +6,6 @@
   "trailingComma": "all",
   "tabWidth": 2,
   "plugins": ["prettier-plugin-tailwindcss"],
-  "tailwindFunctions": ["classnames", "classNames", "cva", "twMerge", "twJoin"]
+  "tailwindFunctions": ["classnames", "classNames", "cva", "twMerge", "twJoin"],
+  "tailwindConfig": "./packages/ui/tailwind.config.ts"
 }

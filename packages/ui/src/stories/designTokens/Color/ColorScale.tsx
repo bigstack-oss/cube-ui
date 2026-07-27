@@ -1,4 +1,4 @@
-import { cubePreset } from '@cube/theme'
+import { cubePreset } from '../../../theme'
 import classNames from 'classnames'
 import { useMemo } from 'react'
 import { hexToRgb, resolveCssVar } from './utils'

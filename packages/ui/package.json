@@ -20,6 +20,11 @@
       "import": "./dist/icons.mjs",
       "require": "./dist/icons.js"
     },
+    "./theme": {
+      "types": "./dist/theme.d.ts",
+      "import": "./dist/theme.mjs",
+      "require": "./dist/theme.js"
+    },
     "./styles.css": "./dist/index.css"
   },
   "files": [
@@ -48,7 +53,6 @@
     "@fontsource/inter": "catalog:",
     "@fontsource/noto-sans-tc": "catalog:",
     "@fontsource/urbanist": "catalog:",
-    "@cube/theme": "workspace:^",
     "@storybook/react": "^10.3.5",
     "@storybook/react-vite": "^10.3.5",
     "@types/lodash": "catalog:",

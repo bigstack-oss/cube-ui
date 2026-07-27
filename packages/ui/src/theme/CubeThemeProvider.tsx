@@ -1,8 +1,8 @@
 import { useEffect, type PropsWithChildren } from 'react'
-import type { CubeThemeName } from '@cube/theme'
+import type { CubeThemeName } from './tokens/types'
 
 export type CubeThemeProviderProps = PropsWithChildren<{
-  /** Which brand palette's CSS variables (see `themes/*.css` in `@cube/theme`) to apply. */
+  /** Which brand palette's CSS variables (see `theme/tokens/themes/*.css`) to apply. */
   theme: CubeThemeName
 }>
 

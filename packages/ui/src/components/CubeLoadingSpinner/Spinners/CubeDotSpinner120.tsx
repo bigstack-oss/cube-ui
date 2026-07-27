@@ -13,9 +13,9 @@ export const CubeDotSpinner120 = (props: PropsWithClassName) => {
         className,
       )}
     >
-      <Dot120 className="absolute rotate-0 animate-cos-dot-spinner-120-vector-0" />
-      <Dot120 className="absolute rotate-[135deg] animate-cos-dot-spinner-120-vector-1" />
-      <Dot120 className="absolute rotate-[270deg] animate-cos-dot-spinner-120-vector-2" />
+      <Dot120 className="absolute rotate-0 animate-cube-dot-spinner-120-vector-0" />
+      <Dot120 className="absolute rotate-[135deg] animate-cube-dot-spinner-120-vector-1" />
+      <Dot120 className="absolute rotate-[270deg] animate-cube-dot-spinner-120-vector-2" />
     </div>
   )
 }

@@ -4,6 +4,7 @@ const config: Options = {
   entry: {
     index: 'src/index.ts',
     icons: 'src/icons/index.ts',
+    theme: 'src/theme/index.ts',
   },
   format: ['cjs', 'esm'],
   dts: {

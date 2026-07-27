@@ -5,16 +5,6 @@
 ```
 packages/
 │
-├── theme/                          ← publishes @cube/theme
-│   ├── src/
-│   │   ├── index.ts                ← 📦 public API: controls what gets packed and published
-│   │   ├── cubePreset.ts           ← Tailwind preset (colors, spacing, …)
-│   │   ├── cubeTheme.ts            ← theme token definitions
-│   │   ├── plugins/                ← custom Tailwind plugins
-│   │   └── utils/                  ← shared helpers (typography, animations, …)
-│   ├── tsup.config.ts              ← build entry / output format
-│   └── package.json
-│
 └── ui/                             ← publishes @cube/ui
     ├── src/
     │   ├── index.ts                ← 📦 public API: controls what gets packed and published
@@ -30,6 +20,16 @@ packages/
     │   │   ├── resources/          ← translation JSON files (en-US, zh-TW, …)
     │   │   ├── *.test.tsx          ← 🧪 i18n unit tests
     │   │   └── *.ts / *.tsx        ← provider, hooks, types
+    │   │
+    │   ├── theme/                  ← theming module (📦 also its own subpath: `@cube/ui/theme`)
+    │   │   ├── index.ts            ← theme public API (re-exported via src/index.ts)
+    │   │   ├── CubeThemeProvider.tsx      ← selects the active brand palette at runtime
+    │   │   └── tokens/
+    │   │       ├── cubePreset.ts   ← Tailwind preset (colors, spacing, …)
+    │   │       ├── cubeTheme.ts    ← theme token definitions
+    │   │       ├── plugins/        ← custom Tailwind plugins
+    │   │       ├── themes/         ← per-brand CSS custom-property files (cubeCOS, cubeEMP, …)
+    │   │       └── utils/          ← shared helpers (typography, animations, …)
     │   │
     │   ├── icons/
     │   │   ├── assets/             ← raw SVG source files (monochrome + colored)
@@ -61,6 +61,62 @@ packages/
     └── package.json
 ```
 
+## Development, Build & Publish Workflow
+
+### 1. Develop
+
+```bash
+pnpm ui:dev
+```
+
+Generates icons, then starts Storybook (`localhost:6006`) on Vite, serving `src/` directly with hot reload - including `src/theme/tokens/**`, so editing a color token, a Tailwind plugin, or a brand palette CSS file reflects immediately, same as editing a component.
+
+### 2. Build
+
+```bash
+pnpm build
+```
+
+Runs, in order:
+
+1. **`icons:generate`** - SVGs in `src/icons/assets` → generated components in `src/icons/src`
+2. **`build:js`** (`tsup`) - three independent entry points, each emitting its own CJS, ESM, and `.d.ts`:
+
+   | Entry   | Source               | Output                                                           |
+   | ------- | -------------------- | ---------------------------------------------------------------- |
+   | `index` | `src/index.ts`       | `dist/index.{js,mjs,d.ts}` - everything: components, i18n, theme |
+   | `icons` | `src/icons/index.ts` | `dist/icons.{js,mjs,d.ts}`                                       |
+   | `theme` | `src/theme/index.ts` | `dist/theme.{js,mjs,d.ts}`                                       |
+
+3. **`build:css`** (`postcss`) - `src/tailwind.css` → `dist/index.css`, inlining the theme CSS custom properties (`src/theme/tokens/themes/*.css`) and generating Tailwind utilities from the preset that lives alongside them (`src/theme/tokens/cubePreset.ts`)
+
+Each entry bundles independently (no shared chunk between them), so `theme`'s code is duplicated into `dist/index.js` too, since `index.ts` re-exports it for convenience. This is intentional, not an oversight: `./theme`'s main use case is a small, Node-only import inside a consumer's own `tailwind.config.js` - it's never bundled into a browser build, so the duplication never actually reaches a shipped app bundle.
+
+### 3. What ships (package exports)
+
+Only `dist/` is published (`"files": ["dist"]`). Consumers reach it through four entry points:
+
+```ts
+// Everything - components, hooks, i18n, theme
+import { CubeButton, CubeThemeProvider, cubePreset } from '@cube/ui'
+
+// Icon components only
+import { MonochromeHome01 } from '@cube/ui/icons'
+
+// Just the design tokens / Tailwind preset / theme provider - e.g. for a
+// consumer's own tailwind.config.js, without loading any component code
+import { cubePreset } from '@cube/ui/theme'
+
+// The compiled stylesheet (Tailwind utilities + theme CSS variables)
+import '@cube/ui/styles.css'
+```
+
+See `pnpm --filter @cube/ui build && pnpm --filter @cube/ui pack --dry-run` to inspect exactly what a published tarball would contain.
+
+### 4. Publish
+
+Handled by Changesets - see [Release Process](#release-process) below for the full flow. In short: `pnpm changeset` to record a change, then either the CI-automated "Version Packages" PR or `pnpm version && pnpm release` by hand.
+
 ## Testing
 
 `@cube/ui` is tested with [Vitest](https://vitest.dev) + [React Testing Library](https://testing-library.com/react), running in a jsdom environment. Tests are colocated with the component they cover (e.g. `CubeButton.test.tsx` next to `CubeButton.tsx`).
@@ -79,6 +135,8 @@ pnpm --filter @cube/ui test:coverage
 The root `pnpm test` runs this across every workspace package via `pnpm -r test`.
 
 Each suite favors user-facing assertions (roles, labels, fired events) over implementation details, and includes a [`jest-axe`](https://github.com/nickcolley/jest-axe) accessibility check per component (`expect(await axe(container)).toHaveNoViolations()`). Note: we type `jest-axe` ourselves in `src/types/jest-axe.d.ts` rather than installing `@types/jest-axe`, since that package hard-references `@types/jest` and clobbers Vitest's own global types.
+
+Coverage (`vitest.config.ts`) excludes `src/icons/**`, `src/stories/**`, `src/internals/**`, and `src/theme/tokens/**` - generated code, Storybook-only helpers, and declarative design-token/Tailwind-preset definitions aren't meaningful to unit-test the same way component logic is, and including them just dilutes the reported percentage. `src/theme/CubeThemeProvider.tsx` (the actual runtime behavior in the theme module) stays covered.
 
 Every push/PR runs `.github/workflows/ci.yml`, which installs and runs `pnpm test`.
 
@@ -217,7 +275,7 @@ When you're ready to go back to the published npm version:
 
 ## Release Process
 
-This monorepo uses [Changesets](https://github.com/changesets/changesets) to manage package versioning and changelogs. Both `@cube/theme` and `@cube/ui` are versioned together (they always share the same version number).
+This monorepo uses [Changesets](https://github.com/changesets/changesets) to manage package versioning and changelogs.
 
 ### For contributors - recording a change
 

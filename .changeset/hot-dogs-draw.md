@@ -1,5 +1,0 @@
----
-'@cube/theme': patch
----
-
-Init

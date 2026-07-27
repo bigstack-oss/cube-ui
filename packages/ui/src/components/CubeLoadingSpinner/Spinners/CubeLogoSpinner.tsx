@@ -15,9 +15,9 @@ export const CubeLogoSpinner = (props: PropsWithClassName) => {
         className,
       )}
     >
-      <CubeLeft className="absolute animate-cos-cube-spinner-vector-0" />
-      <CubeTop className="absolute animate-cos-cube-spinner-vector-1" />
-      <CubeRight className="absolute animate-cos-cube-spinner-vector-2" />
+      <CubeLeft className="absolute animate-cube-spinner-vector-0" />
+      <CubeTop className="absolute animate-cube-spinner-vector-1" />
+      <CubeRight className="absolute animate-cube-spinner-vector-2" />
     </div>
   )
 }

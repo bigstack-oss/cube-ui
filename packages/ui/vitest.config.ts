@@ -24,6 +24,10 @@ export default defineConfig({
         'src/icons/**',
         'src/stories/**',
         'src/internals/**',
+        // Design tokens / Tailwind preset / plugin definitions - declarative
+        // config, not component logic. `CubeThemeProvider` itself (the
+        // actual testable behavior in `src/theme`) stays covered.
+        'src/theme/tokens/**',
       ],
     },
   },
