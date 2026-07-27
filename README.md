@@ -48,7 +48,7 @@ packages/
     │   └── tailwind.css            ← CSS entry point (Tailwind directives + base styles)
     │
     ├── scripts/
-    │   ├── generate-icons.mjs      ← ⚙️ converts SVGs in icons/assets → icons/src (run before build)
+    │   ├── generate-icons.ts       ← ⚙️ converts SVGs in icons/assets → icons/src (run before build)
     │   └── syncI18n.ts             ← pulls translation strings from Google Sheets
     │
     ├── i18nSheetConfig.json.local          ← 🔒 your local i18n sheet config (git-ignored)
