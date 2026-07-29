@@ -5,7 +5,7 @@
 ```
 packages/
 │
-└── ui/                             ← publishes @cube/ui
+└── ui/                             ← publishes @bigstack/cube-ui
     ├── src/
     │   ├── index.ts                ← 📦 public API: controls what gets packed and published
     │   │
@@ -21,7 +21,7 @@ packages/
     │   │   ├── *.test.tsx          ← 🧪 i18n unit tests
     │   │   └── *.ts / *.tsx        ← provider, hooks, types
     │   │
-    │   ├── theme/                  ← theming module (📦 also its own subpath: `@cube/ui/theme`)
+    │   ├── theme/                  ← theming module (📦 also its own subpath: `@bigstack/cube-ui/theme`)
     │   │   ├── index.ts            ← theme public API (re-exported via src/index.ts)
     │   │   ├── CubeThemeProvider.tsx      ← selects the active brand palette at runtime
     │   │   └── tokens/
@@ -61,6 +61,33 @@ packages/
     └── package.json
 ```
 
+## Import Aliases
+
+Within `packages/ui/src`, prefer these aliases (defined in `packages/ui/tsconfig.json`) over `../../../`-style relative imports once a path crosses two or more directory levels:
+
+| Alias             | Points to          |
+| ----------------- | ------------------ |
+| `@components/*`   | `src/components/*` |
+| `@theme/*`        | `src/theme/*`      |
+| `@icons/*`        | `src/icons/*`      |
+| `@i18n/*`         | `src/i18n/*`       |
+| `@internals/*`    | `src/internals/*`  |
+| `@shared-types/*` | `src/types/*`      |
+
+Short sibling imports (`./foo`, `../foo`) are left as-is - the aliases exist to kill the `../../../`-counting problem for imports that cross into a different top-level area, not to replace every relative import.
+
+**No bare `@theme`/`@icons`/`@i18n` aliases** (only the `/*` wildcard form) - `src/theme/index.ts`, `src/icons/index.ts`, and `src/i18n/index.ts` exist to define what each module publishes (as `@bigstack/cube-ui`, `@bigstack/cube-ui/theme`, and the top-level `@bigstack/cube-ui` re-exports respectively), not as a general internal import target. Internal code imports the concrete file directly, e.g. `@theme/tokens/cubePreset` or `@i18n/useCubeUiTranslation`, rather than routing through the barrel.
+
+**Why `@shared-types` and not `@types`:** TypeScript special-cases any import specifier starting with `@types/` as a reference to a DefinitelyTyped package (like `@types/node`), regardless of what a `paths` alias maps it to - using `@types/*` produces a `TS6137` error no matter the target. Any future alias should avoid that prefix for the same reason.
+
+**If you add a new alias**, it must be added in three places to actually work everywhere, not just one - `tsc`/the IDE reads `paths` alone, but neither Vite nor ESLint auto-discover it:
+
+1. `packages/ui/tsconfig.json` (`compilerOptions.paths`)
+2. `resolve.tsconfigPaths: true` in both `packages/ui/vitest.config.ts` and `packages/ui/.storybook/main.ts`'s `viteFinal` (Vite doesn't read `tsconfig.json` paths on its own)
+3. `eslint.config.js`'s `'import/resolver': { typescript: { project: 'packages/ui/tsconfig.json' } }` (needs the explicit `project` path - bare `typescript: true` doesn't resolve them)
+
+`tsup` (the production build) needs no extra config - esbuild resolves `tsconfig.json` `paths` natively at bundle time.
+
 ## Development, Build & Publish Workflow
 
 ### 1. Develop
@@ -98,20 +125,20 @@ Only `dist/` is published (`"files": ["dist"]`). Consumers reach it through four
 
 ```ts
 // Everything - components, hooks, i18n, theme
-import { CubeButton, CubeThemeProvider, cubePreset } from '@cube/ui'
+import { CubeButton, CubeThemeProvider, cubePreset } from '@bigstack/cube-ui'
 
 // Icon components only
-import { MonochromeHome01 } from '@cube/ui/icons'
+import { MonochromeHome01 } from '@bigstack/cube-ui/icons'
 
 // Just the design tokens / Tailwind preset / theme provider - e.g. for a
 // consumer's own tailwind.config.js, without loading any component code
-import { cubePreset } from '@cube/ui/theme'
+import { cubePreset } from '@bigstack/cube-ui/theme'
 
 // The compiled stylesheet (Tailwind utilities + theme CSS variables)
-import '@cube/ui/styles.css'
+import '@bigstack/cube-ui/styles.css'
 ```
 
-See `pnpm --filter @cube/ui build && pnpm --filter @cube/ui pack --dry-run` to inspect exactly what a published tarball would contain.
+See `pnpm --filter @bigstack/cube-ui build && pnpm --filter @bigstack/cube-ui pack --dry-run` to inspect exactly what a published tarball would contain.
 
 ### 4. Publish
 
@@ -119,17 +146,17 @@ Handled by Changesets - see [Release Process](#release-process) below for the fu
 
 ## Testing
 
-`@cube/ui` is tested with [Vitest](https://vitest.dev) + [React Testing Library](https://testing-library.com/react), running in a jsdom environment. Tests are colocated with the component they cover (e.g. `CubeButton.test.tsx` next to `CubeButton.tsx`).
+`@bigstack/cube-ui` is tested with [Vitest](https://vitest.dev) + [React Testing Library](https://testing-library.com/react), running in a jsdom environment. Tests are colocated with the component they cover (e.g. `CubeButton.test.tsx` next to `CubeButton.tsx`).
 
 ```bash
 # Run the full suite once (also what CI runs)
-pnpm --filter @cube/ui test
+pnpm --filter @bigstack/cube-ui test
 
 # Watch mode while developing
-pnpm --filter @cube/ui test:watch
+pnpm --filter @bigstack/cube-ui test:watch
 
 # Run with coverage (report is also written to packages/ui/coverage/)
-pnpm --filter @cube/ui test:coverage
+pnpm --filter @bigstack/cube-ui test:coverage
 ```
 
 The root `pnpm test` runs this across every workspace package via `pnpm -r test`.
@@ -142,43 +169,43 @@ Every push/PR runs `.github/workflows/ci.yml`, which installs and runs `pnpm tes
 
 ## Internationalization
 
-`@cube/ui` ships its own dictionary (`en-US` + `zh-TW`) and keeps its own [i18next](https://www.i18next.com) instance, separate from whatever i18n setup the consuming app uses - the library works standalone regardless of the consumer's own i18n choices (or lack of one). This section is the implementation guide for consumers of the published package; see [`CubeUiLocaleProvider`](packages/ui/src/i18n/CubeUiLocaleProvider.tsx), [`useCubeUiTranslation`](packages/ui/src/i18n/useCubeUiTranslation.ts), and [`addCubeUiTranslations`](packages/ui/src/i18n/addCubeUiTranslations.ts) for the underlying implementation, or the `Overview/i18n` story in Storybook (`pnpm ui:dev`) for a live, interactive example of everything below.
+`@bigstack/cube-ui` ships its own dictionary (`en-US` + `zh-TW`) and keeps its own [i18next](https://www.i18next.com) instance, separate from whatever i18n setup the consuming app uses - the library works standalone regardless of the consumer's own i18n choices (or lack of one). This section is the implementation guide for consumers of the published package; see [`CubeUiLocaleProvider`](packages/ui/src/i18n/CubeUiLocaleProvider.tsx), [`useCubeUiTranslation`](packages/ui/src/i18n/useCubeUiTranslation.ts), and [`addCubeUiTranslations`](packages/ui/src/i18n/addCubeUiTranslations.ts) for the underlying implementation, or the `Overview/i18n` story in Storybook (`pnpm ui:dev`) for a live, interactive example of everything below.
 
 ### 1. Wrap your app in `CubeUiLocaleProvider` (required)
 
-This is the only required step. Wrap the part of your app that renders `@cube/ui` components, passing whichever locale your app is currently using - `@cube/ui` components read this to render their built-in strings (e.g. loading/empty states) in the matching language:
+This is the only required step. Wrap the part of your app that renders `@bigstack/cube-ui` components, passing whichever locale your app is currently using - `@bigstack/cube-ui` components read this to render their built-in strings (e.g. loading/empty states) in the matching language:
 
 ```tsx
-import { CubeUiLocaleProvider } from '@cube/ui'
+import { CubeUiLocaleProvider } from '@bigstack/cube-ui'
 ;<CubeUiLocaleProvider locale={activeLocale /* 'en-US' | 'zh-TW' */}>
   <App />
 </CubeUiLocaleProvider>
 ```
 
-- If you never render this provider, `@cube/ui` still works - it defaults to `en-US`.
-- `locale` can change at runtime (e.g. tied to your app's own language-switcher state); `@cube/ui` components re-render with the new strings immediately, no remount needed.
+- If you never render this provider, `@bigstack/cube-ui` still works - it defaults to `en-US`.
+- `locale` can change at runtime (e.g. tied to your app's own language-switcher state); `@bigstack/cube-ui` components re-render with the new strings immediately, no remount needed.
 - Only components that actually own translated strings react to this - most components have no user-facing text of their own and are unaffected either way.
 
 ### 2. Adding a locale or overriding a default string (optional)
 
-Use `addCubeUiTranslations` to register a locale `@cube/ui` doesn't ship by default, or to override specific default strings for one it does ship. Call this once, e.g. at your app's entry point, before rendering. `resources` is checked against `@cube/ui`'s real key set - **passing an unknown or misspelled key is a TypeScript compile error**, not a silent no-op:
+Use `addCubeUiTranslations` to register a locale `@bigstack/cube-ui` doesn't ship by default, or to override specific default strings for one it does ship. Call this once, e.g. at your app's entry point, before rendering. `resources` is checked against `@bigstack/cube-ui`'s real key set - **passing an unknown or misspelled key is a TypeScript compile error**, not a silent no-op:
 
 ```tsx
-import { addCubeUiTranslations } from '@cube/ui'
+import { addCubeUiTranslations } from '@bigstack/cube-ui'
 
-// Add a locale @cube/ui doesn't ship. Keys you omit fall back to en-US.
+// Add a locale @bigstack/cube-ui doesn't ship. Keys you omit fall back to en-US.
 addCubeUiTranslations('fr-FR', { 'component.common.loading': 'Chargement' })
 
 // Override one of the shipped default strings.
 addCubeUiTranslations('en-US', { 'component.common.loading': 'Please wait' })
 ```
 
-### 3. Reading `@cube/ui`'s own strings directly (rare)
+### 3. Reading `@bigstack/cube-ui`'s own strings directly (rare)
 
-`useCubeUiTranslation` is the hook `@cube/ui`'s components use internally to look up their own strings - most consumers never call it directly. Reach for it only if you're building your own component and want to reuse one of `@cube/ui`'s existing strings (e.g. its shared "Loading" label) for visual consistency, instead of maintaining a duplicate string in your own app's i18n setup:
+`useCubeUiTranslation` is the hook `@bigstack/cube-ui`'s components use internally to look up their own strings - most consumers never call it directly. Reach for it only if you're building your own component and want to reuse one of `@bigstack/cube-ui`'s existing strings (e.g. its shared "Loading" label) for visual consistency, instead of maintaining a duplicate string in your own app's i18n setup:
 
 ```tsx
-import { useCubeUiTranslation } from '@cube/ui'
+import { useCubeUiTranslation } from '@bigstack/cube-ui'
 
 const { t } = useCubeUiTranslation()
 t('component.common.loading') // -> 'Loading' / '載入中', following the active CubeUiLocaleProvider locale
@@ -208,7 +235,7 @@ The target worksheet should have `key`, `en-US`, and `zh-TW` columns - one row p
 
 ## Local Development (Linking a Consumer App)
 
-To try out unpublished `@cube/ui` changes inside a real consumer app - without publishing a new npm version every time and without repeatedly reinstalling - link `packages/ui` directly into the consumer via pnpm's `link:` protocol.
+To try out unpublished `@bigstack/cube-ui` changes inside a real consumer app - without publishing a new npm version every time and without repeatedly reinstalling - link `packages/ui` directly into the consumer via pnpm's `link:` protocol.
 
 ### 1. Start the watcher (cube-ui side)
 
@@ -219,7 +246,7 @@ pnpm ui:watch
 
 This generates icons and compiles the CSS once upfront, then starts `tsup --watch` to rebuild `dist/` on every TS/TSX change. Leave this running in a dedicated terminal — the consumer reads from `dist/`, not `src/`, so no changes propagate without it.
 
-> **CSS changes are not watched.** If you edit `src/tailwind.css`, run `pnpm --filter @cube/ui build:css` manually to recompile it, then restart the consumer's dev server.
+> **CSS changes are not watched.** If you edit `src/tailwind.css`, run `pnpm --filter @bigstack/cube-ui build:css` manually to recompile it, then restart the consumer's dev server.
 
 ### 2. Link it into the consumer
 
@@ -227,7 +254,7 @@ In the consumer app's `package.json`, point the dependency at this repo's `packa
 
 ```json
 "dependencies": {
-  "@cube/ui": "link:../relative/path/to/cube-ui/packages/ui"
+  "@bigstack/cube-ui": "link:../relative/path/to/cube-ui/packages/ui"
 }
 ```
 
@@ -242,7 +269,7 @@ resolve: {
   dedupe: ['react', 'react-dom'],
 },
 optimizeDeps: {
-  exclude: ['@cube/ui'],
+  exclude: ['@bigstack/cube-ui'],
 },
 ```
 
@@ -252,11 +279,11 @@ When you're ready to go back to the published npm version:
 
 1. Remove the `link:` entry from the consumer's `package.json` and restore the real version string:
    ```json
-   "@cube/ui": "0.0.6"
+   "@bigstack/cube-ui": "0.0.6"
    ```
 2. Delete the stale symlink and reinstall:
    ```bash
-   rm -rf node_modules/@cube/ui
+   rm -rf node_modules/@bigstack/cube-ui
    pnpm install
    ```
 3. Stop `pnpm ui:watch` in the cube-ui terminal.
@@ -265,13 +292,13 @@ When you're ready to go back to the published npm version:
 
 ### Risks and how to avoid them
 
-| Risk                                                                      | Why it happens                                                                                                                                                                                                                                         | Fix                                                                                                                                                                                                                                                                                        |
-| ------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| **Duplicate React instances** (`Invalid hook call` at runtime)            | `link:` is a symlink to `packages/ui`'s real path on disk. Node resolves its peer deps (`react`/`react-dom`) from _that_ real path upward, landing on `cube-ui`'s own installed React (already present for Storybook/tests) instead of the consumer's. | Add `resolve.dedupe: ['react', 'react-dom']` to the consumer's bundler config (step 3).                                                                                                                                                                                                    |
-| **Stale component in the consumer despite rebuilding**                    | Vite pre-bundles/caches dependencies under `node_modules` and doesn't watch inside them by default, so a freshly rebuilt `dist/` may not be picked up.                                                                                                 | `optimizeDeps.exclude: ['@cube/ui']` (step 3); if it's still stale, delete the consumer's `node_modules/.vite` cache and restart its dev server.                                                                                                                                           |
-| **Silently testing against - or shipping - the wrong `@cube/ui` version** | Leaving the `link:` entry in place after you're done, or switching back to a registry version by only editing the version string in `package.json`, isn't guaranteed to fully clear pnpm's previously-resolved/symlinked state for that package.       | To fully revert: remove the `@cube/ui` line from the consumer's `package.json` entirely (don't just edit the version string in place), delete `node_modules/@cube/ui` in the consumer if it still exists, then re-add the real version (`pnpm add @cube/ui@<version>`) and `pnpm install`. |
-| **Accidentally committing the local link**                                | The `link:` entry - and the `pnpm-lock.yaml` diff it produces - points at a path that only exists on your machine. Committed as-is, it breaks CI and every other developer's install.                                                                  | Before committing anything in the consumer repo, check `git status`/`git diff` on its `package.json` and `pnpm-lock.yaml` and revert the `@cube/ui` entry if it's still pointing at `link:...`.                                                                                            |
-| **Testing against a broken/half-built `dist/`**                           | If the watcher isn't running (or crashed), the consumer keeps reading whatever was last successfully built, silently going stale.                                                                                                                      | Keep `pnpm ui:watch` running for the whole session; if in doubt, run `pnpm build` once to get a known-good baseline.                                                                                                                                                                       |
+| Risk                                                                               | Why it happens                                                                                                                                                                                                                                         | Fix                                                                                                                                                                                                                                                                                                                   |
+| ---------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Duplicate React instances** (`Invalid hook call` at runtime)                     | `link:` is a symlink to `packages/ui`'s real path on disk. Node resolves its peer deps (`react`/`react-dom`) from _that_ real path upward, landing on `cube-ui`'s own installed React (already present for Storybook/tests) instead of the consumer's. | Add `resolve.dedupe: ['react', 'react-dom']` to the consumer's bundler config (step 3).                                                                                                                                                                                                                               |
+| **Stale component in the consumer despite rebuilding**                             | Vite pre-bundles/caches dependencies under `node_modules` and doesn't watch inside them by default, so a freshly rebuilt `dist/` may not be picked up.                                                                                                 | `optimizeDeps.exclude: ['@bigstack/cube-ui']` (step 3); if it's still stale, delete the consumer's `node_modules/.vite` cache and restart its dev server.                                                                                                                                                             |
+| **Silently testing against - or shipping - the wrong `@bigstack/cube-ui` version** | Leaving the `link:` entry in place after you're done, or switching back to a registry version by only editing the version string in `package.json`, isn't guaranteed to fully clear pnpm's previously-resolved/symlinked state for that package.       | To fully revert: remove the `@bigstack/cube-ui` line from the consumer's `package.json` entirely (don't just edit the version string in place), delete `node_modules/@bigstack/cube-ui` in the consumer if it still exists, then re-add the real version (`pnpm add @bigstack/cube-ui@<version>`) and `pnpm install`. |
+| **Accidentally committing the local link**                                         | The `link:` entry - and the `pnpm-lock.yaml` diff it produces - points at a path that only exists on your machine. Committed as-is, it breaks CI and every other developer's install.                                                                  | Before committing anything in the consumer repo, check `git status`/`git diff` on its `package.json` and `pnpm-lock.yaml` and revert the `@bigstack/cube-ui` entry if it's still pointing at `link:...`.                                                                                                              |
+| **Testing against a broken/half-built `dist/`**                                    | If the watcher isn't running (or crashed), the consumer keeps reading whatever was last successfully built, silently going stale.                                                                                                                      | Keep `pnpm ui:watch` running for the whole session; if in doubt, run `pnpm build` once to get a known-good baseline.                                                                                                                                                                                                  |
 
 ## Release Process
 
@@ -300,7 +327,7 @@ Every push to `main` runs the [`changesets/action`](https://github.com/changeset
 1. If there are pending changesets on `main`, opens/updates a **"Version Packages"** PR that runs `changeset version` for you (bumping `package.json`s and `CHANGELOG.md`s).
 2. When that PR is merged, the workflow runs again, finds no pending changesets, and instead runs `changeset publish` to publish to npm and push the version tags.
 
-This requires an `NPM_TOKEN` repository secret (Settings → Secrets and variables → Actions) holding an npm **Automation** token with publish access to the `@cube` packages - ask whoever administers the org's npm account for one. Until that secret is added, the "Version Packages" PR step still works; only the final publish step needs it.
+This requires an `NPM_TOKEN` repository secret (Settings → Secrets and variables → Actions) holding an npm **Automation** token with publish access to the `@bigstack/cube-ui` package - ask whoever administers the org's npm account for one. Until that secret is added, the "Version Packages" PR step still works; only the final publish step needs it.
 
 ### Manual (fallback) - publishing a release by hand
 

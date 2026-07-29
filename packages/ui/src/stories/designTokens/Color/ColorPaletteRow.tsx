@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react'
-import { SubHeading } from '../../../internals/components/SubHeading'
-import { CaptionText } from '../../../internals/components/CaptionText'
+import { SubHeading } from '@internals/components/SubHeading'
+import { CaptionText } from '@internals/components/CaptionText'
 
 export type ColorPaletteRowProps = {
   children: ReactNode

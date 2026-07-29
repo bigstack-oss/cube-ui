@@ -1,5 +1,5 @@
 import { twMerge } from 'tailwind-merge'
-import type { PropsWithClassName } from '../../utils/react-types'
+import type { PropsWithClassName } from '@shared-types/react-types'
 
 export type CubeSkeletonProps = PropsWithClassName & {
   style?: React.CSSProperties

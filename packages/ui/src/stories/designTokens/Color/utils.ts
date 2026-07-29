@@ -1,4 +1,4 @@
-import { cubePreset } from '../../../theme'
+import { cubePreset } from '@theme/tokens/cubePreset'
 
 const { colors } = cubePreset.theme.extend
 

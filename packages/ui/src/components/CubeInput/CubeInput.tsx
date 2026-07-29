@@ -5,7 +5,7 @@ import {
   type InputHTMLAttributes,
 } from 'react'
 import { twMerge } from 'tailwind-merge'
-import { WarningFilled } from '../../icons/src/monochrome'
+import { MonochromeWarningFilled } from '@icons'
 import type { SvgElement } from '../CubeIcon'
 import { CubeInputSkeleton } from './CubeInputSkeleton'
 import {
@@ -71,7 +71,9 @@ export const CubeInput = forwardRef<HTMLInputElement, CubeInputProps>(
       const errorIcon = (() => {
         if (!isError) return null
 
-        return <WarningFilled className="icon-md text-status-negative" />
+        return (
+          <MonochromeWarningFilled className="icon-md text-status-negative" />
+        )
       })()
 
       const customIcon = (() => {

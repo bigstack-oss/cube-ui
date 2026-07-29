@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { axe } from 'jest-axe'
-import { Settings } from '../../icons/src/monochrome'
+import { MonochromeSettings } from '@icons'
 import { CubeButton } from './CubeButton'
 import {
   cubeButtonTypes,
@@ -80,7 +80,7 @@ describe('CubeButton', () => {
 
   it('renders the icon for icon-only usage', () => {
     const { container } = render(
-      <CubeButton usage="icon-only" Icon={Settings} aria-label="Settings" />,
+      <CubeButton usage="icon-only" Icon={MonochromeSettings} aria-label="Settings" />,
     )
 
     expect(container.querySelector('svg')).toBeInTheDocument()
@@ -88,7 +88,7 @@ describe('CubeButton', () => {
 
   it('renders the icon alongside children for icon-left usage', () => {
     render(
-      <CubeButton usage="icon-left" Icon={Settings}>
+      <CubeButton usage="icon-left" Icon={MonochromeSettings}>
         Settings
       </CubeButton>,
     )

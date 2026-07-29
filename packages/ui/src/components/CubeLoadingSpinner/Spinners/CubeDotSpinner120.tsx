@@ -1,4 +1,4 @@
-import type { PropsWithClassName } from '../../../utils/react-types'
+import type { PropsWithClassName } from '@shared-types/react-types'
 import { Dot120 } from '../Svgs/Dot120'
 import { twMerge } from 'tailwind-merge'
 

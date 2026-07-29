@@ -29,12 +29,7 @@
     /* Interop & performance */
     "esModuleInterop": true,
     "isolatedModules": true,
-    "skipLibCheck": true,
-
-    "paths": {
-      "@ui/*": ["./packages/ui/src/index.ts"],
-      "@icons/*": ["./packages/ui/src/icons/index.ts"]
-    }
+    "skipLibCheck": true
   },
   "exclude": ["node_modules", "dist", "storybook-static"]
 }

@@ -1,5 +1,5 @@
-import type { CubeIconSize, SvgComponent } from '../../../components/CubeIcon'
-import { CubeIconFrame } from '../../../components/CubeIcon/CubeIconFrame'
+import type { CubeIconSize, SvgComponent } from '@components/CubeIcon'
+import { CubeIconFrame } from '@components/CubeIcon/CubeIconFrame'
 
 type IconGalleryItemProps = {
   name: string

@@ -108,7 +108,13 @@ export default tseslint.config(
     },
     settings: {
       'import/resolver': {
-        typescript: true,
+        typescript: {
+          alwaysTryTypes: true,
+          // Both paths are needed: repo-root ESLint uses the first, and the
+          // IDE/ESLint cwd under packages/ui uses the second.
+          project: ['packages/ui/tsconfig.json', 'tsconfig.json'],
+          noWarnOnMultipleProjects: true,
+        },
         node: true,
       },
     },

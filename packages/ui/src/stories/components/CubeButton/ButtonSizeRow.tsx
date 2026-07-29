@@ -1,6 +1,6 @@
 import type { PropsWithChildren } from 'react'
-import type { CubeButtonSize } from '../../../components/CubeButton/cubeButtonTypes'
-import { SubHeading } from '../../../internals/components/SubHeading'
+import type { CubeButtonSize } from '@components/CubeButton/cubeButtonTypes'
+import { SubHeading } from '@internals/components/SubHeading'
 import { ButtonTypeSizeTable } from './ButtonTypeSizeTable'
 
 const SizeText = (props: PropsWithChildren) => {

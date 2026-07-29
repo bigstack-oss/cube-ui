@@ -2,12 +2,24 @@
   "extends": "../../tsconfig.json",
   "compilerOptions": {
     "rootDir": ".",
-    "tsBuildInfoFile": "./node_modules/.cache/tsconfig.tsbuildinfo"
+    "tsBuildInfoFile": "./node_modules/.cache/tsconfig.tsbuildinfo",
+    "paths": {
+      "@components/*": ["./src/components/*"],
+      "@theme/*": ["./src/theme/*"],
+      // Point at the non-generated barrel. `icons/src/**` is eslint-ignored
+      // (codegen output); resolving `@icons` into that folder makes
+      // import/no-unresolved report "Unable to resolve path to module".
+      "@icons": ["./src/icons/index.ts"],
+      "@i18n/*": ["./src/i18n/*"],
+      "@internals/*": ["./src/internals/*"],
+      "@shared-types/*": ["./src/types/*"],
+      "@utils/*": ["./src/utils/*"]
+    }
   },
   "include": [
     "src",
     "scripts",
-    ".storybook",
+    ".storybook/**/*",
     "vitest.config.ts",
     "vitest.setup.ts"
   ],

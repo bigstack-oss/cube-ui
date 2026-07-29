@@ -2,13 +2,13 @@ import { useState } from 'react'
 import {
   type StoryLayoutProps,
   StoryLayout,
-} from '../../../internals/components/StoryLayout/StoryLayout'
+} from '@internals/components/StoryLayout/StoryLayout'
 import type {
   CubeIconSize,
   SvgComponent,
-} from '../../../components/CubeIcon/cubeIconTypes'
+} from '@components/CubeIcon/cubeIconTypes'
 import { IconGalleryItem } from './IconGalleryItem'
-import { CubeInput } from '../../../components/CubeInput/CubeInput'
+import { CubeInput } from '@components/CubeInput/CubeInput'
 
 export type IconGalleryItemProps = Omit<StoryLayoutProps, 'children'> & {
   size?: CubeIconSize

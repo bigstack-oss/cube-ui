@@ -27,7 +27,7 @@ const LocaleSwitcher = () => {
 }
 
 describe('CubeUiLocaleProvider', () => {
-  it('syncs the provided locale into @cube/ui translated output', async () => {
+  it('syncs the provided locale into @bigstack/cube-ui translated output', async () => {
     const user = userEvent.setup()
     render(<LocaleSwitcher />)
 

@@ -1,5 +1,5 @@
 import type { ComponentType } from 'react'
-import type { PropsWithClassName } from '../../utils/react-types'
+import type { PropsWithClassName } from '@shared-types/react-types'
 import { CubeLogoSpinner } from './Spinners/CubeLogoSpinner'
 import { CubeDotSpinner120 } from './Spinners/CubeDotSpinner120'
 import { CubeDotSpinner45 } from './Spinners/CubeDotSpinner45'

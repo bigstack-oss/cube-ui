@@ -1,5 +1,5 @@
 import type { PropsWithChildren } from 'react'
-import { SubHeading } from '../../../internals/components/SubHeading'
+import { SubHeading } from '@internals/components/SubHeading'
 import { ButtonSizeRow } from './ButtonSizeRow'
 
 const TypeText = (props: PropsWithChildren) => {

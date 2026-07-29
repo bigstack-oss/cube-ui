@@ -66,12 +66,6 @@ catalogs:
     postcss:
       specifier: ^8.5.10
       version: 8.5.15
-    react:
-      specifier: ^19.2.5
-      version: 19.2.7
-    react-dom:
-      specifier: ^19.2.5
-      version: 19.2.7
     react-i18next:
       specifier: ^17.0.4
       version: 17.0.8

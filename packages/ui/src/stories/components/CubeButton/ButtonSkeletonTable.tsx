@@ -1,6 +1,6 @@
 import type { PropsWithChildren } from 'react'
-import { CubeButtonSkeleton } from '../../../components/CubeButton/CubeButtonSkeleton'
-import { SubHeading } from '../../../internals/components/SubHeading'
+import { CubeButtonSkeleton } from '@components/CubeButton/CubeButtonSkeleton'
+import { SubHeading } from '@internals/components/SubHeading'
 
 const DescriptionText = (props: PropsWithChildren) => {
   const { children } = props

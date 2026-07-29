@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import { CubeIconFrame } from '../../../components/CubeIcon/CubeIconFrame'
+import { CubeIconFrame } from '@components/CubeIcon/CubeIconFrame'
 import { IconGallery } from './IconGallery'
 import { IconGalleryItem } from './IconGalleryItem'
 import { monochromeIcons } from './utils'

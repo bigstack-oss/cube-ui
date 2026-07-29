@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { type CubeInputProps, CubeInput } from '../CubeInput/CubeInput'
-import { View, ViewOff } from '../../icons/src/monochrome'
+import { MonochromeView as View, MonochromeViewOff as ViewOff } from '@icons'
 
 export type CubePasswordInputProps = Omit<
   CubeInputProps,

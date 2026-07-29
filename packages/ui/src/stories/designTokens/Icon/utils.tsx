@@ -1,5 +1,5 @@
-import type { SvgComponent } from '../../../components/CubeIcon'
-import * as Icons from '../../../icons/src'
+import type { SvgComponent } from '@components/CubeIcon'
+import * as Icons from '@icons'
 
 export type IconEntry = { filename: string; Component: SvgComponent }
 

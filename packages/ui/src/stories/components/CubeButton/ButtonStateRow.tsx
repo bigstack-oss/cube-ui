@@ -1,9 +1,6 @@
 import type { PropsWithChildren } from 'react'
-import {
-  type CubeButtonProps,
-  CubeButton,
-} from '../../../components/CubeButton'
-import { MonochromeHome01, MonochromeChevronDown } from '@icons/index.ts'
+import { type CubeButtonProps, CubeButton } from '@components/CubeButton'
+import { MonochromeHome01, MonochromeChevronDown } from '@icons'
 
 const StateText = (props: PropsWithChildren) => {
   const { children } = props
