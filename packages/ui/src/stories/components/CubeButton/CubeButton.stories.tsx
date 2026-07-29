@@ -1,3 +1,4 @@
+import type { ButtonHTMLAttributes, ComponentType } from 'react'
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import {
   Controls,
@@ -12,10 +13,15 @@ import {
   cubeButtonSizes,
   cubeButtonTypes,
   cubeButtonUsages,
+  type CubeButtonSize,
+  type CubeButtonType,
+  type CubeButtonUsage,
 } from '../../../components/CubeButton/cubeButtonTypes'
+import type { SvgComponent } from '../../../components/CubeIcon/cubeIconTypes'
 import { ButtonVariantTable } from './ButtonVariantTable'
 import { ButtonSkeletonTable } from './ButtonSkeletonTable'
 import { PlaygroundLayout } from '../../../internals/components/StoryLayout/PlaygroundLayout'
+import { MonochromeHome01 } from '@icons/index.ts'
 
 const CubeButtonDocs = () => {
   return (
@@ -28,9 +34,22 @@ const CubeButtonDocs = () => {
   )
 }
 
-const meta: Meta<typeof CubeButton> = {
+// Flattened args for Storybook: Icon stays available for every usage so the
+// playground can switch between text-only and icon usages.
+type CubeButtonStoryArgs = {
+  children?: string
+  htmlType?: ButtonHTMLAttributes<HTMLButtonElement>['type']
+  type?: CubeButtonType
+  size?: CubeButtonSize
+  usage?: CubeButtonUsage
+  disabled?: boolean
+  loading?: boolean
+  Icon?: SvgComponent
+}
+
+const meta: Meta<CubeButtonStoryArgs> = {
   title: 'Atoms/Button',
-  component: CubeButton,
+  component: CubeButton as ComponentType<CubeButtonStoryArgs>,
   tags: ['autodocs'],
   parameters: {
     controls: { expanded: true },
@@ -97,7 +116,7 @@ const meta: Meta<typeof CubeButton> = {
 
 export default meta
 
-type Story = StoryObj<typeof CubeButton>
+type Story = StoryObj<CubeButtonStoryArgs>
 
 export const Playground: Story = {
   tags: ['!dev'],
@@ -115,6 +134,7 @@ export const Playground: Story = {
     usage: 'text-only',
     disabled: false,
     loading: false,
+    Icon: MonochromeHome01,
   },
 }
 
