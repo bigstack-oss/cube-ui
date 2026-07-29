@@ -19,6 +19,7 @@
     "prettier": "prettier --check \"{**/*,*}.{js,ts,tsx,json,scss,md}\"",
     "prettier:fix": "prettier --write \"{**/*,*}.{js,ts,tsx,json,scss,md}\"",
     "build": "pnpm --filter \"@bigstack/*\" build",
+    "icons:generate": "pnpm --filter @bigstack/cube-ui icons:generate",
     "i18n:sync": "pnpm --filter @bigstack/cube-ui i18n:sync",
     "ui:dev": "pnpm --filter @bigstack/cube-ui storybook",
     "ui:watch": "pnpm --filter @bigstack/cube-ui build:watch",
