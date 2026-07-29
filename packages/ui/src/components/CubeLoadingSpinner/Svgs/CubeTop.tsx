@@ -1,4 +1,4 @@
-import type { PropsWithClassName } from '../../../utils/react-types'
+import type { PropsWithClassName } from '@shared-types/react-types'
 
 export const CubeTop = (props: PropsWithClassName) => {
   const { className } = props

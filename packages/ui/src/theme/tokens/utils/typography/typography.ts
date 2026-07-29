@@ -1,4 +1,4 @@
-import { cubeTheme } from '../../cubeTheme'
+import { cubeTheme } from '@theme/tokens/cubeTheme'
 import {
   primaryBody1,
   primaryBody2,

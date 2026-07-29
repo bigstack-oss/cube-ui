@@ -11,6 +11,9 @@ const config: StorybookConfig = {
   },
   async viteFinal(config) {
     return mergeConfig(config, {
+      resolve: {
+        tsconfigPaths: true,
+      },
       plugins: [svgr()],
     })
   },

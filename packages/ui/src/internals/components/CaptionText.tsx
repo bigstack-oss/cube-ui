@@ -1,6 +1,6 @@
 import type { PropsWithChildren } from 'react'
 import { twMerge } from 'tailwind-merge'
-import type { PropsWithClassName } from '../../types/react-types'
+import type { PropsWithClassName } from '@shared-types/react-types'
 
 type CaptionTextProps = PropsWithChildren<PropsWithClassName>
 

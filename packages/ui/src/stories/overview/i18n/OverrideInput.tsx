@@ -1,7 +1,7 @@
 import { useState } from 'react'
-import { CubeButton } from '../../../components/CubeButton'
-import { CubeInput } from '../../../components/CubeInput'
-import type { CubeUiLocale } from '../../../i18n'
+import { CubeButton } from '@components/CubeButton'
+import { CubeInput } from '@components/CubeInput'
+import type { CubeUiLocale } from '@i18n/types'
 
 type OverrideInputProps = {
   language: CubeUiLocale

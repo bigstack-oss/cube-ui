@@ -1,8 +1,8 @@
-import { cubePreset } from '../../../theme'
-import classNames from 'classnames'
 import { useMemo } from 'react'
+import classNames from 'classnames'
+import { cubePreset } from '@theme/tokens/cubePreset'
+import { SubHeading } from '@internals/components/SubHeading'
 import { hexToRgb, resolveCssVar } from './utils'
-import { SubHeading } from '../../../internals/components/SubHeading'
 
 const { colors } = cubePreset.theme.extend
 

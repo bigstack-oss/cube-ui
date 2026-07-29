@@ -6,13 +6,13 @@ import {
   Primary,
   Title,
 } from '@storybook/addon-docs/blocks'
-import type { PropsWithClassName } from '../../../utils/react-types'
-import { formatUnionType } from '../../../internals/utils/formatType'
-import { StoryLayout } from '../../../internals/components/StoryLayout/StoryLayout'
-import { cubeLoadingSpinnerVariants } from '../../../components/CubeLoadingSpinner/cubeLoadingSpinnerTypes'
-import { CubeLoadingSpinner } from '../../../components/CubeLoadingSpinner'
+import type { PropsWithClassName } from '@shared-types/react-types'
+import { formatUnionType } from '@internals/utils/formatType'
+import { StoryLayout } from '@internals/components/StoryLayout/StoryLayout'
+import { cubeLoadingSpinnerVariants } from '@components/CubeLoadingSpinner/cubeLoadingSpinnerTypes'
+import { CubeLoadingSpinner } from '@components/CubeLoadingSpinner'
 import { SpinnerRow } from './SpinnerRow'
-import { PlaygroundLayout } from '../../../internals/components/StoryLayout/PlaygroundLayout'
+import { PlaygroundLayout } from '@internals/components/StoryLayout/PlaygroundLayout'
 
 const CubeLoadingSpinnerDocs = () => {
   return (

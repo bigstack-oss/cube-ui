@@ -1,5 +1,5 @@
 ---
-'@cube/ui': patch
+'@bigstack/cube-ui': patch
 ---
 
 Init

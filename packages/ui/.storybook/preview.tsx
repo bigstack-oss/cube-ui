@@ -1,4 +1,3 @@
-import React from 'react'
 import type { Preview } from '@storybook/react'
 import { CubeUiLocaleProvider, type CubeUiLocale } from '../src/i18n'
 import { CubeThemeProvider, type CubeThemeName } from '../src/theme'
@@ -19,7 +18,7 @@ const preview: Preview = {
   globalTypes: {
     locale: {
       name: 'Locale',
-      description: 'Preview components in a @cube/ui locale',
+      description: 'Preview components in a @bigstack/cube-ui locale',
       toolbar: {
         icon: 'globe',
         title: 'Locale',
@@ -32,7 +31,7 @@ const preview: Preview = {
     },
     theme: {
       name: 'Theme',
-      description: 'Preview components in a @cube/ui product palette',
+      description: 'Preview components in a @bigstack/cube-ui product palette',
       toolbar: {
         icon: 'paintbrush',
         title: 'Theme',

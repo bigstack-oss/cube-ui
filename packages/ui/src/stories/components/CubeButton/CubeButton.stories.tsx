@@ -6,9 +6,9 @@ import {
   Primary,
   Title,
 } from '@storybook/addon-docs/blocks'
-import { StoryLayout } from '../../../internals/components/StoryLayout/StoryLayout'
-import { formatUnionType } from '../../../internals/utils/formatType'
-import { CubeButton } from '../../../components/CubeButton/CubeButton'
+import { StoryLayout } from '@internals/components/StoryLayout/StoryLayout'
+import { formatUnionType } from '@internals/utils/formatType'
+import { CubeButton } from '@components/CubeButton/CubeButton'
 import {
   cubeButtonSizes,
   cubeButtonTypes,
@@ -16,12 +16,12 @@ import {
   type CubeButtonSize,
   type CubeButtonType,
   type CubeButtonUsage,
-} from '../../../components/CubeButton/cubeButtonTypes'
-import type { SvgComponent } from '../../../components/CubeIcon/cubeIconTypes'
+} from '@components/CubeButton/cubeButtonTypes'
+import type { SvgComponent } from '@components/CubeIcon/cubeIconTypes'
 import { ButtonVariantTable } from './ButtonVariantTable'
 import { ButtonSkeletonTable } from './ButtonSkeletonTable'
-import { PlaygroundLayout } from '../../../internals/components/StoryLayout/PlaygroundLayout'
-import { MonochromeHome01 } from '@icons/index.ts'
+import { PlaygroundLayout } from '@internals/components/StoryLayout/PlaygroundLayout'
+import { MonochromeHome01 } from '@icons'
 
 const CubeButtonDocs = () => {
   return (
