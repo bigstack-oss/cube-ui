@@ -1,6 +1,6 @@
 import { execSync } from 'node:child_process'
 import { mkdir, readdir, rm, writeFile } from 'node:fs/promises'
-import { basename, dirname, extname, join, relative } from 'node:path'
+import { basename, dirname, extname, join, relative, sep } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 const packageRoot = join(dirname(fileURLToPath(import.meta.url)), '..')
@@ -40,7 +40,8 @@ const collectTsxFiles = async (
     }
 
     if (entry.name.endsWith('.tsx') && entry.name !== 'index.ts') {
-      files.push(relative(outputDir, fullPath).replace(/\.tsx$/, ''))
+      const posixPath = relative(outputDir, fullPath).split(sep).join('/')
+      files.push(posixPath.replace(/\.tsx$/, ''))
     }
   }
 
