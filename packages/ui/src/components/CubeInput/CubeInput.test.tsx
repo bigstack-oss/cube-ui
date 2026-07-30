@@ -8,9 +8,7 @@ describe('CubeInput', () => {
   it('associates the label with the input for accessibility', () => {
     render(<CubeInput label="Email" />)
 
-    expect(
-      screen.getByLabelText('Email', { exact: false }),
-    ).toBeInTheDocument()
+    expect(screen.getByLabelText('Email', { exact: false })).toBeInTheDocument()
   })
 
   it('renders a required marker when required', () => {
