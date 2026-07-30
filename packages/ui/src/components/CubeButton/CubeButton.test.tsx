@@ -80,7 +80,11 @@ describe('CubeButton', () => {
 
   it('renders the icon for icon-only usage', () => {
     const { container } = render(
-      <CubeButton usage="icon-only" Icon={MonochromeSettings} aria-label="Settings" />,
+      <CubeButton
+        usage="icon-only"
+        Icon={MonochromeSettings}
+        aria-label="Settings"
+      />,
     )
 
     expect(container.querySelector('svg')).toBeInTheDocument()
