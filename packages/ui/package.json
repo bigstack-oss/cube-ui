@@ -63,6 +63,7 @@
     "dayjs": "catalog:",
     "i18next": "catalog:",
     "lodash": "catalog:",
+    "prism-react-renderer": "^2.4.1",
     "prop-types": "^15.8.1",
     "react-chartjs-2": "^5.3.0",
     "react-i18next": "catalog:",
