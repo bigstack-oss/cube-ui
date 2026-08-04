@@ -18,7 +18,7 @@ afterEach(async () => {
 })
 
 describe('addCubeUiTranslations', () => {
-  it('overrides an existing key for a locale @bigstack/cube-ui already ships', () => {
+  it('overrides an existing key for a locale @bigstack-oss/cube-ui already ships', () => {
     addCubeUiTranslations('en-US', {
       'component.common.loading': 'Please wait',
     })
@@ -36,7 +36,7 @@ describe('addCubeUiTranslations', () => {
   })
 
   it('rejects an unknown/misspelled key at compile time', () => {
-    // @ts-expect-error - 'component.common.laoding' is not a valid @bigstack/cube-ui translation key.
+    // @ts-expect-error - 'component.common.laoding' is not a valid @bigstack-oss/cube-ui translation key.
     addCubeUiTranslations('en-US', { 'component.common.laoding': 'Loading' })
   })
 })

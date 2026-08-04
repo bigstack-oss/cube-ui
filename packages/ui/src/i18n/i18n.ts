@@ -4,7 +4,7 @@ import enUS from './resources/en-US.json'
 import zhTW from './resources/zh-TW.json'
 
 /**
- * @bigstack/cube-ui keeps its own i18next instance, separate from whatever i18n setup
+ * @bigstack-oss/cube-ui keeps its own i18next instance, separate from whatever i18n setup
  * the consuming app uses, so the library works standalone regardless of the
  * consumer's own i18n choices (or lack thereof).
  */
