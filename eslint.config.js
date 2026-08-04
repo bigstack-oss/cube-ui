@@ -25,27 +25,6 @@ export default tseslint.config(
       // TODO (low-priority): Find a way to get rid of the following ignore.
       // eslint-disable-next-line import/no-named-as-default-member
       ...tseslint.configs.recommended,
-      ...tailwind.configs['flat/recommended'],
-      {
-        settings: {
-          tailwindcss: {
-            whitelist: ['cube\\-.*'],
-            callees: ['classnames', 'classNames', 'cva', 'twMerge', 'twJoin'],
-            config: 'packages/ui/tailwind.config.ts',
-            classRegex: '^(\\w+)?[cC]lass(Name)?$',
-            // Default cssFiles globs omit dist/build but not storybook-static,
-            // whose stale CSS would otherwise "validate" renamed/removed classes.
-            cssFiles: [
-              '**/*.css',
-              '!**/node_modules',
-              '!**/.*',
-              '!**/dist',
-              '!**/build',
-              '!**/storybook-static/**',
-            ],
-          },
-        },
-      },
     ],
     files: ['**/*.{js,jsx,ts,tsx}'],
     languageOptions: {
@@ -81,8 +60,6 @@ export default tseslint.config(
           ignoreRestSiblings: true,
         },
       ],
-      'tailwindcss/no-custom-classname': 'error',
-      'tailwindcss/classnames-order': 'error',
     },
   },
   {
@@ -92,6 +69,38 @@ export default tseslint.config(
     languageOptions: {
       ecmaVersion: 2022,
       globals: globals.node,
+    },
+  },
+  {
+    // Tailwind classname linting only makes sense for the browser-run UI
+    // source - it's split out from the block above so it can `ignores`
+    // config/tooling scripts, which live outside packages/ui and therefore
+    // can't resolve `tailwindcss` (only a dependency of that workspace
+    // package, not the repo root).
+    extends: [...tailwind.configs['flat/recommended']],
+    files: ['**/*.{js,jsx,ts,tsx}'],
+    ignores: ['**/*.config.{js,ts,mjs,cjs}', '**/scripts/**/*.{js,ts,mjs,cjs}'],
+    settings: {
+      tailwindcss: {
+        whitelist: ['cube\\-.*'],
+        callees: ['classnames', 'classNames', 'cva', 'twMerge', 'twJoin'],
+        config: 'packages/ui/tailwind.config.ts',
+        classRegex: '^(\\w+)?[cC]lass(Name)?$',
+        // Default cssFiles globs omit dist/build but not storybook-static,
+        // whose stale CSS would otherwise "validate" renamed/removed classes.
+        cssFiles: [
+          '**/*.css',
+          '!**/node_modules',
+          '!**/.*',
+          '!**/dist',
+          '!**/build',
+          '!**/storybook-static/**',
+        ],
+      },
+    },
+    rules: {
+      'tailwindcss/no-custom-classname': 'error',
+      'tailwindcss/classnames-order': 'error',
     },
   },
   {

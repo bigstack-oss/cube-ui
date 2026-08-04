@@ -18,7 +18,7 @@
     "eslint:fix": "eslint . --fix",
     "prettier": "prettier --check \"{**/*,*}.{js,ts,tsx,json,scss,md}\"",
     "prettier:fix": "prettier --write \"{**/*,*}.{js,ts,tsx,json,scss,md}\"",
-    "build": "pnpm --filter \"@bigstack/*\" build",
+    "build": "pnpm --filter \"@bigstack-oss/*\" build",
     "icons:generate": "pnpm --filter @bigstack-oss/cube-ui icons:generate",
     "i18n:sync": "pnpm --filter @bigstack-oss/cube-ui i18n:sync",
     "ui:dev": "pnpm --filter @bigstack-oss/cube-ui storybook",
