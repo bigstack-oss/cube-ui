@@ -19,7 +19,7 @@
  * the same root element; the more specific/later declaration wins per
  * property, not per selector block).
  *
- * To add a new palette: add a `CubeThemeName` entry in `@bigstack/cube-ui`'s
+ * To add a new palette: add a `CubeThemeName` entry in `@bigstack-oss/cube-ui`'s
  * `src/theme/types.ts`, add a `your-theme.css` file here, and import it below.
  */
 

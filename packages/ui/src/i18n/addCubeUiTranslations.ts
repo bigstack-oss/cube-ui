@@ -2,11 +2,11 @@ import i18n from './i18n'
 import type { CubeUiLocale, CubeUiTranslationResource } from './types'
 
 /**
- * Registers additional or overriding translations for @bigstack/cube-ui's own
- * strings. Use this to add a locale @bigstack/cube-ui doesn't ship by default, or to
+ * Registers additional or overriding translations for @bigstack-oss/cube-ui's own
+ * strings. Use this to add a locale @bigstack-oss/cube-ui doesn't ship by default, or to
  * override specific default strings for a locale it does ship.
  *
- * `resources` is checked against @bigstack/cube-ui's real key set - an unknown or
+ * `resources` is checked against @bigstack-oss/cube-ui's real key set - an unknown or
  * misspelled key is a TypeScript error. Omitted keys for a new locale fall
  * back to the English (`en-US`) text.
  *

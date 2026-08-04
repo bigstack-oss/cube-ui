@@ -18,7 +18,7 @@ const preview: Preview = {
   globalTypes: {
     locale: {
       name: 'Locale',
-      description: 'Preview components in a @bigstack/cube-ui locale',
+      description: 'Preview components in a @bigstack-oss/cube-ui locale',
       toolbar: {
         icon: 'globe',
         title: 'Locale',
@@ -31,7 +31,7 @@ const preview: Preview = {
     },
     theme: {
       name: 'Theme',
-      description: 'Preview components in a @bigstack/cube-ui product palette',
+      description: 'Preview components in a @bigstack-oss/cube-ui product palette',
       toolbar: {
         icon: 'paintbrush',
         title: 'Theme',

@@ -12,7 +12,7 @@ A clear and concise description of what the bug is.
 
 ## Version
 
-What version of `@bigstack/cube-ui` is affected [e.g. 1.2.0].
+What version of `@bigstack-oss/cube-ui` is affected [e.g. 1.2.0].
 
 ## To Reproduce
 
