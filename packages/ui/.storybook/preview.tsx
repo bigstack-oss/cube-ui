@@ -31,7 +31,8 @@ const preview: Preview = {
     },
     theme: {
       name: 'Theme',
-      description: 'Preview components in a @bigstack-oss/cube-ui product palette',
+      description:
+        'Preview components in a @bigstack-oss/cube-ui product palette',
       toolbar: {
         icon: 'paintbrush',
         title: 'Theme',

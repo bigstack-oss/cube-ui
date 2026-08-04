@@ -200,17 +200,17 @@ export const Docs: Story = {
       <StoryLayout.Section title="Why this exists">
         <div className="flex flex-col gap-y-4">
           <CaptionText>
-            Some @bigstack-oss/cube-ui components render their own text - loading
-            labels, empty states, and similar strings - in English by default.
-            @bigstack-oss/cube-ui keeps its own <InlineCode>i18next</InlineCode>{' '}
-            instance, separate from whatever i18n setup your app uses (or
-            doesn&apos;t use at all), so these strings can be localized
-            independently.
+            Some @bigstack-oss/cube-ui components render their own text -
+            loading labels, empty states, and similar strings - in English by
+            default. @bigstack-oss/cube-ui keeps its own{' '}
+            <InlineCode>i18next</InlineCode> instance, separate from whatever
+            i18n setup your app uses (or doesn&apos;t use at all), so these
+            strings can be localized independently.
           </CaptionText>
           <CaptionText>
             You only need this guide if your app targets a non-English locale,
-            or if you want to customize the wording of @bigstack-oss/cube-ui&apos;s
-            built-in strings.
+            or if you want to customize the wording of
+            @bigstack-oss/cube-ui&apos;s built-in strings.
           </CaptionText>
         </div>
       </StoryLayout.Section>
@@ -219,8 +219,8 @@ export const Docs: Story = {
         <CaptionText>
           Nothing to install. <InlineCode>i18next</InlineCode> and{' '}
           <InlineCode>react-i18next</InlineCode> are regular dependencies of{' '}
-          <InlineCode>@bigstack-oss/cube-ui</InlineCode> and ship bundled with it -
-          your app does not need to add them itself, and
+          <InlineCode>@bigstack-oss/cube-ui</InlineCode> and ship bundled with
+          it - your app does not need to add them itself, and
           @bigstack-oss/cube-ui&apos;s instance will not collide with your
           app&apos;s own i18next setup if it has one.
         </CaptionText>
@@ -229,10 +229,10 @@ export const Docs: Story = {
       <StoryLayout.Section title="2. Wrap your app in CubeUiLocaleProvider">
         <div className="flex flex-col gap-y-4">
           <CaptionText>
-            Wrap the part of your tree that renders @bigstack-oss/cube-ui components
-            in <InlineCode>CubeUiLocaleProvider</InlineCode>, passing whatever
-            locale state your app already tracks (a URL param, a user setting,
-            the browser locale, etc). This is the only required step.
+            Wrap the part of your tree that renders @bigstack-oss/cube-ui
+            components in <InlineCode>CubeUiLocaleProvider</InlineCode>, passing
+            whatever locale state your app already tracks (a URL param, a user
+            setting, the browser locale, etc). This is the only required step.
           </CaptionText>
           <CodeBlock>{`import { CubeUiLocaleProvider } from '@bigstack-oss/cube-ui'
 
@@ -262,8 +262,8 @@ function App() {
       <StoryLayout.Section title="3. (Optional) Reuse a @bigstack-oss/cube-ui string in your own components">
         <div className="flex flex-col gap-y-4">
           <CaptionText>
-            If a custom component of yours needs one of @bigstack-oss/cube-ui&apos;s
-            own translated strings, use{' '}
+            If a custom component of yours needs one of
+            @bigstack-oss/cube-ui&apos;s own translated strings, use{' '}
             <InlineCode>useCubeUiTranslation</InlineCode> instead of
             react-i18next&apos;s <InlineCode>useTranslation</InlineCode>.
             It&apos;s the same hook, pinned to @bigstack-oss/cube-ui&apos;s own
@@ -286,12 +286,12 @@ function MyLoadingLabel() {
         <div className="flex flex-col gap-y-4">
           <CaptionText>
             Use <InlineCode>addCubeUiTranslations</InlineCode> to override
-            specific shipped strings, or to register a locale @bigstack-oss/cube-ui
-            doesn&apos;t ship by default. Keys are checked against
-            @bigstack-oss/cube-ui&apos;s real key set at compile time - an unknown
-            or misspelled key is a TypeScript error - and any key you omit for a
-            new locale falls back to the English text. Call this once during app
-            startup, before your components render.
+            specific shipped strings, or to register a locale
+            @bigstack-oss/cube-ui doesn&apos;t ship by default. Keys are checked
+            against @bigstack-oss/cube-ui&apos;s real key set at compile time -
+            an unknown or misspelled key is a TypeScript error - and any key you
+            omit for a new locale falls back to the English text. Call this once
+            during app startup, before your components render.
           </CaptionText>
 
           <SubHeading>Override a shipped string</SubHeading>
@@ -320,10 +320,10 @@ addCubeUiTranslations('fr-FR', {
           <CaptionText>
             <strong>Mutation warning:</strong> i18next deep-merges these
             overrides into its resource store in place, which mutates the
-            imported JSON module backing @bigstack-oss/cube-ui&apos;s defaults. If
-            you need to restore the original text later (in tests, for example),
-            take a <InlineCode>structuredClone</InlineCode> snapshot of the
-            defaults before calling{' '}
+            imported JSON module backing @bigstack-oss/cube-ui&apos;s defaults.
+            If you need to restore the original text later (in tests, for
+            example), take a <InlineCode>structuredClone</InlineCode> snapshot
+            of the defaults before calling{' '}
             <InlineCode>addCubeUiTranslations</InlineCode>.
           </CaptionText>
         </div>
@@ -332,8 +332,8 @@ addCubeUiTranslations('fr-FR', {
       <StoryLayout.Section title="Reference: translation source of truth">
         <div className="flex flex-col gap-y-4">
           <CaptionText>
-            Every key @bigstack-oss/cube-ui ships and its translation in each locale
-            is managed centrally in this{' '}
+            Every key @bigstack-oss/cube-ui ships and its translation in each
+            locale is managed centrally in this{' '}
             <a
               href={TRANSLATION_SHEET_URL}
               target="_blank"

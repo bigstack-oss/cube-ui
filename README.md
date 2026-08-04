@@ -125,7 +125,11 @@ Only `dist/` is published (`"files": ["dist"]`). Consumers reach it through four
 
 ```ts
 // Everything - components, hooks, i18n, theme
-import { CubeButton, CubeThemeProvider, cubePreset } from '@bigstack-oss/cube-ui'
+import {
+  CubeButton,
+  CubeThemeProvider,
+  cubePreset,
+} from '@bigstack-oss/cube-ui'
 
 // Icon components only
 import { MonochromeHome01 } from '@bigstack-oss/cube-ui/icons'
