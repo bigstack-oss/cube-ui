@@ -7,7 +7,7 @@ export type CubeThemeProviderProps = PropsWithChildren<{
 }>
 
 /**
- * Selects which brand palette @bigstack/cube-ui's colors resolve to by
+ * Selects which brand palette @bigstack-oss/cube-ui's colors resolve to by
  * setting `data-cube-theme` on the document root.
  *
  * **Optional** — omitting this provider falls back to the `cubeCOS` palette,
