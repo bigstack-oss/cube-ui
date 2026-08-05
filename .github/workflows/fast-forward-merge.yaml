@@ -10,11 +10,20 @@ permissions:
 
 jobs:
   merge:
-    if: ${{ github.event.label.name == 'done' && github.event.pull_request.mergeable == true }}
+    # `github.event.pull_request.mergeable` is computed asynchronously by
+    # GitHub and is often still `null` right when a `labeled` event fires, so
+    # gating on it here caused this job to silently skip instead of running.
+    # `git merge --ff-only` below is the real gate: it fails loudly (and the
+    # default `bash -e` shell stops before `git push`) if the PR isn't
+    # actually fast-forwardable, which is a stronger guarantee than the
+    # cached `mergeable` flag anyway.
+    if: ${{ github.event.label.name == 'done' }}
     runs-on: ubuntu-latest
     steps:
       - name: Check Out PR Target Branch
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # 7.0.1
+        with:
+          fetch-depth: 0
       - name: Merge
         env:
           TOPIC_BRANCH: ${{ github.head_ref }}
@@ -23,5 +32,8 @@ jobs:
           git checkout $TOPIC_BRANCH
           git checkout @{-1}
           git branch
-          git merge --ff-only $TOPIC_BRANCH
-          git push
+          git merge --ff-only $TOPIC_BRANCH || {
+            echo "::error::PR branch '$TOPIC_BRANCH' is not fast-forwardable onto the target branch - rebase it and re-apply the 'done' label."
+            exit 1
+          }
+          git push origin HEAD:${{ github.event.pull_request.base.ref }}
