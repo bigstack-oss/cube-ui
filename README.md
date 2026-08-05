@@ -1,5 +1,7 @@
 # cube-ui
 
+[![CI workflow](https://github.com/bigstack-oss/cube-ui/actions/workflows/ci-workflow.yml/badge.svg)](https://github.com/bigstack-oss/cube-ui/actions/workflows/ci-workflow.yml)
+
 ## File Structure
 
 ```
