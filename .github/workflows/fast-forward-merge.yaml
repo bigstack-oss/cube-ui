@@ -7,6 +7,7 @@ on:
 
 permissions:
   contents: write
+  actions: write
 
 jobs:
   merge:
@@ -37,3 +38,13 @@ jobs:
             exit 1
           }
           git push origin HEAD:${{ github.event.pull_request.base.ref }}
+      - name: Trigger Release workflow
+        # A push made with the default GITHUB_TOKEN (as above) doesn't
+        # trigger other workflows - that's intentional, to prevent
+        # recursive workflow-triggering loops, so release.yml's `on: push`
+        # never fires for this merge. Dispatch it explicitly instead; this
+        # is a deliberate API call, not an implicit event cascade, so the
+        # same restriction doesn't apply to it.
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh workflow run release.yml --ref ${{ github.event.pull_request.base.ref }}
