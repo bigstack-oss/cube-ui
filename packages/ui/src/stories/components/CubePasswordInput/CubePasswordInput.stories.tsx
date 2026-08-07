@@ -9,12 +9,10 @@ import {
 import { StoryLayout } from '@internals/components/StoryLayout/StoryLayout'
 import { PlaygroundLayout } from '@internals/components/StoryLayout/PlaygroundLayout'
 import { SubHeading } from '@internals/components/SubHeading'
-import { CubeInput } from '@components/CubeInput/CubeInput'
-import { MonochromeSearch } from '@icons'
-import type { SvgElement } from '@components/CubeIcon'
-import { InputRow } from './InputRow'
+import { CubePasswordInput } from '@components/CubePasswordInput/CubePasswordInput'
+import { PasswordInputRow } from './PasswordInputRow'
 
-const CubeInputDocs = () => {
+const CubePasswordInputDocs = () => {
   return (
     <>
       <Title />
@@ -27,7 +25,7 @@ const CubeInputDocs = () => {
 
 // Flattened args for Storybook: only the props relevant to demoing the
 // component are exposed as controls; native input attributes are omitted.
-type CubeInputStoryArgs = {
+type CubePasswordInputStoryArgs = {
   label?: string
   placeholder?: string
   helpMessage?: string
@@ -35,18 +33,18 @@ type CubeInputStoryArgs = {
   required?: boolean
   disabled?: boolean
   isLoading?: boolean
-  trailingIcon?: SvgElement
+  initialShowPassword?: boolean
   tooltip?: ReactNode
 }
 
-const meta: Meta<CubeInputStoryArgs> = {
-  title: 'Molecules/Input',
-  component: CubeInput as ComponentType<CubeInputStoryArgs>,
+const meta: Meta<CubePasswordInputStoryArgs> = {
+  title: 'Molecules/Password Input',
+  component: CubePasswordInput as ComponentType<CubePasswordInputStoryArgs>,
   tags: ['autodocs'],
   parameters: {
     controls: { expanded: true },
     docs: {
-      page: CubeInputDocs,
+      page: CubePasswordInputDocs,
     },
   },
   argTypes: {
@@ -90,10 +88,12 @@ const meta: Meta<CubeInputStoryArgs> = {
       defaultValue: { summary: 'false' },
       control: 'boolean',
     },
-    trailingIcon: {
-      description: 'An icon rendered at the trailing edge of the input.',
-      table: { type: { summary: 'SvgElement' } },
-      control: { disable: true },
+    initialShowPassword: {
+      description:
+        'Whether the password is shown in plain text on first render.',
+      table: { type: { summary: 'boolean' } },
+      defaultValue: { summary: 'false' },
+      control: 'boolean',
     },
     tooltip: {
       description: 'A tooltip displayed when hovering over the input.',
@@ -105,7 +105,7 @@ const meta: Meta<CubeInputStoryArgs> = {
 
 export default meta
 
-type Story = StoryObj<CubeInputStoryArgs>
+type Story = StoryObj<CubePasswordInputStoryArgs>
 
 export const Playground: Story = {
   tags: ['!dev'],
@@ -117,13 +117,18 @@ export const Playground: Story = {
     ),
   ],
   args: {
-    label: 'Email',
-    placeholder: 'you@example.com',
+    label: 'Password',
+    placeholder: 'Enter your password',
     required: false,
     disabled: false,
     isLoading: false,
-    trailingIcon: <MonochromeSearch />,
+    initialShowPassword: false,
   },
+  // `initialShowPassword` only seeds state on mount. Remount when the control
+  // changes so the playground reflects the new initial value immediately.
+  render: (args) => (
+    <CubePasswordInput key={String(args.initialShowPassword)} {...args} />
+  ),
 }
 
 export const Gallery: Story = {
@@ -140,38 +145,46 @@ export const Gallery: Story = {
   render: () => {
     return (
       <StoryLayout
-        title="Input"
-        desc="Inputs allow users to enter and edit text, numbers, and other data. The min width of text frame is 170px."
+        title="Password Input"
+        desc="Password inputs allow users to enter sensitive text with a show/hide toggle. The min width of text frame is 170px."
       >
         <StoryLayout.Section title="States">
           <div className="flex flex-col gap-y-6">
-            <InputRow.Header />
-            <InputRow title="Default" inputProps={{}} />
-            <InputRow title="Required" inputProps={{ required: true }} />
-            <InputRow title="Disabled" inputProps={{ disabled: true }} />
-            <InputRow
-              title="w/Trailing Icon"
-              inputProps={{ trailingIcon: <MonochromeSearch /> }}
+            <PasswordInputRow.Header />
+            <PasswordInputRow title="Default" inputProps={{}} />
+            <PasswordInputRow
+              title="Required"
+              inputProps={{ required: true }}
+            />
+            <PasswordInputRow
+              title="Disabled"
+              inputProps={{ disabled: true }}
+            />
+            <PasswordInputRow
+              title="Show Password"
+              inputProps={{
+                defaultValue: 'super-secret',
+                initialShowPassword: true,
+              }}
             />
             {/** TODO: Add tooltip */}
-            {/* <InputRow title="w/Tooltip" inputProps={{}} /> */}
-            <InputRow
+            {/* <PasswordInputRow title="w/Tooltip" inputProps={{ tooltip: 'Tooltip' }} /> */}
+            <PasswordInputRow
               title="w/Help Message"
               inputProps={{ helpMessage: 'Help message' }}
             />
-            <InputRow
+            <PasswordInputRow
               title="w/Error Message"
               inputProps={{ errorMessage: 'Error message' }}
             />
-            <InputRow
-              title="w/Default Text"
-              inputProps={{ defaultValue: 'Input Text' }}
+            <PasswordInputRow
+              title="w/Default Password"
+              inputProps={{ defaultValue: 'super-secret' }}
             />
-            <InputRow
-              title="Truncate Text"
+            <PasswordInputRow
+              title="w/Truncated Password"
               inputProps={{
-                defaultValue:
-                  'Display an ellipsis when a long message is entered in the input field.',
+                defaultValue: 'super-long-password-that-should-be-truncated',
               }}
             />
           </div>
@@ -185,10 +198,14 @@ export const Gallery: Story = {
               <SubHeading>w/Label & Message</SubHeading>
             </div>
             <div className="grid grid-cols-5 items-start gap-x-12">
-              <CubeInput isLoading />
-              <CubeInput isLoading label="Label" />
-              <CubeInput isLoading helpMessage="Help message" />
-              <CubeInput isLoading label="Label" helpMessage="Help message" />
+              <CubePasswordInput isLoading />
+              <CubePasswordInput isLoading label="Label" />
+              <CubePasswordInput isLoading helpMessage="Help message" />
+              <CubePasswordInput
+                isLoading
+                label="Label"
+                helpMessage="Help message"
+              />
             </div>
           </div>
         </StoryLayout.Section>

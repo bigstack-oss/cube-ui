@@ -68,6 +68,8 @@ export const CubeInput = forwardRef<HTMLInputElement, CubeInputProps>(
     }
 
     const renderIcon = () => {
+      if (isLoading) return null
+
       const errorIcon = (() => {
         if (!isError) return null
 
