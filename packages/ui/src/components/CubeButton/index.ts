@@ -5,9 +5,6 @@ export type {
   CubeButtonProps,
 } from './cubeButtonTypes'
 
-export { CubeButton } from './CubeButton'
+export type { CubeButtonSkeletonProps } from './CubeButtonSkeleton'
 
-export {
-  type CubeButtonSkeletonProps,
-  CubeButtonSkeleton,
-} from './CubeButtonSkeleton'
+export { CubeButton } from './CubeButton'

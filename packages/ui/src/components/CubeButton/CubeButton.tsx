@@ -5,6 +5,7 @@ import type { CubeButtonProps } from './cubeButtonTypes'
 import { button, iconContainer } from './cubeButtonStyles'
 import { getIconSizeByButtonSize } from './cubeButtonUtils'
 import { CubeButtonLoadingSpinner } from './CubeButtonLoadingSpinner'
+import { CubeButtonSkeleton } from './CubeButtonSkeleton'
 
 export const CubeButton = (props: CubeButtonProps) => {
   const {
@@ -77,3 +78,5 @@ export const CubeButton = (props: CubeButtonProps) => {
     </button>
   )
 }
+
+CubeButton.Skeleton = CubeButtonSkeleton

@@ -5,11 +5,6 @@ export type {
   CubeCheckboxProps,
 } from './cubeCheckboxTypes'
 
+export type { CubeCheckboxGridProps } from './CubeCheckboxGrid'
+
 export { CubeCheckbox } from './CubeCheckbox'
-
-export { CubeCheckboxSkeleton } from './CubeCheckboxSkeleton'
-
-export {
-  type CubeCheckboxGridProps,
-  CubeCheckboxGrid,
-} from './CubeCheckboxGrid'

@@ -8,6 +8,7 @@ import {
 import type { CubeCheckboxProps } from './cubeCheckboxTypes'
 import { container, iconWrap, label as labelStyles } from './cubeCheckboxStyles'
 import { CubeCheckboxSkeleton } from './CubeCheckboxSkeleton'
+import { CubeCheckboxGrid } from './CubeCheckboxGrid'
 
 export const CubeCheckbox = (props: CubeCheckboxProps) => {
   const {
@@ -97,3 +98,6 @@ export const CubeCheckbox = (props: CubeCheckboxProps) => {
     </label>
   )
 }
+
+CubeCheckbox.Skeleton = CubeCheckboxSkeleton
+CubeCheckbox.Grid = CubeCheckboxGrid

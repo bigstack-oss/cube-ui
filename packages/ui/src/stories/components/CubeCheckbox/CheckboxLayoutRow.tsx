@@ -1,6 +1,5 @@
 import {
   CubeCheckbox,
-  CubeCheckboxGrid,
   type CubeCheckboxGridProps,
 } from '@components/CubeCheckbox'
 import { CheckboxRow } from './CheckboxRow'
@@ -15,7 +14,7 @@ export const CheckboxLayoutRow = (props: CheckboxLayoutRowProps) => {
   const { title, direction } = props
   return (
     <CheckboxRow title={title}>
-      <CubeCheckboxGrid direction={direction} className="col-span-3">
+      <CubeCheckbox.Grid direction={direction} className="col-span-3">
         <CubeCheckbox label={longCheckboxText} />
         <CubeCheckbox label={longCheckboxText} />
         <CubeCheckbox label={longCheckboxText} />
@@ -24,7 +23,7 @@ export const CheckboxLayoutRow = (props: CheckboxLayoutRowProps) => {
         <CubeCheckbox label={longCheckboxText} />
         <CubeCheckbox label={longCheckboxText} />
         <CubeCheckbox label={longCheckboxText} />
-      </CubeCheckboxGrid>
+      </CubeCheckbox.Grid>
     </CheckboxRow>
   )
 }

@@ -64,6 +64,10 @@ const meta: Meta<CubeCheckboxStoryArgs> = {
   parameters: {
     controls: { expanded: true },
     docs: {
+      description: {
+        component:
+          'Checkboxes let users select one or more items from a set, or toggle a single option on or off.',
+      },
       page: CubeCheckboxDocs,
     },
   },
@@ -182,10 +186,7 @@ export const Gallery: Story = {
   },
   render: function Render() {
     return (
-      <StoryLayout
-        title="Checkbox"
-        desc="Checkboxes let users select one or more items from a set, or toggle a single option on or off."
-      >
+      <StoryLayout title="Checkbox">
         <StoryLayout.Section title="Variants">
           <div className="flex flex-col gap-y-6">
             <CheckboxRow title="">

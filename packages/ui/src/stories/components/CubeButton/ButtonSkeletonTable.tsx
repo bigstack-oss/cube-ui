@@ -1,5 +1,5 @@
 import type { PropsWithChildren } from 'react'
-import { CubeButtonSkeleton } from '@components/CubeButton/CubeButtonSkeleton'
+import { CubeButton } from '@components/CubeButton'
 import { SubHeading } from '@internals/components/SubHeading'
 
 const DescriptionText = (props: PropsWithChildren) => {
@@ -21,22 +21,22 @@ export const ButtonSkeletonTable = () => {
       <DescriptionText>Icon right</DescriptionText>
 
       <DescriptionText>MD</DescriptionText>
-      <CubeButtonSkeleton size="md" usage="text-only" />
-      <CubeButtonSkeleton size="md" usage="icon-only" />
-      <CubeButtonSkeleton size="md" usage="icon-left" />
-      <CubeButtonSkeleton size="md" usage="icon-right" />
+      <CubeButton.Skeleton size="md" usage="text-only" />
+      <CubeButton.Skeleton size="md" usage="icon-only" />
+      <CubeButton.Skeleton size="md" usage="icon-left" />
+      <CubeButton.Skeleton size="md" usage="icon-right" />
 
       <DescriptionText>SM</DescriptionText>
-      <CubeButtonSkeleton size="sm" usage="text-only" />
-      <CubeButtonSkeleton size="sm" usage="icon-only" />
-      <CubeButtonSkeleton size="sm" usage="icon-left" />
-      <CubeButtonSkeleton size="sm" usage="icon-right" />
+      <CubeButton.Skeleton size="sm" usage="text-only" />
+      <CubeButton.Skeleton size="sm" usage="icon-only" />
+      <CubeButton.Skeleton size="sm" usage="icon-left" />
+      <CubeButton.Skeleton size="sm" usage="icon-right" />
 
       <DescriptionText>LG</DescriptionText>
-      <CubeButtonSkeleton size="lg" usage="text-only" />
-      <CubeButtonSkeleton size="lg" usage="icon-only" />
-      <CubeButtonSkeleton size="lg" usage="icon-left" />
-      <CubeButtonSkeleton size="lg" usage="icon-right" />
+      <CubeButton.Skeleton size="lg" usage="text-only" />
+      <CubeButton.Skeleton size="lg" usage="icon-only" />
+      <CubeButton.Skeleton size="lg" usage="icon-left" />
+      <CubeButton.Skeleton size="lg" usage="icon-right" />
     </div>
   )
 }
