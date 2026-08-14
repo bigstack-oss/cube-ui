@@ -26,8 +26,8 @@ export type CubeInputProps = InputHTMLAttributes<HTMLInputElement> & {
   trailingIcon?: SvgElement
 }
 
-export const CubeInput = forwardRef<HTMLInputElement, CubeInputProps>(
-  (props: CubeInputProps, ref) => {
+export const CubeInput = Object.assign(
+  forwardRef<HTMLInputElement, CubeInputProps>((props: CubeInputProps, ref) => {
     const {
       className,
       required = false,
@@ -135,7 +135,8 @@ export const CubeInput = forwardRef<HTMLInputElement, CubeInputProps>(
         {renderFooter()}
       </div>
     )
-  },
+  }),
+  { Skeleton: CubeInputSkeleton },
 )
 
 CubeInput.displayName = 'CubeInput'
