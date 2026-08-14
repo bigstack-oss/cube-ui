@@ -1,4 +1,4 @@
-import type { ComponentType, ReactNode } from 'react'
+import type { ComponentType } from 'react'
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import {
   Controls,
@@ -27,6 +27,7 @@ const CubeInputDocs = () => {
 
 // Flattened args for Storybook: only the props relevant to demoing the
 // component are exposed as controls; native input attributes are omitted.
+// TODO: re-expose `tooltip` once CubeTooltip (or a story-friendly stand-in) exists.
 type CubeInputStoryArgs = {
   label?: string
   placeholder?: string
@@ -36,7 +37,6 @@ type CubeInputStoryArgs = {
   disabled?: boolean
   isLoading?: boolean
   trailingIcon?: SvgElement
-  tooltip?: ReactNode
 }
 
 const meta: Meta<CubeInputStoryArgs> = {
@@ -97,11 +97,6 @@ const meta: Meta<CubeInputStoryArgs> = {
     trailingIcon: {
       description: 'An icon rendered at the trailing edge of the input.',
       table: { type: { summary: 'SvgElement' } },
-      control: { disable: true },
-    },
-    tooltip: {
-      description: 'A tooltip displayed when hovering over the input.',
-      table: { type: { summary: 'ReactNode' } },
       control: { disable: true },
     },
   },

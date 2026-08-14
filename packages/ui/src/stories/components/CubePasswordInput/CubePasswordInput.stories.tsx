@@ -1,4 +1,4 @@
-import type { ComponentType, ReactNode } from 'react'
+import type { ComponentType } from 'react'
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import {
   Controls,
@@ -25,6 +25,7 @@ const CubePasswordInputDocs = () => {
 
 // Flattened args for Storybook: only the props relevant to demoing the
 // component are exposed as controls; native input attributes are omitted.
+// TODO: re-expose `tooltip` once CubeTooltip (or a story-friendly stand-in) exists.
 type CubePasswordInputStoryArgs = {
   label?: string
   placeholder?: string
@@ -34,7 +35,6 @@ type CubePasswordInputStoryArgs = {
   disabled?: boolean
   isLoading?: boolean
   initialShowPassword?: boolean
-  tooltip?: ReactNode
 }
 
 const meta: Meta<CubePasswordInputStoryArgs> = {
@@ -98,11 +98,6 @@ const meta: Meta<CubePasswordInputStoryArgs> = {
       table: { type: { summary: 'boolean' } },
       defaultValue: { summary: 'false' },
       control: 'boolean',
-    },
-    tooltip: {
-      description: 'A tooltip displayed when hovering over the input.',
-      table: { type: { summary: 'ReactNode' } },
-      control: { disable: true },
     },
   },
 }
