@@ -32,6 +32,10 @@ const meta: Meta<typeof CubeLoadingSpinner> = {
   parameters: {
     controls: { expanded: true },
     docs: {
+      description: {
+        component:
+          'Loading spinners indicate that content or a process is in progress.',
+      },
       page: CubeLoadingSpinnerDocs,
     },
   },

@@ -145,7 +145,7 @@ export const Gallery: Story = {
         </StoryLayout.Section>
         <StoryLayout.Section title="Skeleton">
           <RadioButtonRow title="Default">
-            <CubeRadioButton label={radioButtonText} isLoading />
+            <CubeRadioButton.Skeleton />
           </RadioButtonRow>
         </StoryLayout.Section>
       </StoryLayout>

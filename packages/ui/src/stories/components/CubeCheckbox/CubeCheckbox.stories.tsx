@@ -276,7 +276,7 @@ export const Gallery: Story = {
         </StoryLayout.Section>
         <StoryLayout.Section title="Skeleton">
           <CheckboxRow title="Default">
-            <CubeCheckbox label={checkboxText} isLoading />
+            <CubeCheckbox.Skeleton />
           </CheckboxRow>
         </StoryLayout.Section>
       </StoryLayout>
