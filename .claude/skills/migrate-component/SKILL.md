@@ -74,7 +74,7 @@ The source component very likely has **no** test file — that's a known gap in 
 
 ## Phase 5 — Write the Storybook story
 
-Create `packages/ui/src/stories/components/Cube<Name>/Cube<Name>.stories.tsx`. Follow `CLAUDE.md` → "Storybook story structure" precisely — docs page block order, `Playground` + `Gallery` pair, disabled controls for non-primitive props with a translation `render` function, row/`.Header` helper pattern for repeated Gallery layouts.
+Create `packages/ui/src/stories/components/Cube<Name>/Cube<Name>.stories.tsx`. Follow `CLAUDE.md` → "Storybook story structure" precisely — docs page block order, component blurb in `parameters.docs.description.component` (not Gallery `StoryLayout desc`), `Playground` + `Gallery` pair, disabled controls for non-primitive props with a translation `render` function, row/`.Header` helper pattern for repeated Gallery layouts.
 
 Decide the `meta.title` tier (`Atoms/*` vs `Molecules/*`) by looking at the component's structure, not by copying the old repo's Storybook category verbatim (the old repo may not have used the same tiers). If it's genuinely ambiguous, ask the user rather than guessing — this is one of the few real judgment calls in an otherwise mechanical process.
 

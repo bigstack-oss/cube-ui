@@ -44,6 +44,10 @@ const meta: Meta<CubePasswordInputStoryArgs> = {
   parameters: {
     controls: { expanded: true },
     docs: {
+      description: {
+        component:
+          'Password inputs allow users to enter sensitive text with a show/hide toggle. The min width of text frame is 170px.',
+      },
       page: CubePasswordInputDocs,
     },
   },
@@ -144,10 +148,7 @@ export const Gallery: Story = {
   },
   render: () => {
     return (
-      <StoryLayout
-        title="Password Input"
-        desc="Password inputs allow users to enter sensitive text with a show/hide toggle. The min width of text frame is 170px."
-      >
+      <StoryLayout title="Password Input">
         <StoryLayout.Section title="States">
           <div className="flex flex-col gap-y-6">
             <PasswordInputRow.Header />

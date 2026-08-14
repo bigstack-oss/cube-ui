@@ -54,6 +54,10 @@ const meta: Meta<CubeButtonStoryArgs> = {
   parameters: {
     controls: { expanded: true },
     docs: {
+      description: {
+        component:
+          'Buttons allow users to take actions, and make choices, with a single tap.',
+      },
       page: CubeButtonDocs,
     },
   },
@@ -153,10 +157,7 @@ export const Gallery: Story = {
     const buttonText = 'Call to action'
 
     return (
-      <StoryLayout
-        title="Button"
-        desc="Buttons allow users to take actions, and make choices, with a single tap."
-      >
+      <StoryLayout title="Button">
         <StoryLayout.Section title="Variants">
           <ButtonVariantTable buttonText={buttonText} />
         </StoryLayout.Section>

@@ -46,6 +46,10 @@ const meta: Meta<CubeInputStoryArgs> = {
   parameters: {
     controls: { expanded: true },
     docs: {
+      description: {
+        component:
+          'Inputs allow users to enter and edit text, numbers, and other data. The min width of text frame is 170px.',
+      },
       page: CubeInputDocs,
     },
   },
@@ -139,10 +143,7 @@ export const Gallery: Story = {
   },
   render: () => {
     return (
-      <StoryLayout
-        title="Input"
-        desc="Inputs allow users to enter and edit text, numbers, and other data. The min width of text frame is 170px."
-      >
+      <StoryLayout title="Input">
         <StoryLayout.Section title="States">
           <div className="flex flex-col gap-y-6">
             <InputRow.Header />
