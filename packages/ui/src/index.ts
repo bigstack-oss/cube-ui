@@ -5,6 +5,7 @@ export * from './components/CubeIcon'
 export * from './components/CubeInput'
 export * from './components/CubeLoadingSpinner'
 export * from './components/CubePasswordInput'
+export * from './components/CubeRadioButton'
 export * from './components/CubeSkeleton'
 
 // I18n
