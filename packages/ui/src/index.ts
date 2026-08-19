@@ -1,6 +1,7 @@
 // Components
 export * from './components/CubeButton'
 export * from './components/CubeCheckbox'
+export * from './components/CubeHyperlink'
 export * from './components/CubeIcon'
 export * from './components/CubeInput'
 export * from './components/CubeLoadingSpinner'
