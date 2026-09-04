@@ -1,4 +1,25 @@
 {
   "component.common.loading": "載入中",
-  "component.common.noData": "沒有資料"
+  "component.common.noData": "沒有資料",
+  "component.status.host.neutral": "中性",
+  "component.status.host.inUse": "使用中",
+  "component.status.host.finished": "已完成",
+  "component.status.host.ok": "正常",
+  "component.status.host.success": "成功",
+  "component.status.host.active": "啟用",
+  "component.status.host.available": "可用",
+  "component.status.host.poweringOn": "啟動中",
+  "component.status.host.warning": "警告",
+  "component.status.host.error": "錯誤",
+  "component.status.host.fail": "失敗",
+  "component.status.host.failed": "已失敗",
+  "component.status.host.stopped": "已停止",
+  "component.status.host.poweringOff": "關機中",
+  "component.status.reaction.neutral": "中性",
+  "component.status.reaction.success": "成功",
+  "component.status.reaction.available": "可用",
+  "component.status.reaction.done": "完成",
+  "component.status.reaction.error": "錯誤",
+  "component.status.reaction.duplicate": "重複",
+  "component.status.reaction.failed": "失敗"
 }
