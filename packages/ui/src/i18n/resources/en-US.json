@@ -1,4 +1,25 @@
 {
   "component.common.loading": "Loading",
-  "component.common.noData": "No Data"
+  "component.common.noData": "No Data",
+  "component.status.host.neutral": "Neutral",
+  "component.status.host.inUse": "In-Use",
+  "component.status.host.finished": "Finished",
+  "component.status.host.ok": "Ok",
+  "component.status.host.success": "Success",
+  "component.status.host.active": "Active",
+  "component.status.host.available": "Available",
+  "component.status.host.poweringOn": "Powering-On",
+  "component.status.host.warning": "Warning",
+  "component.status.host.error": "Error",
+  "component.status.host.fail": "Fail",
+  "component.status.host.failed": "Failed",
+  "component.status.host.stopped": "Stopped",
+  "component.status.host.poweringOff": "Powering-Off",
+  "component.status.reaction.neutral": "Neutral",
+  "component.status.reaction.success": "Success",
+  "component.status.reaction.available": "Available",
+  "component.status.reaction.done": "Done",
+  "component.status.reaction.error": "Error",
+  "component.status.reaction.duplicate": "Duplicate",
+  "component.status.reaction.failed": "Failed"
 }
