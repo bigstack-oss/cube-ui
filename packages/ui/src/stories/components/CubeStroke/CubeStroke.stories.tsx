@@ -1,4 +1,4 @@
-import type { ComponentProps } from 'react'
+import type { ComponentType } from 'react'
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import {
   Controls,
@@ -6,12 +6,14 @@ import {
   Primary,
   Title,
 } from '@storybook/addon-docs/blocks'
-import type { PropsWithClassName } from '@shared-types/react-types'
 import type { BorderColorClass } from '@theme/tokens/cubeTheme'
 import { formatUnionType } from '@internals/utils/formatType'
 import { StoryLayout } from '@internals/components/StoryLayout/StoryLayout'
 import { PlaygroundLayout } from '@internals/components/StoryLayout/PlaygroundLayout'
-import { cubeStrokeTypes } from '@components/CubeStroke/cubeStrokeTypes'
+import {
+  cubeStrokeTypes,
+  type CubeStrokeType,
+} from '@components/CubeStroke/cubeStrokeTypes'
 import { CubeStroke } from '@components/CubeStroke'
 import { StrokeRow } from './StrokeRow'
 import { SubHeading } from '@internals/components/SubHeading'
@@ -36,9 +38,15 @@ const colorOptions = [
   'border-secondary-500',
 ] as const satisfies readonly BorderColorClass[]
 
-const meta: Meta<typeof CubeStroke> = {
+type CubeStrokeStoryArgs = {
+  type?: CubeStrokeType
+  color?: BorderColorClass
+  className?: string
+}
+
+const meta: Meta<CubeStrokeStoryArgs> = {
   title: 'Atoms/Stroke',
-  component: CubeStroke,
+  component: CubeStroke as ComponentType<CubeStrokeStoryArgs>,
   tags: ['autodocs'],
   parameters: {
     controls: { expanded: true },
@@ -52,10 +60,8 @@ const meta: Meta<typeof CubeStroke> = {
   argTypes: {
     type: {
       description: 'The visual style of the divider.',
-      table: {
-        type: { summary: formatUnionType(cubeStrokeTypes) },
-        defaultValue: { summary: 'regular' },
-      },
+      table: { type: { summary: formatUnionType(cubeStrokeTypes) } },
+      defaultValue: { summary: 'regular' },
       control: 'select',
       options: cubeStrokeTypes,
     },
@@ -67,6 +73,7 @@ const meta: Meta<typeof CubeStroke> = {
       options: colorOptions,
     },
     className: {
+      description: 'Additional classes merged onto the divider.',
       table: { type: { summary: 'string' } },
       control: { disable: true },
     },
@@ -75,9 +82,7 @@ const meta: Meta<typeof CubeStroke> = {
 
 export default meta
 
-type StrokeStoryArgs = ComponentProps<typeof CubeStroke> & PropsWithClassName
-
-type Story = StoryObj<StrokeStoryArgs>
+type Story = StoryObj<CubeStrokeStoryArgs>
 
 export const Playground: Story = {
   tags: ['!dev'],

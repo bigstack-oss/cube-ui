@@ -1,4 +1,4 @@
-import { type ComponentProps } from 'react'
+import type { ComponentType } from 'react'
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import {
   Controls,
@@ -6,10 +6,12 @@ import {
   Primary,
   Title,
 } from '@storybook/addon-docs/blocks'
-import type { PropsWithClassName } from '@shared-types/react-types'
 import { formatUnionType } from '@internals/utils/formatType'
 import { StoryLayout } from '@internals/components/StoryLayout/StoryLayout'
-import { cubeLoadingSpinnerVariants } from '@components/CubeLoadingSpinner/cubeLoadingSpinnerTypes'
+import {
+  cubeLoadingSpinnerVariants,
+  type CubeLoadingSpinnerVariant,
+} from '@components/CubeLoadingSpinner/cubeLoadingSpinnerTypes'
 import { CubeLoadingSpinner } from '@components/CubeLoadingSpinner'
 import { SpinnerRow } from './SpinnerRow'
 import { PlaygroundLayout } from '@internals/components/StoryLayout/PlaygroundLayout'
@@ -25,9 +27,14 @@ const CubeLoadingSpinnerDocs = () => {
   )
 }
 
-const meta: Meta<typeof CubeLoadingSpinner> = {
+type CubeLoadingSpinnerStoryArgs = {
+  variant: CubeLoadingSpinnerVariant
+  className?: string
+}
+
+const meta: Meta<CubeLoadingSpinnerStoryArgs> = {
   title: 'Atoms/Loading Spinner',
-  component: CubeLoadingSpinner,
+  component: CubeLoadingSpinner as ComponentType<CubeLoadingSpinnerStoryArgs>,
   tags: ['autodocs'],
   parameters: {
     controls: { expanded: true },
@@ -49,6 +56,7 @@ const meta: Meta<typeof CubeLoadingSpinner> = {
       options: cubeLoadingSpinnerVariants,
     },
     className: {
+      description: 'Additional classes merged onto the spinner.',
       table: { type: { summary: 'string' } },
       control: { disable: true },
     },
@@ -57,10 +65,7 @@ const meta: Meta<typeof CubeLoadingSpinner> = {
 
 export default meta
 
-type LoadingSpinnerStoryArgs = ComponentProps<typeof CubeLoadingSpinner> &
-  PropsWithClassName
-
-type Story = StoryObj<LoadingSpinnerStoryArgs>
+type Story = StoryObj<CubeLoadingSpinnerStoryArgs>
 
 export const Playground: Story = {
   tags: ['!dev'],
