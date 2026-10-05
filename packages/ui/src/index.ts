@@ -14,6 +14,7 @@ export * from './components/CubeTabs'
 export * from './components/CubeTag'
 export * from './components/CubeTextarea'
 export * from './components/CubeToggle'
+export * from './components/CubeTooltip'
 
 // I18n
 export * from './i18n'

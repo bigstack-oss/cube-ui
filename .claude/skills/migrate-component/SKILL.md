@@ -76,6 +76,14 @@ The source component very likely has **no** test file — that's a known gap in 
 
 Create `packages/ui/src/stories/components/Cube<Name>/Cube<Name>.stories.tsx`. Follow `CLAUDE.md` → "Storybook story structure" precisely — docs page block order, component blurb in `parameters.docs.description.component` (not Gallery `StoryLayout desc`), `Playground` + `Gallery` pair, disabled controls for non-primitive props with a translation `render` function, row/`.Header` helper pattern for repeated Gallery layouts.
 
+**Keep the story's args type aligned with the component's Props type hierarchy.** This is the most common mistake in migrated stories, so check it explicitly before moving on:
+
+- Each arg is a real top-level prop, under its real name, typed with the component's exported types. Do not invent flattened args.
+- An object-shaped prop (e.g. `CubeTooltip`'s `hoverContent: CubeTooltipInformation`) stays **one grouped arg** with `control: 'object'` and `table: { type: { summary: 'CubeTooltipInformation', detail: '{ title?: string; subtext?: string; message: string }' } }`. Never split it into `title` / `subtext` / `message` args and reassemble it in `render`.
+- Stand-in controls (CLAUDE.md → "Storybook story structure") are only for leaf values a control can't represent; a prop with no usable control stays listed with `control: { disable: true }`.
+- `argTypes` entries: `description`, `table.type.summary` (via `formatUnionType` for unions), `defaultValue` beside `table`, then `control` / `options`. Compare with `CubeButton.stories.tsx` and `CubeTooltip.stories.tsx`.
+- Smell test: if `component: CubeX as ComponentType<CubeXStoryArgs>` only compiles with `as unknown`, the args type has drifted from the props. Fix the args type, not the cast.
+
 Decide the `meta.title` tier (`Atoms/*` vs `Molecules/*`) by looking at the component's structure, not by copying the old repo's Storybook category verbatim (the old repo may not have used the same tiers). If it's genuinely ambiguous, ask the user rather than guessing — this is one of the few real judgment calls in an otherwise mechanical process.
 
 Port the old Gallery's coverage (every variant × state combination it demonstrated) rather than inventing a new set from scratch — the old story is usually a good checklist of what actually matters to show. In stories and tests, render same-family pieces via the compound API (`<CubeCheckbox.Skeleton />`, not a flat `CubeCheckboxSkeleton` import).
