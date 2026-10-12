@@ -1,4 +1,4 @@
-import type { MouseEvent, RefObject } from 'react'
+import type { RefObject } from 'react'
 import { splitPlacements } from '@internals/utils/floating/splitPlacements'
 import type { Placement } from '@internals/utils/floating/types'
 import { useFloating } from '@internals/utils/floating/useFloating'
@@ -7,6 +7,7 @@ import { infoBoxContainer } from './cubeTooltipStyles'
 import type { CubeTooltipInformation } from './cubeTooltipTypes'
 
 export type InfoBoxProps = {
+  id: string
   information: CubeTooltipInformation
   placement: Placement
   mouseX: number
@@ -15,6 +16,7 @@ export type InfoBoxProps = {
 
 export const InfoBox = (props: InfoBoxProps) => {
   const {
+    id,
     information: { title, subtext, message },
     placement,
     mouseX,
@@ -40,18 +42,9 @@ export const InfoBox = (props: InfoBoxProps) => {
 
   const [verticalPlacement] = splitPlacements(idealPlacement)
 
-  const onClick = (e: MouseEvent<HTMLDivElement>) => {
-    // Prevent the visibility state from switching from 'hover' to 'click'
-    // when the info box is clicked after the translate is applied.
-    e.stopPropagation()
-  }
-
   const renderContent = () => {
     return (
-      <div
-        className="flex flex-col gap-y-0.5 rounded-[5px] bg-dark-700 px-3 pb-2.5 pt-2"
-        onClick={onClick}
-      >
+      <div className="flex flex-col gap-y-0.5 rounded-[5px] bg-dark-700 px-3 pb-2.5 pt-2">
         <div className="flex items-center justify-between gap-x-6 text-primary-200">
           <div className="primary-body2 shrink-0 font-semibold">{title}</div>
           <div className="primary-body4 shrink-0">{subtext}</div>
@@ -68,16 +61,22 @@ export const InfoBox = (props: InfoBoxProps) => {
       the right edge of the window. */}
       <div
         ref={elementRef}
+        aria-hidden
         className={infoBoxContainer({
           verticalPlacement,
+          isMeasuring: true,
         })}
       >
         {renderContent()}
       </div>
-      {/* Element that's visible to users. */}
+      {/* Element that's visible to users. It stays hidden like the shadow
+      element until its position has been resolved. */}
       <div
+        id={id}
+        role="tooltip"
         className={infoBoxContainer({
           verticalPlacement,
+          isMeasuring: !floatingStyle,
         })}
         style={floatingStyle}
       >

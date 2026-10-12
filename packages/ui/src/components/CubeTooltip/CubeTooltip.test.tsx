@@ -5,8 +5,9 @@ import { axe } from 'jest-axe'
 import { CubeTooltip } from './CubeTooltip'
 import { cubeTooltipPlacements } from './cubeTooltipTypes'
 
-// The info box renders its content twice: once in an off-screen "shadow"
-// element used for measuring, and once in the visible floating element.
+// The info box renders its content twice: once in a hidden, `aria-hidden`
+// "shadow" element used for measuring, and once in the visible
+// `role="tooltip"` element.
 const queryVisibleCaret = () =>
   document.body.querySelector<HTMLSpanElement>('span.border-b-dark-700')
 
@@ -194,6 +195,113 @@ describe('CubeTooltip', () => {
       expect(queryVisibleCaret()).toBeInTheDocument()
     },
   )
+
+  it('exposes a single tooltip and links it to the anchor while shown', async () => {
+    const user = userEvent.setup()
+    render(
+      <CubeTooltip hoverContent={{ message: 'Tooltip message' }}>
+        <button>Anchor</button>
+      </CubeTooltip>,
+    )
+
+    const anchor = screen.getByRole('button', { name: 'Anchor' })
+    expect(anchor).not.toHaveAttribute('aria-describedby')
+
+    await user.hover(anchor)
+
+    const tooltip = screen.getByRole('tooltip')
+    expect(tooltip).toHaveTextContent('Tooltip message')
+    expect(anchor).toHaveAttribute('aria-describedby', tooltip.id)
+    expect(anchor).toHaveAccessibleDescription('Tooltip message')
+
+    await user.unhover(anchor)
+    expect(anchor).not.toHaveAttribute('aria-describedby')
+  })
+
+  it("keeps the anchor's own aria-describedby alongside the tooltip id", async () => {
+    const user = userEvent.setup()
+    render(
+      <CubeTooltip hoverContent={{ message: 'Tooltip message' }}>
+        <button aria-describedby="hint">Anchor</button>
+      </CubeTooltip>,
+    )
+
+    const anchor = screen.getByRole('button', { name: 'Anchor' })
+    await user.hover(anchor)
+
+    expect(anchor).toHaveAttribute(
+      'aria-describedby',
+      `hint ${screen.getByRole('tooltip').id}`,
+    )
+
+    await user.unhover(anchor)
+    expect(anchor).toHaveAttribute('aria-describedby', 'hint')
+  })
+
+  it('hides the measuring element from users and assistive technology', async () => {
+    const user = userEvent.setup()
+    render(
+      <CubeTooltip hoverContent={{ message: 'Tooltip message' }}>
+        <button>Anchor</button>
+      </CubeTooltip>,
+    )
+
+    await user.hover(screen.getByRole('button', { name: 'Anchor' }))
+
+    const [shadow] = screen
+      .getAllByText('Tooltip message')
+      .map((el) => el.closest('[aria-hidden="true"]'))
+      .filter(Boolean)
+
+    // `fixed` keeps it out of the document flow, so it can't add scroll height.
+    expect(shadow).toHaveClass('invisible', 'fixed', 'left-0', 'top-0')
+    expect(shadow).not.toHaveClass('absolute')
+  })
+
+  it('shows the hover content on keyboard focus and hides it on blur', async () => {
+    const user = userEvent.setup()
+    const onFocus = vi.fn()
+    const onBlur = vi.fn()
+    render(
+      <CubeTooltip hoverContent={{ message: 'Tooltip message' }}>
+        <button onFocus={onFocus} onBlur={onBlur}>
+          Anchor
+        </button>
+      </CubeTooltip>,
+    )
+
+    await user.tab()
+    expect(screen.getByRole('button', { name: 'Anchor' })).toHaveFocus()
+    expect(screen.getByRole('tooltip')).toHaveTextContent('Tooltip message')
+    expect(onFocus).toHaveBeenCalledOnce()
+
+    await user.tab()
+    expect(screen.queryByRole('tooltip')).not.toBeInTheDocument()
+    expect(onBlur).toHaveBeenCalledOnce()
+  })
+
+  it('dismisses the tooltip with Escape', async () => {
+    const user = userEvent.setup()
+    render(
+      <CubeTooltip
+        hoverContent={{ message: 'Hover message' }}
+        clickContent={{ message: 'Click message' }}
+      >
+        <button>Anchor</button>
+      </CubeTooltip>,
+    )
+
+    const anchor = screen.getByRole('button', { name: 'Anchor' })
+
+    await user.hover(anchor)
+    await user.keyboard('{Escape}')
+    expect(screen.queryByRole('tooltip')).not.toBeInTheDocument()
+
+    await user.click(anchor)
+    expect(screen.getByRole('tooltip')).toHaveTextContent('Click message')
+    await user.keyboard('{Escape}')
+    expect(screen.queryByRole('tooltip')).not.toBeInTheDocument()
+  })
 
   it('has no accessibility violations while the tooltip is shown', async () => {
     const user = userEvent.setup()

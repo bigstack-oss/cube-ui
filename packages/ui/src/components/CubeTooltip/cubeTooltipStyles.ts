@@ -20,13 +20,22 @@ export const caret = cva(
 )
 
 export const infoBoxContainer = cva(
-  'pointer-events-none absolute flex min-w-[50px] max-w-[480px]',
+  'pointer-events-none flex min-w-[50px] max-w-[480px]',
   {
     variants: {
       verticalPlacement: {
         top: 'flex-col',
         bottom: 'flex-col-reverse',
       } satisfies Record<VerticalPlacement, ClassValue>,
+      /**
+       * Hidden and pinned to the viewport's top-left corner: `fixed` keeps it
+       * out of the document flow (no extra scroll height), and the left edge
+       * gives it the full viewport width so it's measured without wrapping.
+       */
+      isMeasuring: {
+        true: 'invisible fixed left-0 top-0',
+        false: 'absolute',
+      },
     },
   },
 )

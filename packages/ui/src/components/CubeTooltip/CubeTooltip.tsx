@@ -1,7 +1,10 @@
 import {
   cloneElement,
+  type FocusEvent,
   Fragment,
   type MouseEvent,
+  useEffect,
+  useId,
   useRef,
   useState,
 } from 'react'
@@ -29,6 +32,8 @@ export const CubeTooltip = (props: CubeTooltipProps) => {
 
   const anchorRef = useRef<HTMLElement | null>(null)
 
+  const tooltipId = useId()
+
   const infoMap: Record<
     NonNullable<CubeTooltipVisibilityState>,
     CubeTooltipInformation | undefined
@@ -36,6 +41,26 @@ export const CubeTooltip = (props: CubeTooltipProps) => {
     hover: hoverContent,
     click: clickContent,
   }
+
+  const isVisible =
+    visibilityState !== undefined && infoMap[visibilityState] !== undefined
+
+  // Dismiss with Escape while the tooltip is shown, whether it was opened by
+  // hover, focus, or click.
+  useEffect(() => {
+    if (!isVisible) return
+
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setVisibilityState(undefined)
+      }
+    }
+
+    document.addEventListener('keydown', onKeyDown)
+    return () => {
+      document.removeEventListener('keydown', onKeyDown)
+    }
+  }, [isVisible])
 
   const onMouseEnter = (e: MouseEvent<HTMLElement>) => {
     if (hoverContent) {
@@ -61,9 +86,30 @@ export const CubeTooltip = (props: CubeTooltipProps) => {
     anchorElement.props.onClick?.(e)
   }
 
+  const onFocus = (e: FocusEvent<HTMLElement>) => {
+    if (hoverContent) {
+      // There's no cursor position for keyboard focus, so `follow-cursor`
+      // placements center on the anchor instead.
+      const rect = e.currentTarget.getBoundingClientRect()
+      setMouseX(rect.left + rect.width / 2)
+      setVisibilityState('hover')
+    }
+    anchorElement.props.onFocus?.(e)
+  }
+
+  const onBlur = (e: FocusEvent<HTMLElement>) => {
+    setVisibilityState(undefined)
+    anchorElement.props.onBlur?.(e)
+  }
+
   if (anchorElement.type === Fragment) {
     throw new Error('Fragment children is not supported in CubeTooltip')
   }
+
+  const ariaDescribedBy =
+    [anchorElement.props['aria-describedby'], isVisible ? tooltipId : null]
+      .filter(Boolean)
+      .join(' ') || undefined
 
   const clonedAnchor = cloneElement(anchorElement, {
     ref: (element: HTMLElement) => {
@@ -77,6 +123,9 @@ export const CubeTooltip = (props: CubeTooltipProps) => {
     onMouseMove,
     onMouseLeave,
     onClick,
+    onFocus,
+    onBlur,
+    'aria-describedby': ariaDescribedBy,
   })
 
   return (
@@ -89,6 +138,7 @@ export const CubeTooltip = (props: CubeTooltipProps) => {
             // Assign a key to remount the InfoBox to prevent layout shifts
             // when switching from hover content to click content.
             key={visibilityState}
+            id={tooltipId}
             information={infoMap[visibilityState]}
             placement={placement}
             mouseX={mouseX}

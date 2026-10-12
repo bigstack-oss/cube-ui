@@ -1,4 +1,4 @@
-import type { MouseEvent, ReactElement, Ref } from 'react'
+import type { FocusEvent, MouseEvent, ReactElement, Ref } from 'react'
 import type { Placement } from '@internals/utils/floating/types'
 
 export const cubeTooltipPlacements = [
@@ -20,6 +20,9 @@ export type CubeTooltipInteractiveElementProps = {
   onMouseMove?: (e: MouseEvent<HTMLElement>) => void
   onMouseLeave?: (e: MouseEvent<HTMLElement>) => void
   onClick?: (e: MouseEvent<HTMLElement>) => void
+  onFocus?: (e: FocusEvent<HTMLElement>) => void
+  onBlur?: (e: FocusEvent<HTMLElement>) => void
+  'aria-describedby'?: string
 }
 
 export type CubeTooltipInformation = {
@@ -38,7 +41,9 @@ export type CubeTooltipProps = {
   hoverContent?: CubeTooltipInformation
   clickContent?: CubeTooltipInformation
   /**
-   * The toggle (anchor) element.
+   * The toggle (anchor) element. Hover content is also shown while it has
+   * keyboard focus, so pass a focusable element (e.g. a `<button>`) to make
+   * the tooltip reachable by keyboard.
    */
   children: ReactElement<CubeTooltipInteractiveElementProps>
 }
