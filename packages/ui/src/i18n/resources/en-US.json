@@ -1,4 +1,7 @@
 {
   "component.common.loading": "Loading",
-  "component.common.noData": "No Data"
+  "component.common.noData": "No Data",
+  "component.dropdown.choose": "Choose",
+  "component.dropdown.all": "All",
+  "component.dropdown.search": "Search"
 }

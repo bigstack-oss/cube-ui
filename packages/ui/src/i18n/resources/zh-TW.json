@@ -1,4 +1,7 @@
 {
   "component.common.loading": "載入中",
-  "component.common.noData": "沒有資料"
+  "component.common.noData": "沒有資料",
+  "component.dropdown.choose": "選擇",
+  "component.dropdown.all": "全部",
+  "component.dropdown.search": "搜尋"
 }
