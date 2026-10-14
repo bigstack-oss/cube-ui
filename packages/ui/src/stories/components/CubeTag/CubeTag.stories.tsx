@@ -17,7 +17,14 @@ import {
   type CubeTagVariant,
 } from '@components/CubeTag/cubeTagTypes'
 import { MonochromeTag } from '@icons'
-import { SubHeadingRow, TagSkeletonCells, TagVariantRow } from './TagVariantRow'
+import { GalleryMatrix } from '@internals/components/GalleryMatrix'
+import {
+  SubHeadingRow,
+  TagContentCell,
+  TagSkeletonCells,
+  TagVariantRow,
+} from './TagVariantRow'
+import { tagContents } from './utils'
 import { TagRow } from './TagRow'
 
 const CubeTagDocs = () => {
@@ -186,11 +193,25 @@ export const Gallery: Story = {
           </div>
         </StoryLayout.Section>
         <StoryLayout.Section title="States">
-          <div className="flex w-[1000px] flex-col gap-y-6 overflow-auto">
-            <TagVariantRow.Header />
-            <TagVariantRow title="Default" />
-            <TagVariantRow title="Disabled" disabled />
-          </div>
+          <GalleryMatrix
+            rowGroups={cubeTagColors}
+            rows={[
+              { title: 'Default', value: false },
+              { title: 'Disabled', value: true },
+            ]}
+            columnGroups={cubeTagVariants}
+            columns={tagContents}
+            renderCell={({ rowGroup, row, columnGroup, column }) =>
+              columnGroup && (
+                <TagContentCell
+                  color={rowGroup}
+                  disabled={row}
+                  variant={columnGroup}
+                  content={column}
+                />
+              )
+            }
+          />
         </StoryLayout.Section>
         <StoryLayout.Section title="Skeleton">
           <div className="flex w-[1000px] flex-col gap-y-6 overflow-auto">
