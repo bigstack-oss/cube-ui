@@ -1,5 +1,14 @@
 # @bigstack-oss/cube-ui
 
+## 0.2.0
+
+### Minor Changes
+
+- 7d28ab2: Add CubeTooltip
+- ce98c2d: Add CubeStatus and CubeStatusReaction
+- 9c450f4: Add CubeDropdown
+- 0639a1e: Add CubeOverflowMenu
+
 ## 0.1.0
 
 ### Minor Changes
