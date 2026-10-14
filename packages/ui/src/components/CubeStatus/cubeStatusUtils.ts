@@ -1,40 +1,13 @@
-const neutralStatuses = ['neutral', 'in-use', 'finished'] as const
+import {
+  cubeStatusNeutralValues,
+  cubeStatusSuccessValues,
+  cubeStatusWarningValues,
+  type CubeStatusType,
+} from './cubeStatusTypes'
 
-const successStatuses = [
-  'ok',
-  'success',
-  'active',
-  'available',
-  'powering on',
-] as const
-
-const warningStatuses = [
-  'warning',
-  'error',
-  'fail',
-  'failed',
-  'stopped',
-  'powering off',
-] as const
-
-export const cubeStatusKnownValues = [
-  ...neutralStatuses,
-  ...successStatuses,
-  ...warningStatuses,
-] as const
-
-type CubeStatusKnownValue = (typeof cubeStatusKnownValues)[number]
-
-// Use `string & {}` alongside the known literals to allow those specific
-// strings to autocomplete while still accepting any string.
-// Reference: https://stackoverflow.com/a/61048124/19772349
-export type CubeStatusValue = (string & {}) | CubeStatusKnownValue
-
-export type CubeStatusType = 'neutral' | 'success' | 'warning' | 'others'
-
-const neutralStatusSet = new Set<string>(neutralStatuses)
-const successStatusSet = new Set<string>(successStatuses)
-const warningStatusSet = new Set<string>(warningStatuses)
+const neutralStatusSet = new Set<string>(cubeStatusNeutralValues)
+const successStatusSet = new Set<string>(cubeStatusSuccessValues)
+const warningStatusSet = new Set<string>(cubeStatusWarningValues)
 
 export const computeStatusType = (status: string): CubeStatusType => {
   if (neutralStatusSet.has(status)) {

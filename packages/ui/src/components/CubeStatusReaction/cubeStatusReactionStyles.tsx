@@ -1,6 +1,6 @@
 import { cva } from 'class-variance-authority'
 import type { ClassValue } from 'class-variance-authority/types'
-import type { CubeStatusReactionType } from './cubeStatusReactionUtils'
+import type { CubeStatusReactionType } from './cubeStatusReactionTypes'
 
 export const baseClass = 'inline-flex w-fit items-center gap-x-2 px-2 py-[5px]'
 

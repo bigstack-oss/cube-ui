@@ -1,22 +1,9 @@
 import { twMerge } from 'tailwind-merge'
-import {
-  computeStatusType,
-  formatOtherStatusText,
-  type CubeStatusValue,
-} from './cubeStatusUtils'
+import type { CubeStatusProps } from './cubeStatusTypes'
+import { computeStatusType, formatOtherStatusText } from './cubeStatusUtils'
 import { status as statusStyles } from './cubeStatusStyles'
 import { useCubeStatusTranslation } from './useCubeStatusTranslation'
 import { CubeStatusSkeleton } from './CubeStatusSkeleton'
-
-export type CubeStatusProps = {
-  status: CubeStatusValue
-  /**
-   * Custom display text for the status text.
-   * If not specified, the text will be automatically generated
-   * based on the built-in logic and i18n translations.
-   */
-  message?: string
-}
 
 export const CubeStatus = (props: CubeStatusProps) => {
   const { status, message } = props

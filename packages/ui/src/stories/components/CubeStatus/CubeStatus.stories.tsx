@@ -10,8 +10,10 @@ import { formatUnionType } from '@internals/utils/formatType'
 import { StoryLayout } from '@internals/components/StoryLayout/StoryLayout'
 import { PlaygroundLayout } from '@internals/components/StoryLayout/PlaygroundLayout'
 import { CubeStatus } from '@components/CubeStatus/CubeStatus'
-import type { CubeStatusProps } from '@components/CubeStatus'
-import { cubeStatusKnownValues } from '@components/CubeStatus/cubeStatusUtils'
+import {
+  cubeStatusKnownValues,
+  type CubeStatusValue,
+} from '@components/CubeStatus/cubeStatusTypes'
 import { StatusRow } from './StatusRow'
 
 const CubeStatusDocs = () => {
@@ -25,9 +27,14 @@ const CubeStatusDocs = () => {
   )
 }
 
-const meta: Meta<CubeStatusProps> = {
+type CubeStatusStoryArgs = {
+  status: CubeStatusValue
+  message?: string
+}
+
+const meta: Meta<CubeStatusStoryArgs> = {
   title: 'Atoms/Status',
-  component: CubeStatus as ComponentType<CubeStatusProps>,
+  component: CubeStatus as ComponentType<CubeStatusStoryArgs>,
   tags: ['autodocs'],
   parameters: {
     controls: { expanded: true },
@@ -43,7 +50,11 @@ const meta: Meta<CubeStatusProps> = {
     status: {
       description:
         'The status value. A set of well-known values get built-in translated text and coloring; any other string falls back to a generated "Others" style label.',
-      table: { type: { summary: formatUnionType(cubeStatusKnownValues) } },
+      table: {
+        type: {
+          summary: `${formatUnionType(cubeStatusKnownValues)} | string`,
+        },
+      },
       control: 'select',
       options: cubeStatusKnownValues,
     },
@@ -58,7 +69,7 @@ const meta: Meta<CubeStatusProps> = {
 
 export default meta
 
-type Story = StoryObj<CubeStatusProps>
+type Story = StoryObj<CubeStatusStoryArgs>
 
 export const Playground: Story = {
   tags: ['!dev'],

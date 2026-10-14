@@ -7,9 +7,9 @@ import {
 } from '@icons'
 import type { SvgComponent } from '../CubeIcon/cubeIconTypes'
 import type {
-  CubeStatusReactionStatus,
+  CubeStatusReactionProps,
   CubeStatusReactionType,
-} from './cubeStatusReactionUtils'
+} from './cubeStatusReactionTypes'
 import { computeStatusType } from './cubeStatusReactionUtils'
 import { statusReaction } from './cubeStatusReactionStyles'
 import { useCubeStatusReactionTranslation } from './useCubeStatusReactionTranslation'
@@ -19,11 +19,6 @@ const iconMap: Record<CubeStatusReactionType, SvgComponent> = {
   neutral: MonochromeCheckmarkBold,
   success: MonochromeCheckmarkCircleFill,
   warning: MonochromeCrossFill,
-}
-
-export type CubeStatusReactionProps = {
-  status: CubeStatusReactionStatus
-  message?: string
 }
 
 export const CubeStatusReaction = (props: CubeStatusReactionProps) => {

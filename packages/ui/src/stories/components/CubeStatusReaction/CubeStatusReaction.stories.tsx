@@ -10,8 +10,10 @@ import { formatUnionType } from '@internals/utils/formatType'
 import { StoryLayout } from '@internals/components/StoryLayout/StoryLayout'
 import { PlaygroundLayout } from '@internals/components/StoryLayout/PlaygroundLayout'
 import { CubeStatusReaction } from '@components/CubeStatusReaction/CubeStatusReaction'
-import type { CubeStatusReactionProps } from '@components/CubeStatusReaction'
-import { cubeStatusReactionStatuses } from '@components/CubeStatusReaction/cubeStatusReactionUtils'
+import {
+  cubeStatusReactionStatuses,
+  type CubeStatusReactionStatus,
+} from '@components/CubeStatusReaction/cubeStatusReactionTypes'
 import { StatusReactionRow } from './StatusReactionRow'
 
 const CubeStatusReactionDocs = () => {
@@ -25,9 +27,14 @@ const CubeStatusReactionDocs = () => {
   )
 }
 
-const meta: Meta<CubeStatusReactionProps> = {
+type CubeStatusReactionStoryArgs = {
+  status: CubeStatusReactionStatus
+  message?: string
+}
+
+const meta: Meta<CubeStatusReactionStoryArgs> = {
   title: 'Atoms/Status Reaction',
-  component: CubeStatusReaction as ComponentType<CubeStatusReactionProps>,
+  component: CubeStatusReaction as ComponentType<CubeStatusReactionStoryArgs>,
   tags: ['autodocs'],
   parameters: {
     controls: { expanded: true },
@@ -57,7 +64,7 @@ const meta: Meta<CubeStatusReactionProps> = {
 
 export default meta
 
-type Story = StoryObj<CubeStatusReactionProps>
+type Story = StoryObj<CubeStatusReactionStoryArgs>
 
 export const Playground: Story = {
   tags: ['!dev'],

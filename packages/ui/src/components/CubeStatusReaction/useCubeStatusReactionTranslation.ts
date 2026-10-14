@@ -1,5 +1,5 @@
 import { useCubeUiTranslation } from '@i18n/useCubeUiTranslation'
-import type { CubeStatusReactionStatus } from './cubeStatusReactionUtils'
+import type { CubeStatusReactionStatus } from './cubeStatusReactionTypes'
 
 export const useCubeStatusReactionTranslation = (): Record<
   CubeStatusReactionStatus,

@@ -1,23 +1,14 @@
-const neutralStatuses = ['neutral'] as const
+import {
+  cubeStatusReactionNeutralStatuses,
+  cubeStatusReactionSuccessStatuses,
+  cubeStatusReactionWarningStatuses,
+  type CubeStatusReactionStatus,
+  type CubeStatusReactionType,
+} from './cubeStatusReactionTypes'
 
-const successStatuses = ['success', 'available', 'done'] as const
-
-const warningStatuses = ['error', 'duplicate', 'failed'] as const
-
-export const cubeStatusReactionStatuses = [
-  ...neutralStatuses,
-  ...successStatuses,
-  ...warningStatuses,
-] as const
-
-export type CubeStatusReactionStatus =
-  (typeof cubeStatusReactionStatuses)[number]
-
-export type CubeStatusReactionType = 'neutral' | 'success' | 'warning'
-
-const neutralStatusSet = new Set<string>(neutralStatuses)
-const successStatusSet = new Set<string>(successStatuses)
-const warningStatusSet = new Set<string>(warningStatuses)
+const neutralStatusSet = new Set<string>(cubeStatusReactionNeutralStatuses)
+const successStatusSet = new Set<string>(cubeStatusReactionSuccessStatuses)
+const warningStatusSet = new Set<string>(cubeStatusReactionWarningStatuses)
 
 export const computeStatusType = (
   status: CubeStatusReactionStatus,

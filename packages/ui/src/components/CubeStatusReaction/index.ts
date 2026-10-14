@@ -1,6 +1,7 @@
-export type { CubeStatusReactionStatus } from './cubeStatusReactionUtils'
+export type {
+  CubeStatusReactionProps,
+  CubeStatusReactionStatus,
+  CubeStatusReactionType,
+} from './cubeStatusReactionTypes'
 
-export {
-  type CubeStatusReactionProps,
-  CubeStatusReaction,
-} from './CubeStatusReaction'
+export { CubeStatusReaction } from './CubeStatusReaction'

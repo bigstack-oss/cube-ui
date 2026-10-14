@@ -1,3 +1,8 @@
-export type { CubeStatusValue } from './cubeStatusUtils'
+export type {
+  CubeStatusKnownValue,
+  CubeStatusProps,
+  CubeStatusType,
+  CubeStatusValue,
+} from './cubeStatusTypes'
 
-export { type CubeStatusProps, CubeStatus } from './CubeStatus'
+export { CubeStatus } from './CubeStatus'

@@ -4,7 +4,7 @@ import { CubeStatusReaction } from './CubeStatusReaction'
 import {
   cubeStatusReactionStatuses,
   type CubeStatusReactionStatus,
-} from './cubeStatusReactionUtils'
+} from './cubeStatusReactionTypes'
 
 describe('CubeStatusReaction', () => {
   it.each(cubeStatusReactionStatuses)(

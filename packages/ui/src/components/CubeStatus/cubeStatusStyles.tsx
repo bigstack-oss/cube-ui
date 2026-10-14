@@ -1,6 +1,6 @@
 import { cva } from 'class-variance-authority'
 import type { ClassValue } from 'class-variance-authority/types'
-import type { CubeStatusType } from './cubeStatusUtils'
+import type { CubeStatusType } from './cubeStatusTypes'
 
 export const status = cva(
   [
