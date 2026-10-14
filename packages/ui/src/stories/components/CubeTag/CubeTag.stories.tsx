@@ -172,17 +172,24 @@ export const Gallery: Story = {
     return (
       <StoryLayout title="Tag">
         <StoryLayout.Section title="Variants">
-          <div className="w-[1000px] overflow-auto">
-            <TagVariantRow color="default" />
+          <div className="flex w-[1000px] flex-col gap-y-6 overflow-auto">
+            <TagVariantRow.Header />
+            <TagVariantRow title="Default" />
           </div>
         </StoryLayout.Section>
         <StoryLayout.Section title="Colors">
-          <div className="flex w-[1000px] flex-col gap-y-12 overflow-auto">
-            <TagVariantRow color="default" />
-            <TagVariantRow color="primary-blue" />
-            <TagVariantRow color="blue" />
-            <TagVariantRow color="cyan" />
-            <TagVariantRow color="dark" />
+          <div className="flex w-[1000px] flex-col gap-y-6 overflow-auto">
+            <TagVariantRow.Header />
+            {cubeTagColors.map((color) => (
+              <TagVariantRow key={color} title={color} color={color} />
+            ))}
+          </div>
+        </StoryLayout.Section>
+        <StoryLayout.Section title="States">
+          <div className="flex w-[1000px] flex-col gap-y-6 overflow-auto">
+            <TagVariantRow.Header />
+            <TagVariantRow title="Default" />
+            <TagVariantRow title="Disabled" disabled />
           </div>
         </StoryLayout.Section>
         <StoryLayout.Section title="Skeleton">

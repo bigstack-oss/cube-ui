@@ -113,11 +113,6 @@ export const Gallery: Story = {
   render: () => {
     return (
       <StoryLayout title="Toggle">
-        <StoryLayout.Section title="Variants">
-          <ToggleRow title="Master">
-            <CenteredCubeToggle showLabel initialChecked />
-          </ToggleRow>
-        </StoryLayout.Section>
         <StoryLayout.Section title="States">
           <div className="flex flex-col gap-y-6">
             <ToggleRow.Header />

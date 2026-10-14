@@ -16,7 +16,6 @@ import {
 } from '@components/CubeStroke/cubeStrokeTypes'
 import { CubeStroke } from '@components/CubeStroke'
 import { StrokeRow } from './StrokeRow'
-import { SubHeading } from '@internals/components/SubHeading'
 
 const CubeStrokeDocs = () => {
   return (
@@ -114,22 +113,25 @@ export const Gallery: Story = {
   render: () => {
     return (
       <StoryLayout title="Stroke">
-        <StoryLayout.Section title="Variants">
-          <div className="grid grid-cols-[max-content_max-content_minmax(0,1fr)] items-center gap-x-12 gap-y-6">
-            <SubHeading className="row-span-2 self-center">Regular</SubHeading>
-            <StrokeRow title="Default color">
-              <CubeStroke type="regular" />
+        <StoryLayout.Section title="Types">
+          <div className="grid grid-cols-[120px_minmax(0,1fr)] items-center gap-x-12 gap-y-6">
+            {cubeStrokeTypes.map((type) => (
+              <StrokeRow key={type} title={type}>
+                <CubeStroke type={type} />
+              </StrokeRow>
+            ))}
+          </div>
+        </StoryLayout.Section>
+        <StoryLayout.Section title="Colors">
+          <div className="grid grid-cols-[180px_minmax(0,1fr)] items-center gap-x-12 gap-y-6">
+            <StrokeRow title="Default">
+              <CubeStroke />
             </StrokeRow>
-            <StrokeRow title="Custom color">
-              <CubeStroke type="regular" color="border-primary-500" />
-            </StrokeRow>
-            <SubHeading className="row-span-2 self-center">Dot</SubHeading>
-            <StrokeRow title="Default color">
-              <CubeStroke type="dot" />
-            </StrokeRow>
-            <StrokeRow title="Custom color">
-              <CubeStroke type="dot" color="border-secondary-500" />
-            </StrokeRow>
+            {colorOptions.map((color) => (
+              <StrokeRow key={color} title={color}>
+                <CubeStroke color={color} />
+              </StrokeRow>
+            ))}
           </div>
         </StoryLayout.Section>
       </StoryLayout>

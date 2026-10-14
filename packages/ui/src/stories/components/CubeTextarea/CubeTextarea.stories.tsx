@@ -140,9 +140,6 @@ export const Gallery: Story = {
   render: function Render() {
     return (
       <StoryLayout title="Textarea">
-        <StoryLayout.Section title="Variants">
-          <ControlledTextarea title="Master" textareaProps={{}} />
-        </StoryLayout.Section>
         <StoryLayout.Section title="States">
           <div className="flex flex-col gap-y-6">
             <ControlledTextarea title="Default" textareaProps={{}} />

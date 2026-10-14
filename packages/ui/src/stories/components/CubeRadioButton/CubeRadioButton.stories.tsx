@@ -12,7 +12,6 @@ import { CubeRadioButton } from '@components/CubeRadioButton/CubeRadioButton'
 import { RadioButtonRow } from './RadioButtonRow'
 import { RadioButtonStateRow } from './RadioButtonStateRow'
 import { RadioButtonLayoutRow } from './RadioButtonLayoutRow'
-import { radioButtonText } from './utils'
 
 const CubeRadioButtonDocs = () => {
   return (
@@ -121,11 +120,6 @@ export const Gallery: Story = {
   render: function Render() {
     return (
       <StoryLayout title="Radio Button">
-        <StoryLayout.Section title="Variants">
-          <RadioButtonRow title="Master">
-            <CubeRadioButton label={radioButtonText} />
-          </RadioButtonRow>
-        </StoryLayout.Section>
         <StoryLayout.Section title="States">
           <div className="flex flex-col gap-y-6">
             <RadioButtonStateRow.Header />

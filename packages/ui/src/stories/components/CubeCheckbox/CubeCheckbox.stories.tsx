@@ -9,7 +9,6 @@ import {
 import { formatUnionType } from '@internals/utils/formatType'
 import { StoryLayout } from '@internals/components/StoryLayout/StoryLayout'
 import { PlaygroundLayout } from '@internals/components/StoryLayout/PlaygroundLayout'
-import { SubHeading } from '@internals/components/SubHeading'
 import { CaptionText } from '@internals/components/CaptionText'
 import { CubeCheckbox } from '@components/CubeCheckbox/CubeCheckbox'
 import {
@@ -187,36 +186,17 @@ export const Gallery: Story = {
   render: function Render() {
     return (
       <StoryLayout title="Checkbox">
-        <StoryLayout.Section title="Variants">
+        <StoryLayout.Section title="Colors">
           <div className="flex flex-col gap-y-6">
-            <CheckboxRow title="">
-              <SubHeading>Default</SubHeading>
-              <SubHeading>Dark</SubHeading>
-            </CheckboxRow>
-            <CheckboxRow title="Primary">
-              <CubeCheckbox
-                label={checkboxText}
-                color="primary"
-                defaultChecked
-              />
-              <CubeCheckbox
-                label={checkboxText}
-                color="primary-dark"
-                defaultChecked
-              />
-            </CheckboxRow>
-            <CheckboxRow title="Secondary">
-              <CubeCheckbox
-                label={checkboxText}
-                color="secondary"
-                defaultChecked
-              />
-              <CubeCheckbox
-                label={checkboxText}
-                color="secondary-dark"
-                defaultChecked
-              />
-            </CheckboxRow>
+            {cubeCheckboxColors.map((color) => (
+              <CheckboxRow key={color} title={color}>
+                <CubeCheckbox
+                  label={checkboxText}
+                  color={color}
+                  defaultChecked
+                />
+              </CheckboxRow>
+            ))}
           </div>
         </StoryLayout.Section>
         <StoryLayout.Section title="Label Sizes">
@@ -233,37 +213,10 @@ export const Gallery: Story = {
         <StoryLayout.Section title="States">
           <div className="flex flex-col gap-y-6">
             <CheckboxStateRow.Header />
+            <CheckboxStateRow title="Default" checkboxProps={{}} />
             <CheckboxStateRow
-              title="Primary"
-              checkboxProps={{ color: 'primary' }}
-            />
-            <CheckboxStateRow
-              title="Primary (Disabled)"
-              checkboxProps={{ color: 'primary', disabled: true }}
-            />
-            <CheckboxStateRow
-              title="Primary Dark"
-              checkboxProps={{ color: 'primary-dark' }}
-            />
-            <CheckboxStateRow
-              title="Primary Dark (Disabled)"
-              checkboxProps={{ color: 'primary-dark', disabled: true }}
-            />
-            <CheckboxStateRow
-              title="Secondary"
-              checkboxProps={{ color: 'secondary' }}
-            />
-            <CheckboxStateRow
-              title="Secondary (Disabled)"
-              checkboxProps={{ color: 'secondary', disabled: true }}
-            />
-            <CheckboxStateRow
-              title="Secondary Dark"
-              checkboxProps={{ color: 'secondary-dark' }}
-            />
-            <CheckboxStateRow
-              title="Secondary Dark (Disabled)"
-              checkboxProps={{ color: 'secondary-dark', disabled: true }}
+              title="Disabled"
+              checkboxProps={{ disabled: true }}
             />
           </div>
         </StoryLayout.Section>

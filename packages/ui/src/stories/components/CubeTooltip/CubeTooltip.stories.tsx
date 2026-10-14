@@ -18,6 +18,7 @@ import {
 } from '@components/CubeTooltip/cubeTooltipTypes'
 import { HoverAndClickGrid } from './HoverAndClickGrid'
 import { LayoutGrid } from './LayoutGrid'
+import { TooltipRow } from './TooltipRow'
 import { NestedLayout } from './NestedLayout'
 import { PlacementGrid } from './PlacementGrid'
 
@@ -147,11 +148,13 @@ export const Gallery: Story = {
         <StoryLayout.Section title="Placements">
           <PlacementGrid />
         </StoryLayout.Section>
-        <StoryLayout.Section title="Layout">
-          <LayoutGrid />
-        </StoryLayout.Section>
-        <StoryLayout.Section title="Nested Layout">
-          <NestedLayout />
+        <StoryLayout.Section title="Layouts">
+          <div className="flex flex-col gap-y-8">
+            <LayoutGrid />
+            <TooltipRow title="In a Scroll Container">
+              <NestedLayout />
+            </TooltipRow>
+          </div>
         </StoryLayout.Section>
         <StoryLayout.Section title="Hover & Click">
           <HoverAndClickGrid />

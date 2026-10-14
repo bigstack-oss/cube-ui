@@ -149,26 +149,33 @@ export const Gallery: Story = {
   render: function Render() {
     return (
       <StoryLayout title="Tabs">
-        <StoryLayout.Section title="Layout">
+        <StoryLayout.Section title="Variants">
           <div className="flex flex-col gap-y-6">
             <TabsRow title="Default">
               <ControlledTabs />
             </TabsRow>
-            <TabsRow title="Default (disabled)">
-              <ControlledTabs disabled />
-            </TabsRow>
             <TabsRow title="w/Number">
               <ControlledTabs number />
-            </TabsRow>
-            <TabsRow title="w/Number (disabled)">
-              <ControlledTabs number disabled />
             </TabsRow>
             <TabsRow title="w/Dot">
               <ControlledTabs dot />
             </TabsRow>
-            <TabsRow title="w/Dot (disabled)">
-              <ControlledTabs dot disabled />
-            </TabsRow>
+          </div>
+        </StoryLayout.Section>
+        <StoryLayout.Section title="States">
+          <div className="flex flex-col gap-y-10">
+            {[false, true].map((disabled) => (
+              <TabsRow
+                key={String(disabled)}
+                title={disabled ? 'Disabled' : 'Default'}
+              >
+                <div className="flex flex-col gap-y-6">
+                  <ControlledTabs disabled={disabled} />
+                  <ControlledTabs number disabled={disabled} />
+                  <ControlledTabs dot disabled={disabled} />
+                </div>
+              </TabsRow>
+            ))}
           </div>
         </StoryLayout.Section>
         <StoryLayout.Section title="Skeleton">

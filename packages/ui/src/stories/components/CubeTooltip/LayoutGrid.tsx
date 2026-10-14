@@ -17,7 +17,7 @@ export const LayoutGrid = () => {
 
   return (
     <div className="flex flex-col gap-y-8">
-      <TooltipRow title="With Title and Subtext">
+      <TooltipRow title="w/Title & Subtext">
         <CubeTooltip
           hoverContent={{
             title: 'Title',
@@ -37,7 +37,7 @@ export const LayoutGrid = () => {
           {icon}
         </CubeTooltip>
       </TooltipRow>
-      <TooltipRow title="Multiple Rows with Title">
+      <TooltipRow title="Multiple Rows w/Title">
         <CubeTooltip
           hoverContent={{
             title: 'Title',

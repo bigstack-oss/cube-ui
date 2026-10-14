@@ -18,8 +18,7 @@ import {
   type CubeButtonUsage,
 } from '@components/CubeButton/cubeButtonTypes'
 import type { SvgComponent } from '@components/CubeIcon/cubeIconTypes'
-import { ButtonVariantTable } from './ButtonVariantTable'
-import { ButtonSkeletonTable } from './ButtonSkeletonTable'
+import { ButtonRow } from './ButtonRow'
 import { PlaygroundLayout } from '@internals/components/StoryLayout/PlaygroundLayout'
 import { MonochromeHome01 } from '@icons'
 
@@ -154,15 +153,45 @@ export const Gallery: Story = {
     },
   },
   render: () => {
-    const buttonText = 'Call to action'
-
     return (
       <StoryLayout title="Button">
-        <StoryLayout.Section title="Variants">
-          <ButtonVariantTable buttonText={buttonText} />
+        <StoryLayout.Section title="Usages">
+          <div className="flex flex-col gap-y-6">
+            <ButtonRow.Header />
+            <ButtonRow title="Default" />
+          </div>
+        </StoryLayout.Section>
+        <StoryLayout.Section title="Types">
+          <div className="flex flex-col gap-y-6">
+            <ButtonRow.Header />
+            {cubeButtonTypes.map((type) => (
+              <ButtonRow key={type} title={type} type={type} />
+            ))}
+          </div>
+        </StoryLayout.Section>
+        <StoryLayout.Section title="Sizes">
+          <div className="flex flex-col gap-y-6">
+            <ButtonRow.Header />
+            {cubeButtonSizes.map((size) => (
+              <ButtonRow key={size} title={size} size={size} />
+            ))}
+          </div>
+        </StoryLayout.Section>
+        <StoryLayout.Section title="States">
+          <div className="flex flex-col gap-y-6">
+            <ButtonRow.Header />
+            <ButtonRow title="Default" />
+            <ButtonRow title="Disabled" disabled />
+            <ButtonRow title="Loading" loading />
+          </div>
         </StoryLayout.Section>
         <StoryLayout.Section title="Skeleton">
-          <ButtonSkeletonTable />
+          <div className="flex flex-col gap-y-6">
+            <ButtonRow.Header />
+            {cubeButtonSizes.map((size) => (
+              <ButtonRow key={size} title={size} size={size} isSkeleton />
+            ))}
+          </div>
         </StoryLayout.Section>
       </StoryLayout>
     )

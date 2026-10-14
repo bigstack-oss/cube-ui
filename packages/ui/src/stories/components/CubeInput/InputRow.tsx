@@ -10,7 +10,7 @@ const InputRowHeader = () => {
   return (
     <div className="grid grid-cols-5 items-end gap-x-12">
       <div />
-      <SubHeading>Regular</SubHeading>
+      <SubHeading>Basic</SubHeading>
       <SubHeading>w/Placeholder</SubHeading>
       <SubHeading>w/Label</SubHeading>
       <SubHeading>w/Label & Placeholder</SubHeading>

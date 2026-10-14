@@ -104,6 +104,15 @@ Stories live in `src/stories/components/Cube<Name>/Cube<Name>.stories.tsx`, mirr
 - **Two stories per component**: `Playground` and `Gallery`.
   - `Playground` — interactive, args-driven, wrapped in `<PlaygroundLayout>`, `tags: ['!dev']`. Give every arg a sensible non-empty default so the canvas shows something meaningful on first load, not a blank/invisible component.
   - `Gallery` — exhaustive static visual reference, `tags: ['!autodocs']`, controls/actions/interactions all disabled via `parameters`, built with `<StoryLayout>` / `<StoryLayout.Section>` (title only — no component `desc`; that lives on the Docs page).
+- **Gallery sections and labels follow one naming scheme (required).**
+  - **One dimension per section.** A section shows one prop (or state) varying; never file sizes under Variants or a disabled row under Sizes.
+  - **Section titles are plural Title Case, in this order**: the main style prop named after the prop itself (`Variants`, `Types`, `Colors`, `Usages`, ...) → `Sizes` → `States` → `Layouts` → `Skeleton` (always last). Component-specific sections (`Placements`, `Composed Menus`) go before `Skeleton`. Omit sections the component doesn't have.
+  - **No component name and no "Master"** as a section or row label (the page title already names the component; a "Master" overview duplicates the sections below it).
+  - **`Default`** labels only the row showing the component with no optional props set (all defaults).
+  - **`Basic`** labels a column/cell with no label, icon, badge or other extras, as opposed to `w/Label`, `w/Icon`, `w/Number`. Don't use `Regular` for this; `Regular` appears only if it is a real prop value.
+  - **Prop values are shown verbatim**, lowercase as written in code: `md`, `sm`, `primary`, `text-only`, `dot45`. Don't title-case or uppercase them (`MD`, `Primary Blue`). Map over the exported const array (`cubeButtonSizes.map(...)`) so labels can't drift from the type.
+  - Columns may repeat another dimension for comparison (e.g. every Sizes row spans all `usage` values); put those column labels in the row helper's `.Header`.
+  - Precedent: `CubeButton.stories.tsx` (Usages / Types / Sizes / States / Skeleton via `ButtonRow`).
 - **The story's args type is hand-curated, not the component's real Props type.** Only list props worth demoing in the Controls panel. When a real prop's type can't be represented by a Storybook control — `ReactNode`, an `SvgElement`, a tri-state `boolean | null` — invent a control-friendly stand-in (a string enum via a `select`, a plain `boolean`, etc.) and translate it back to the real prop inside a story-level `render` function. Precedent:
   - `CubeInput`'s `trailingIcon` is a `select` with options `'with icon' | 'without icon'`, mapped to a real `<MonochromeSearch />` element in `Playground.render`.
   - `CubePasswordInput`'s `initialShowPassword` only seeds state on mount, so `Playground.render` keys the component on that arg (`key={String(args.initialShowPassword)}`) to force a remount when the control changes.

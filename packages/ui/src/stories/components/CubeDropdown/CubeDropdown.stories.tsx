@@ -375,7 +375,7 @@ export const Gallery: Story = {
             </CaptionText>
           </div>
         </StoryLayout.Section>
-        <StoryLayout.Section title="Status">
+        <StoryLayout.Section title="States">
           <div className="flex flex-col gap-y-8">
             <DropdownRow.Header />
             <DropdownRow title="Unselected" />

@@ -20,7 +20,7 @@ export const HoverAndClickGrid = () => {
             <MonochromeCopy className="icon-md cursor-pointer" />
           </CubeTooltip>
         </TooltipRow>
-        <TooltipRow title="Title and Subtext">
+        <TooltipRow title="w/Title & Subtext">
           <CubeTooltip
             placement="bottom-center"
             hoverContent={{

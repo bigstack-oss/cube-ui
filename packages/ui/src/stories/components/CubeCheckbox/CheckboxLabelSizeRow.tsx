@@ -28,7 +28,7 @@ const CheckboxLabelSizeRowHeader = () => {
 export const CheckboxLabelSizeRow = (props: CheckboxLabelSizeRowProps) => {
   const { labelSize } = props
   return (
-    <CheckboxRow title={labelSize.toUpperCase()}>
+    <CheckboxRow title={labelSize}>
       <CaptionText>{captionTexts[labelSize]}</CaptionText>
       <CubeCheckbox label={checkboxText} labelSize={labelSize} />
     </CheckboxRow>

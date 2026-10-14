@@ -175,7 +175,7 @@ export const Gallery: Story = {
         <StoryLayout.Section title="Skeleton">
           <div className="flex flex-col gap-y-6">
             <div className="grid grid-cols-5 items-center gap-x-12">
-              <SubHeading>Regular</SubHeading>
+              <SubHeading>Basic</SubHeading>
               <SubHeading>w/Label</SubHeading>
               <SubHeading>w/Message</SubHeading>
               <SubHeading>w/Label & Message</SubHeading>

@@ -97,13 +97,13 @@ export const Gallery: Story = {
       <StoryLayout title="Loading Spinner">
         <StoryLayout.Section title="Variants">
           <div className="flex flex-col gap-y-10">
-            <SpinnerRow title="Dot 45˚">
+            <SpinnerRow title="dot45">
               <CubeLoadingSpinner {...props} variant="dot45" />
             </SpinnerRow>
-            <SpinnerRow title="Dot 120˚">
+            <SpinnerRow title="dot120">
               <CubeLoadingSpinner {...props} variant="dot120" />
             </SpinnerRow>
-            <SpinnerRow title="Cube">
+            <SpinnerRow title="cube">
               <CubeLoadingSpinner {...props} variant="cube" />
             </SpinnerRow>
           </div>

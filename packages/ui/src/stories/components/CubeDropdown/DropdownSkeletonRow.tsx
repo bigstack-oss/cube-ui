@@ -38,7 +38,7 @@ const DropdownSkeletonRowHeader = () => {
   return (
     <div className={rowClassName}>
       <span />
-      <SubHeading>Regular</SubHeading>
+      <SubHeading>Basic</SubHeading>
       <SubHeading>w/Label</SubHeading>
     </div>
   )

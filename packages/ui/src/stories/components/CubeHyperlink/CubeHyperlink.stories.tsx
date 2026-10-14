@@ -20,13 +20,7 @@ import {
 } from '@components/CubeHyperlink/cubeHyperlinkTypes'
 import type { SvgComponent } from '@components/CubeIcon/cubeIconTypes'
 import { MonochromeHome01 } from '@icons'
-import { SubHeading } from '@internals/components/SubHeading'
-import {
-  ColorHeading,
-  HyperlinkSizeRow,
-  hyperlinkText,
-  hyperlinkHref,
-} from './HyperlinkSizeRow'
+import { HyperlinkRow, hyperlinkHref } from './HyperlinkRow'
 
 const CubeHyperlinkDocs = () => {
   return (
@@ -160,45 +154,31 @@ export const Gallery: Story = {
       <StoryLayout title="Hyperlink">
         <StoryLayout.Section title="Variants">
           <div className="flex flex-col gap-y-6">
-            <div className="flex items-center gap-x-10">
-              <SubHeading className="w-10 shrink-0">MD</SubHeading>
-              <CubeHyperlink
-                color="primary"
-                size="md"
-                variant="text-only"
-                href={hyperlinkHref}
-              >
-                {hyperlinkText}
-              </CubeHyperlink>
-            </div>
-            <div className="flex items-center gap-x-10">
-              <SubHeading className="w-10 shrink-0">SM</SubHeading>
-              <CubeHyperlink
-                color="primary"
-                size="sm"
-                variant="text-only"
-                href={hyperlinkHref}
-              >
-                {hyperlinkText}
-              </CubeHyperlink>
-            </div>
+            <HyperlinkRow.Header />
+            <HyperlinkRow title="Default" />
+          </div>
+        </StoryLayout.Section>
+        <StoryLayout.Section title="Colors">
+          <div className="flex flex-col gap-y-6">
+            <HyperlinkRow.Header />
+            {cubeHyperlinkColors.map((color) => (
+              <HyperlinkRow key={color} title={color} color={color} />
+            ))}
+          </div>
+        </StoryLayout.Section>
+        <StoryLayout.Section title="Sizes">
+          <div className="flex flex-col gap-y-6">
+            <HyperlinkRow.Header />
+            {cubeHyperlinkSizes.map((size) => (
+              <HyperlinkRow key={size} title={size} size={size} />
+            ))}
           </div>
         </StoryLayout.Section>
         <StoryLayout.Section title="States">
-          <div className="grid w-fit grid-cols-[auto_auto_auto] items-start gap-12">
-            <span />
-            <ColorHeading>Primary</ColorHeading>
-            <ColorHeading>Secondary</ColorHeading>
-            <HyperlinkSizeRow
-              sizeText="MD"
-              size="md"
-              showVariantHeader={true}
-            />
-            <HyperlinkSizeRow
-              sizeText="SM"
-              size="sm"
-              showVariantHeader={false}
-            />
+          <div className="flex flex-col gap-y-6">
+            <HyperlinkRow.Header />
+            <HyperlinkRow title="Default" />
+            <HyperlinkRow title="Disabled" disabled />
           </div>
         </StoryLayout.Section>
       </StoryLayout>

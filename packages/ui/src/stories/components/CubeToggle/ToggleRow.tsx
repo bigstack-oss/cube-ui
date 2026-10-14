@@ -21,7 +21,7 @@ const ToggleRowHeader = () => {
     <>
       <ToggleRow title="">
         <div className="col-span-2 text-center">
-          <SubHeading>Regular</SubHeading>
+          <SubHeading>Basic</SubHeading>
         </div>
         <div className="col-span-2 text-center">
           <SubHeading>w/Label</SubHeading>
