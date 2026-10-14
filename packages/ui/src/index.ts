@@ -1,4 +1,5 @@
 // Components
+export * from './components/CubeBreadcrumb'
 export * from './components/CubeButton'
 export * from './components/CubeCheckbox'
 export * from './components/CubeDropdown'
