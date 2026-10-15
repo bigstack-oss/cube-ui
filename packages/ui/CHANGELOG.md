@@ -1,5 +1,12 @@
 # @bigstack-oss/cube-ui
 
+## 0.3.0
+
+### Minor Changes
+
+- f1e672a: Add CubeIconText
+- c934366: Add CubeBreadcrumb
+
 ## 0.2.0
 
 ### Minor Changes
