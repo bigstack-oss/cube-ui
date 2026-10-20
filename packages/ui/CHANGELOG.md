@@ -1,5 +1,16 @@
 # @bigstack-oss/cube-ui
 
+## 0.3.0
+
+### Minor Changes
+
+- f1e672a: Add CubeIconText
+- 72fd419: Add CubeInlineNotification
+- c934366: Add CubeBreadcrumb
+- 6ded4bd: Add CubeNagging
+- 814d8ab: Add CubeMessage
+- 15e7feb: Add CubeToastProvider and useCubeToast
+
 ## 0.2.0
 
 ### Minor Changes
