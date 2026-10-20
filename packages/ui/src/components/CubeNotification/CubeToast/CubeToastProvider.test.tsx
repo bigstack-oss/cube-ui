@@ -81,6 +81,20 @@ describe('CubeToastProvider', () => {
     }
   })
 
+  it('does not accept onClose (closing is owned by the provider)', () => {
+    renderProvider()
+
+    act(() =>
+      toastApi.addToast({
+        ...createToast(1),
+        // @ts-expect-error onClose is not part of CubeToastType
+        onClose: () => {},
+      }),
+    )
+
+    expect(screen.getByText('Message 1')).toBeInTheDocument()
+  })
+
   it('provides no-op functions outside a provider', () => {
     render(<Consumer />)
 

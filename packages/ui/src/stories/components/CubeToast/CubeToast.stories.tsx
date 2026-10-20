@@ -49,7 +49,7 @@ const meta: Meta<CubeToastStoryArgs> = {
     controls: { expanded: true },
     docs: {
       description: {
-        component: `A notification that pops up at the bottom right and closes itself. Wrap the app in \`CubeToastProvider\`, then call \`useCubeToast().addToast(toast)\` with the fields below plus a unique \`id\`. At most ${MAX_VISIBLE_TOASTS_AMOUNT} toasts are shown at once, each for ${TOAST_LIFETIME / 1000} seconds; adding more removes the oldest.`,
+        component: `A notification that pops up at the bottom right and closes itself. Wrap the app in \`CubeToastProvider\`, then call \`useCubeToast().addToast(toast)\` with the fields below plus a unique \`id\`; call \`removeToast(id)\` to close one from code. At most ${MAX_VISIBLE_TOASTS_AMOUNT} toasts are shown at once, each for ${TOAST_LIFETIME / 1000} seconds; adding more removes the oldest.`,
       },
       page: CubeToastDocs,
     },
@@ -89,12 +89,6 @@ const meta: Meta<CubeToastStoryArgs> = {
       description: 'Time text shown at the bottom right.',
       table: { type: { summary: 'string' } },
       control: 'text',
-    },
-    onClose: {
-      description:
-        'Part of the toast type, but not called by the toast list yet (carried over from the source).',
-      table: { type: { summary: '() => void' } },
-      control: { disable: true },
     },
   },
 }
