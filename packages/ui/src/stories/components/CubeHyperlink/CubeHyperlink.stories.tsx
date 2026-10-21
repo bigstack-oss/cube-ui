@@ -20,7 +20,16 @@ import {
 } from '@components/CubeHyperlink/cubeHyperlinkTypes'
 import type { SvgComponent } from '@components/CubeIcon/cubeIconTypes'
 import { MonochromeHome01 } from '@icons'
-import { HyperlinkRow, hyperlinkHref } from './HyperlinkRow'
+import {
+  GalleryMatrix,
+  type GalleryMatrixRow,
+} from '@internals/components/GalleryMatrix'
+import {
+  HyperlinkCell,
+  HyperlinkRow,
+  hyperlinkHref,
+  type HyperlinkCellProps,
+} from './HyperlinkRow'
 
 const CubeHyperlinkDocs = () => {
   return (
@@ -138,6 +147,13 @@ export const Playground: Story = {
   },
 }
 
+const hyperlinkStates: GalleryMatrixRow<
+  Pick<HyperlinkCellProps, 'disabled'>
+>[] = [
+  { title: 'Default', value: {} },
+  { title: 'Disabled', value: { disabled: true } },
+]
+
 export const Gallery: Story = {
   tags: ['!autodocs'],
   parameters: {
@@ -175,11 +191,20 @@ export const Gallery: Story = {
           </div>
         </StoryLayout.Section>
         <StoryLayout.Section title="States">
-          <div className="flex flex-col gap-y-6">
-            <HyperlinkRow.Header />
-            <HyperlinkRow title="Default" />
-            <HyperlinkRow title="Disabled" disabled />
-          </div>
+          <GalleryMatrix
+            rowGroups={cubeHyperlinkSizes}
+            rows={hyperlinkStates}
+            columnGroups={cubeHyperlinkColors}
+            columns={cubeHyperlinkVariants}
+            renderCell={({ rowGroup, row, columnGroup, column }) => (
+              <HyperlinkCell
+                {...row}
+                size={rowGroup}
+                color={columnGroup}
+                variant={column}
+              />
+            )}
+          />
         </StoryLayout.Section>
       </StoryLayout>
     )

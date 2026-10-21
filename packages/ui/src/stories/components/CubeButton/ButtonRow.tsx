@@ -13,7 +13,7 @@ export const buttonText = 'Call to action'
 const rowClassName =
   'grid grid-cols-[120px_repeat(4,minmax(0,1fr))] items-center gap-x-8'
 
-type ButtonCellProps = {
+export type ButtonCellProps = {
   usage: CubeButtonUsage
   type?: CubeButtonType
   size?: CubeButtonSize
@@ -21,7 +21,7 @@ type ButtonCellProps = {
   loading?: boolean
 }
 
-const ButtonCell = (props: ButtonCellProps) => {
+export const ButtonCell = (props: ButtonCellProps) => {
   const { usage, ...rest } = props
 
   switch (usage) {

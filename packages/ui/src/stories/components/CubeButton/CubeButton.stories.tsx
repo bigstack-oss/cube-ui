@@ -18,7 +18,11 @@ import {
   type CubeButtonUsage,
 } from '@components/CubeButton/cubeButtonTypes'
 import type { SvgComponent } from '@components/CubeIcon/cubeIconTypes'
-import { ButtonRow } from './ButtonRow'
+import {
+  GalleryMatrix,
+  type GalleryMatrixRow,
+} from '@internals/components/GalleryMatrix'
+import { ButtonCell, ButtonRow, type ButtonCellProps } from './ButtonRow'
 import { PlaygroundLayout } from '@internals/components/StoryLayout/PlaygroundLayout'
 import { MonochromeHome01 } from '@icons'
 
@@ -141,6 +145,14 @@ export const Playground: Story = {
   },
 }
 
+const buttonStates: GalleryMatrixRow<
+  Pick<ButtonCellProps, 'disabled' | 'loading'>
+>[] = [
+  { title: 'Default', value: {} },
+  { title: 'Disabled', value: { disabled: true } },
+  { title: 'Loading', value: { loading: true } },
+]
+
 export const Gallery: Story = {
   tags: ['!autodocs'],
   parameters: {
@@ -178,12 +190,20 @@ export const Gallery: Story = {
           </div>
         </StoryLayout.Section>
         <StoryLayout.Section title="States">
-          <div className="flex flex-col gap-y-6">
-            <ButtonRow.Header />
-            <ButtonRow title="Default" />
-            <ButtonRow title="Disabled" disabled />
-            <ButtonRow title="Loading" loading />
-          </div>
+          <GalleryMatrix
+            rowGroups={cubeButtonSizes}
+            rows={buttonStates}
+            columnGroups={cubeButtonTypes}
+            columns={cubeButtonUsages}
+            renderCell={({ rowGroup, row, columnGroup, column }) => (
+              <ButtonCell
+                {...row}
+                size={rowGroup}
+                type={columnGroup}
+                usage={column}
+              />
+            )}
+          />
         </StoryLayout.Section>
         <StoryLayout.Section title="Skeleton">
           <div className="flex flex-col gap-y-6">

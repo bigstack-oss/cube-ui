@@ -18,9 +18,10 @@ import {
   type CubeCheckboxLabelSize,
 } from '@components/CubeCheckbox/cubeCheckboxTypes'
 import { CheckboxRow } from './CheckboxRow'
-import { CheckboxStateRow } from './CheckboxStateRow'
+import { GalleryMatrix } from '@internals/components/GalleryMatrix'
+import { CheckboxStateCell } from './CheckboxStateCell'
 import { CheckboxLayoutRow } from './CheckboxLayoutRow'
-import { checkboxText } from './utils'
+import { checkboxCheckStates, checkboxText } from './utils'
 import { CheckboxLabelSizeRow } from './CheckboxLabelSizeRow'
 
 const CubeCheckboxDocs = () => {
@@ -211,14 +212,21 @@ export const Gallery: Story = {
           </div>
         </StoryLayout.Section>
         <StoryLayout.Section title="States">
-          <div className="flex flex-col gap-y-6">
-            <CheckboxStateRow.Header />
-            <CheckboxStateRow title="Default" checkboxProps={{}} />
-            <CheckboxStateRow
-              title="Disabled"
-              checkboxProps={{ disabled: true }}
-            />
-          </div>
+          <GalleryMatrix
+            rowGroups={cubeCheckboxColors}
+            rows={[
+              { title: 'Default', value: false },
+              { title: 'Disabled', value: true },
+            ]}
+            columns={checkboxCheckStates}
+            renderCell={({ rowGroup, row, column }) => (
+              <CheckboxStateCell
+                color={rowGroup}
+                disabled={row}
+                checkState={column}
+              />
+            )}
+          />
         </StoryLayout.Section>
         <StoryLayout.Section title="Layouts">
           <div className="flex flex-col gap-y-6">
