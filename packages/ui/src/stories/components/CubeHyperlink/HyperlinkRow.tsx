@@ -14,14 +14,14 @@ export const hyperlinkHref = `/#${Math.random()}`
 const rowClassName =
   'grid grid-cols-[120px_repeat(4,minmax(0,1fr))] items-center gap-x-8'
 
-type HyperlinkCellProps = {
+export type HyperlinkCellProps = {
   variant: CubeHyperlinkVariant
   color?: CubeHyperlinkColor
   size?: CubeHyperlinkSize
   disabled?: boolean
 }
 
-const HyperlinkCell = (props: HyperlinkCellProps) => {
+export const HyperlinkCell = (props: HyperlinkCellProps) => {
   const { variant, ...rest } = props
   const shared = { ...rest, href: hyperlinkHref, children: hyperlinkText }
 
