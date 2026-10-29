@@ -17,6 +17,7 @@
   "component.pagination.nextPage": "Next page",
   "component.pagination.lastPage": "Last page",
   "component.pagination.pageNumber": "Page {{page}}",
+  "component.table.noResult": "No Result",
   "component.status.host.neutral": "Neutral",
   "component.status.host.inUse": "In-Use",
   "component.status.host.finished": "Finished",

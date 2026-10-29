@@ -17,6 +17,7 @@
   "component.pagination.nextPage": "下一頁",
   "component.pagination.lastPage": "最後一頁",
   "component.pagination.pageNumber": "第 {{page}} 頁",
+  "component.table.noResult": "無資料",
   "component.status.host.neutral": "中性",
   "component.status.host.inUse": "使用中",
   "component.status.host.finished": "已完成",
