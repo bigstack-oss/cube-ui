@@ -32,6 +32,7 @@ export * from './components/CubeTag'
 export * from './components/CubeTextarea'
 export * from './components/CubeToggle'
 export * from './components/CubeTooltip'
+export * from './components/CubeViewDetailsTable'
 
 // I18n
 export * from './i18n'
