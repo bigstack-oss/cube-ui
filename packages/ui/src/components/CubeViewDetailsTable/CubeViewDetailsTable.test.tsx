@@ -42,7 +42,7 @@ const renderTable = (props: TableProps = {}) =>
 const getBodyRows = () => screen.getAllByRole('row').slice(1)
 
 const getExpandButtons = () =>
-  screen.getAllByRole('button', { name: 'Row details' })
+  screen.getAllByRole('button', { name: 'Row Details' })
 
 describe('CubeViewDetailsTable', () => {
   it('adds an expand button column before the data columns', () => {
@@ -51,8 +51,8 @@ describe('CubeViewDetailsTable', () => {
     // The expand column's header is visually hidden but named.
     expect(
       screen.getAllByRole('columnheader').map((th) => th.textContent),
-    ).toEqual(['Row details', 'Product'])
-    expect(screen.getByText('Row details', { selector: 'span' })).toHaveClass(
+    ).toEqual(['Row Details', 'Product'])
+    expect(screen.getByText('Row Details', { selector: 'span' })).toHaveClass(
       'sr-only',
     )
     expect(getExpandButtons()).toHaveLength(2)
