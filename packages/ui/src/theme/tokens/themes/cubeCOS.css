@@ -119,6 +119,15 @@
   --cube-color-scene-gradient-2: #4c68f9;
   --cube-color-scene-gradient-3: #31c4ff;
   --cube-color-scene-gradient-4: #57e2e2;
+  /* Each theme sets the whole gradient, so its stops and positions can differ
+     (e.g. CubeAIR's three stops). */
+  --cube-color-scene-gradient: linear-gradient(
+    90deg,
+    var(--cube-color-scene-gradient-1) 0%,
+    var(--cube-color-scene-gradient-2) 30%,
+    var(--cube-color-scene-gradient-3) 65%,
+    var(--cube-color-scene-gradient-4) 100%
+  );
 
   --cube-color-functional-title: #282d39;
   --cube-color-functional-text: #3f4453;

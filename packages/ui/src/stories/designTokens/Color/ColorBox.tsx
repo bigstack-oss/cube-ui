@@ -1,6 +1,6 @@
 import classNames from 'classnames'
-import { useMemo } from 'react'
-import { resolveThemeColor } from './utils'
+import { useContext, useMemo } from 'react'
+import { PinnedThemeContext, resolveThemeColor } from './utils'
 
 export type ColorBoxProps = {
   colorName: string
@@ -10,9 +10,11 @@ export type ColorBoxProps = {
 export const ColorBox = (props: ColorBoxProps) => {
   const { colorName, bgClassName } = props
 
+  const theme = useContext(PinnedThemeContext)
+
   const hex = useMemo<string | undefined>(() => {
-    return resolveThemeColor(bgClassName)
-  }, [bgClassName])
+    return resolveThemeColor(bgClassName, theme)
+  }, [bgClassName, theme])
 
   return (
     <div className="flex flex-col gap-y-2">

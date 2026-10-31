@@ -39,6 +39,7 @@ const preview: Preview = {
         items: [
           { value: 'cubeCOS', title: 'CubeCOS' },
           { value: 'cubeEMP', title: 'CubeEMP' },
+          { value: 'cubeAIR', title: 'CubeAIR' },
         ],
       },
     },

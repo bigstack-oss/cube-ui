@@ -145,8 +145,7 @@ export const cubeTheme = {
       secondary: 'var(--cube-color-secondary-DEFAULT)',
     },
     scene: {
-      gradient:
-        'linear-gradient(90deg, var(--cube-color-scene-gradient-1) 0%, var(--cube-color-scene-gradient-2) 30%, var(--cube-color-scene-gradient-3) 65%, var(--cube-color-scene-gradient-4) 100%)',
+      gradient: 'var(--cube-color-scene-gradient)',
       background: 'var(--cube-color-scene-background)',
     },
     functional: {

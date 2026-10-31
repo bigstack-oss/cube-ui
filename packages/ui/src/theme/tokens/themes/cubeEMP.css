@@ -1,40 +1,104 @@
 /**
- * CubeEMP - PLACEHOLDER palette used to prove the theme-switching mechanism
- * in Storybook. Replace these values with the real product's palette once
- * available.
+ * CubeEMP - palette from the CubeEMP Design System in Figma ("CubeEMP Design System 2025", where the brand is named EMPOWER).
  *
- * Only overrides the tokens that differ from CubeCOS (primary/secondary);
- * everything else (grey, status, chart, etc.) inherits CubeCOS's value via
- * normal CSS cascade. See `index.css` in this folder for how theme files
- * compose.
+ * Only overrides the tokens that differ from CubeCOS; everything else
+ * (the dark, grey and yellow ramps, most functional colors, etc.) inherits
+ * CubeCOS's value via normal CSS cascade. See `index.css` in this folder for
+ * how theme files compose.
  */
 
 [data-cube-theme='cubeEMP'] {
-  --cube-color-primary-DEFAULT: #8259f6;
-  --cube-color-primary-0: #fbf9ff;
-  --cube-color-primary-50: #f1ebfe;
-  --cube-color-primary-100: #e7defe;
-  --cube-color-primary-150: #dcd0fd;
-  --cube-color-primary-200: #d1c3fc;
-  --cube-color-primary-300: #b7a0fa;
-  --cube-color-primary-400: #9c7df8;
-  --cube-color-primary-500: #8259f6;
-  --cube-color-primary-600: #6d3fe0;
-  --cube-color-primary-700: #5829c9;
-  --cube-color-primary-800: #4415b3;
-  --cube-color-primary-850: #3a0da3;
+  --cube-color-primary-DEFAULT: #955bff;
+  --cube-color-primary-0: #f8f4ff;
+  --cube-color-primary-50: #eee5ff;
+  --cube-color-primary-100: #e4d5ff;
+  --cube-color-primary-150: #dac6ff;
+  --cube-color-primary-200: #d0b7ff;
+  --cube-color-primary-300: #bd98ff;
+  --cube-color-primary-400: #a97aff;
+  --cube-color-primary-500: #955bff;
+  --cube-color-primary-600: #8549f3;
+  --cube-color-primary-700: #7537e6;
+  --cube-color-primary-800: #6424da;
+  --cube-color-primary-850: #5c1bd4;
 
-  --cube-color-secondary-DEFAULT: #ff9c00;
-  --cube-color-secondary-0: #fff9ef;
-  --cube-color-secondary-50: #fff0d6;
-  --cube-color-secondary-100: #ffe7be;
-  --cube-color-secondary-150: #ffdda5;
-  --cube-color-secondary-200: #ffd48d;
-  --cube-color-secondary-300: #ffc15d;
-  --cube-color-secondary-400: #ffaf2e;
-  --cube-color-secondary-500: #ff9c00;
-  --cube-color-secondary-600: #e48900;
-  --cube-color-secondary-700: #c97600;
-  --cube-color-secondary-800: #ad6400;
-  --cube-color-secondary-850: #9e5b00;
+  --cube-color-secondary-DEFAULT: #b8e70f;
+  --cube-color-secondary-0: #fbfef2;
+  --cube-color-secondary-50: #f4fcdb;
+  --cube-color-secondary-100: #eef9c5;
+  --cube-color-secondary-150: #e7f7ae;
+  --cube-color-secondary-200: #e0f597;
+  --cube-color-secondary-300: #d3f06a;
+  --cube-color-secondary-400: #c5ec3c;
+  --cube-color-secondary-500: #b8e70f;
+  --cube-color-secondary-600: #93b90c;
+  --cube-color-secondary-700: #6e8b09;
+  --cube-color-secondary-800: #4a5c06;
+  --cube-color-secondary-850: #374505;
+
+  --cube-color-blue-50: #e2ebff;
+  --cube-color-blue-100: #d3e1ff;
+  --cube-color-blue-150: #c5d8ff;
+  --cube-color-blue-200: #b7ceff;
+  --cube-color-blue-300: #9abaff;
+  --cube-color-blue-400: #7ea7ff;
+  --cube-color-blue-500: #6193ff;
+  --cube-color-blue-600: #4e83f6;
+  --cube-color-blue-700: #3a73ed;
+  --cube-color-blue-800: #2762e3;
+  --cube-color-blue-850: #1d5adf;
+
+  --cube-color-green-0: #f1fbe7;
+  --cube-color-green-50: #e7f8d7;
+  --cube-color-green-100: #def5c6;
+  --cube-color-green-150: #d4f2b6;
+  --cube-color-green-200: #caefa5;
+  --cube-color-green-300: #b7e985;
+  --cube-color-green-400: #a3e364;
+  --cube-color-green-500: #90dd43;
+  --cube-color-green-600: #7dc138;
+  --cube-color-green-700: #69a52e;
+  --cube-color-green-800: #568823;
+  --cube-color-green-850: #4c7a1e;
+
+  --cube-color-red-0: #fef9f9;
+  --cube-color-red-50: #fce9e9;
+  --cube-color-red-100: #fbd9d9;
+  --cube-color-red-150: #f9c9c9;
+  --cube-color-red-200: #f7b9b9;
+  --cube-color-red-300: #f4989a;
+  --cube-color-red-400: #f0787a;
+  --cube-color-red-500: #ed585a;
+  --cube-color-red-600: #d8494b;
+  --cube-color-red-700: #c33a3c;
+  --cube-color-red-800: #ae2c2e;
+  --cube-color-red-850: #a32426;
+
+  --cube-color-functional-hover-primary: #a06dff;
+  --cube-color-functional-hover-secondary: #f3ffc7;
+  --cube-color-functional-disable: #f3f0f7;
+  --cube-color-functional-disable-text: #e4e1e9;
+  --cube-color-functional-disable-light: #f8f6fb;
+
+  --cube-color-status-positive: #90dd43;
+  --cube-color-status-positive-text: #77b539;
+  --cube-color-status-negative: #ed585a;
+  --cube-color-status-neutral: #6193ff;
+  --cube-color-status-over-limit: #794a8a;
+
+  --cube-color-chart-1: #b8e70f;
+  --cube-color-chart-2: #aa7dff;
+  --cube-color-chart-3: #ffb56a;
+  --cube-color-chart-4: #cdb4fa;
+  --cube-color-chart-5: #eaea24;
+  --cube-color-chart-11: #f9c300;
+  --cube-color-chart-20: #96b524;
+
+  /* Not in Figma (EMP defines no theme gradient): derived from the brand
+     primary and secondary until design provides one. */
+  --cube-color-scene-gradient: linear-gradient(
+    90deg,
+    var(--cube-color-primary-DEFAULT) 0%,
+    var(--cube-color-secondary-DEFAULT) 100%
+  );
 }

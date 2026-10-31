@@ -1,0 +1,75 @@
+/**
+ * CubeAIR - palette from the AIR Design System in Figma ("AIR Design System 2026").
+ *
+ * Only overrides the tokens that differ from CubeCOS; everything else
+ * (the dark, grey and yellow ramps, most functional colors, etc.) inherits
+ * CubeCOS's value via normal CSS cascade. See `index.css` in this folder for
+ * how theme files compose.
+ */
+
+[data-cube-theme='cubeAIR'] {
+  --cube-color-primary-DEFAULT: #575ce1;
+  --cube-color-primary-0: #eeeffc;
+  --cube-color-primary-50: #dfe0f9;
+  --cube-color-primary-100: #d0d2f7;
+  --cube-color-primary-150: #c1c3f4; /* TBC with design: the Figma style also stacks a 20% black layer on this value. */
+  --cube-color-primary-200: #b2b4f1;
+  --cube-color-primary-300: #9397ec;
+  --cube-color-primary-400: #7579e6;
+  --cube-color-primary-500: #575ce1;
+  --cube-color-primary-600: #4a4ecb;
+  --cube-color-primary-700: #3c41b4;
+  --cube-color-primary-800: #2f339e;
+  --cube-color-primary-850: #282c93;
+
+  --cube-color-secondary-DEFAULT: #fbb03b;
+  --cube-color-secondary-0: #fff7ea;
+  --cube-color-secondary-50: #fff0d8;
+  --cube-color-secondary-100: #fee9c7;
+  --cube-color-secondary-150: #fee2b5;
+  --cube-color-secondary-200: #fddba4;
+  --cube-color-secondary-300: #fdcc81;
+  --cube-color-secondary-400: #fcbe5e;
+  --cube-color-secondary-500: #fbb03b;
+  --cube-color-secondary-600: #e39d30;
+  --cube-color-secondary-700: #ca8a25;
+  --cube-color-secondary-800: #b27619;
+  --cube-color-secondary-850: #a66d14;
+
+  --cube-color-red-0: #fffafb;
+  --cube-color-red-50: #feeaee;
+  --cube-color-red-100: #fddae2;
+  --cube-color-red-150: #fbc9d5;
+  --cube-color-red-200: #fab9c9;
+  --cube-color-red-300: #f899b0;
+  --cube-color-red-400: #f57897;
+  --cube-color-red-500: #f3587e;
+  --cube-color-red-600: #e0496e;
+  --cube-color-red-700: #cd395d;
+  --cube-color-red-800: #b92a4d;
+  --cube-color-red-850: #b02245;
+
+  --cube-color-functional-hover-primary: #7579e6;
+  --cube-color-functional-hover-secondary: #fff7ea;
+
+  --cube-color-status-negative: #f3597e;
+  --cube-color-status-neutral: #575ce1;
+  --cube-color-status-over-limit: #b02245;
+
+  --cube-color-chart-1: #575ce1;
+  --cube-color-chart-2: #fbb03b;
+  --cube-color-chart-3: #e6689a;
+  --cube-color-chart-4: #58cfff;
+  --cube-color-chart-5: #989dc1;
+  --cube-color-chart-7: #00d5a2;
+  --cube-color-chart-8: #3049ce;
+  --cube-color-chart-9: #3cb6b6;
+  --cube-color-chart-10: #f899b0;
+
+  --cube-color-scene-gradient: linear-gradient(
+    90deg,
+    #4c68f9 0%,
+    #ff4471 55%,
+    #fbb03b 100%
+  );
+}

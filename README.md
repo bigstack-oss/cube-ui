@@ -30,7 +30,7 @@ packages/
     │   │       ├── cubePreset.ts   ← Tailwind preset (colors, spacing, …)
     │   │       ├── cubeTheme.ts    ← theme token definitions
     │   │       ├── plugins/        ← custom Tailwind plugins
-    │   │       ├── themes/         ← per-brand CSS custom-property files (cubeCOS, cubeEMP, …)
+    │   │       ├── themes/         ← per-brand CSS custom-property files (cubeCOS, cubeEMP, cubeAIR, …)
     │   │       └── utils/          ← shared helpers (typography, animations, …)
     │   │
     │   ├── icons/

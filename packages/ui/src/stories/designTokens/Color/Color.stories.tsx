@@ -4,6 +4,7 @@ import { StoryLayout } from '@internals/components/StoryLayout/StoryLayout'
 import { ColorScale } from './ColorScale'
 import { ColorPaletteRow } from './ColorPaletteRow'
 import { ColorBox } from './ColorBox'
+import { PinnedThemeContext } from './utils'
 
 const meta: Meta = {
   title: 'Design Tokens/Color Palettes',
@@ -133,15 +134,18 @@ const pinnedThemeStory = (theme: CubeThemeName, title: string): Story => ({
   name: theme,
   render: () => (
     <div data-cube-theme={theme}>
-      <StoryLayout
-        title={title}
-        desc={`Color palette for ${theme}. Pinned independently of the toolbar 'Theme' setting.`}
-      >
-        <ColorSections />
-      </StoryLayout>
+      <PinnedThemeContext.Provider value={theme}>
+        <StoryLayout
+          title={title}
+          desc={`Color palette for ${theme}. Pinned independently of the toolbar 'Theme' setting.`}
+        >
+          <ColorSections />
+        </StoryLayout>
+      </PinnedThemeContext.Provider>
     </div>
   ),
 })
 
 export const CubeCOS: Story = pinnedThemeStory('cubeCOS', 'CubeCOS Palette')
 export const CubeEMP: Story = pinnedThemeStory('cubeEMP', 'CubeEMP Palette')
+export const CubeAIR: Story = pinnedThemeStory('cubeAIR', 'CubeAIR Palette')

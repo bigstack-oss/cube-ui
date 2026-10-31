@@ -1,8 +1,8 @@
-import { useMemo } from 'react'
+import { useContext, useMemo } from 'react'
 import classNames from 'classnames'
 import { cubePreset } from '@theme/tokens/cubePreset'
 import { SubHeading } from '@internals/components/SubHeading'
-import { hexToRgb, resolveCssVar } from './utils'
+import { hexToRgb, PinnedThemeContext, resolveCssVar } from './utils'
 
 const { colors } = cubePreset.theme.extend
 
@@ -22,6 +22,8 @@ const hexToRgbSum = (hex: string): number => {
 export const ColorScale = (props: ColorScaleProps) => {
   const { title, category } = props
 
+  const theme = useContext(PinnedThemeContext)
+
   const scales = useMemo<[property: string, hex: string][]>(() => {
     return Object.entries(colors[category]).filter(
       ([property]) => property !== 'DEFAULT',
@@ -34,7 +36,7 @@ export const ColorScale = (props: ColorScaleProps) => {
       <div>
         {scales.map(([property, rawValue]) => {
           const bgClassName = `bg-${category}-${property}`
-          const hex = resolveCssVar(rawValue)
+          const hex = resolveCssVar(rawValue, theme)
           const rgbSum = hexToRgbSum(hex)
           const shouldShowDarkText = rgbSum > 400
           return (
