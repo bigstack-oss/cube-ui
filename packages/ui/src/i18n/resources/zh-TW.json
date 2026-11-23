@@ -19,6 +19,8 @@
   "component.pagination.pageNumber": "第 {{page}} 頁",
   "component.table.noResult": "無資料",
   "component.table.rowDetails": "詳細資料",
+  "component.table.selectAllRows": "全選",
+  "component.table.selectRow": "選取此列",
   "component.status.host.neutral": "中性",
   "component.status.host.inUse": "使用中",
   "component.status.host.finished": "已完成",
