@@ -1,4 +1,5 @@
 // Components
+export * from './components/CubeBackButton'
 export * from './components/CubeBasicTable'
 export * from './components/CubeBatchActionTable'
 export * from './components/CubeBreadcrumb'

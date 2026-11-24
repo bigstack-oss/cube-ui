@@ -1,4 +1,5 @@
 {
+  "component.backButton.back": "返回",
   "component.collapsiblePanelLayout.closePanel": "關閉面板",
   "component.collapsiblePanelLayout.togglePanel": "顯示或隱藏面板",
   "component.common.loading": "載入中",

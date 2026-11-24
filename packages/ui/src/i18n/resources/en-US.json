@@ -1,4 +1,5 @@
 {
+  "component.backButton.back": "Back",
   "component.collapsiblePanelLayout.closePanel": "Close Panel",
   "component.collapsiblePanelLayout.togglePanel": "Show or Hide Panel",
   "component.common.loading": "Loading",
