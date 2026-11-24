@@ -1,4 +1,6 @@
 {
+  "component.collapsiblePanelLayout.closePanel": "關閉面板",
+  "component.collapsiblePanelLayout.togglePanel": "顯示或隱藏面板",
   "component.common.loading": "載入中",
   "component.common.noData": "無資料",
   "component.dropdown.choose": "選擇",

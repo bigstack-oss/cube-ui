@@ -1,4 +1,6 @@
 {
+  "component.collapsiblePanelLayout.closePanel": "Close Panel",
+  "component.collapsiblePanelLayout.togglePanel": "Show or Hide Panel",
   "component.common.loading": "Loading",
   "component.common.noData": "No Data",
   "component.dropdown.choose": "Choose",
