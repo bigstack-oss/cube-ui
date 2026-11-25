@@ -26,6 +26,7 @@
   "component.pagination.nextPage": "下一頁",
   "component.pagination.lastPage": "最後一頁",
   "component.pagination.pageNumber": "第 {{page}} 頁",
+  "component.searchBar.filter.search": "搜尋",
   "component.table.noResult": "無資料",
   "component.table.rowDetails": "詳細資料",
   "component.table.selectAllRows": "全選",

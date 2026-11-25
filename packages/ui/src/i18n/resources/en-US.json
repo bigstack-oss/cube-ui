@@ -26,6 +26,7 @@
   "component.pagination.nextPage": "Next page",
   "component.pagination.lastPage": "Last page",
   "component.pagination.pageNumber": "Page {{page}}",
+  "component.searchBar.filter.search": "Search",
   "component.table.noResult": "No Result",
   "component.table.rowDetails": "Row Details",
   "component.table.selectAllRows": "Select All Rows",
