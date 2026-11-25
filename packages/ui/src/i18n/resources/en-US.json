@@ -44,6 +44,7 @@
   "component.searchBar.global.category": "Category",
   "component.searchBar.global.noCategory": "No Category",
   "component.searchBar.global.search": "Search",
+  "component.sideBar.dataCenterTime": "Data Center Time:",
   "component.table.noResult": "No Result",
   "component.table.rowDetails": "Row Details",
   "component.table.selectAllRows": "Select All Rows",

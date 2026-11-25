@@ -44,6 +44,7 @@
   "component.searchBar.global.category": "類別",
   "component.searchBar.global.noCategory": "無類別",
   "component.searchBar.global.search": "搜尋",
+  "component.sideBar.dataCenterTime": "資料中心時間：",
   "component.table.noResult": "無資料",
   "component.table.rowDetails": "詳細資料",
   "component.table.selectAllRows": "全選",
