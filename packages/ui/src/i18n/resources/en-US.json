@@ -68,5 +68,6 @@
   "component.status.reaction.done": "Done",
   "component.status.reaction.error": "Error",
   "component.status.reaction.duplicate": "Duplicate",
-  "component.status.reaction.failed": "Failed"
+  "component.status.reaction.failed": "Failed",
+  "component.upload.closeError": "Close Error"
 }

@@ -68,5 +68,6 @@
   "component.status.reaction.done": "完成",
   "component.status.reaction.error": "錯誤",
   "component.status.reaction.duplicate": "重複",
-  "component.status.reaction.failed": "失敗"
+  "component.status.reaction.failed": "失敗",
+  "component.upload.closeError": "關閉錯誤"
 }
