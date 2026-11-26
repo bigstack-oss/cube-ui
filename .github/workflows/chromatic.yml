@@ -1,0 +1,56 @@
+name: Chromatic
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: chromatic-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  chromatic:
+    name: Publish Storybook
+    # Pull requests from forks can't read secrets, so skip them.
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # 7.0.1
+        with:
+          # Chromatic needs the git history to find baselines.
+          fetch-depth: 0
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@0977fd99725f1db4007ccb2928dbb4e90d06cc86 # 6.0.10
+
+      - name: Setup Node
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # 7.0.0
+        with:
+          node-version: 24.15.0
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Generate icons
+        run: pnpm icons:generate
+
+      - name: Publish to Chromatic
+        uses: chromaui/action@0a7067e5ffc663a631b14db505d8a94b26e1bf2f # v18.15.3
+        with:
+          projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
+          workingDir: packages/ui
+          buildScriptName: build:storybook
+          # Builds on main become the new baseline.
+          autoAcceptChanges: main
+          # Visual changes don't fail the check; review them in Chromatic.
+          exitZeroOnChanges: true
+          # TurboSnap: only snapshot stories affected by the change.
+          onlyChanged: true
