@@ -40,6 +40,8 @@
   "component.pagination.nextPage": "Next page",
   "component.pagination.lastPage": "Last page",
   "component.pagination.pageNumber": "Page {{page}}",
+  "component.percentagePieChart.overThreshold": "Over Limit",
+  "component.percentagePieChart.used": "Used",
   "component.searchBar.filter.search": "Search",
   "component.searchBar.global.category": "Category",
   "component.searchBar.global.noCategory": "No Category",

@@ -40,6 +40,8 @@
   "component.pagination.nextPage": "下一頁",
   "component.pagination.lastPage": "最後一頁",
   "component.pagination.pageNumber": "第 {{page}} 頁",
+  "component.percentagePieChart.overThreshold": "超出限制",
+  "component.percentagePieChart.used": "已使用",
   "component.searchBar.filter.search": "搜尋",
   "component.searchBar.global.category": "類別",
   "component.searchBar.global.noCategory": "無類別",
