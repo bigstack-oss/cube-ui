@@ -298,3 +298,24 @@ describe('CubeViewDetailsTable test IDs', () => {
     },
   )
 })
+
+describe('CubeViewDetailsTable detail item keys', () => {
+  it('keys a detail item by its title, or by the data-key it passes', () => {
+    renderTable({
+      'data-testid': 'licenses',
+      expandedRowIdSet: new Set(['2']),
+      getDetailItems: (license) => [
+        { title: 'Quantity', value: license.quantity },
+        { title: 'Expires', value: '2027-01-01', 'data-key': 'expiry' },
+      ],
+    })
+
+    const sub = document.querySelector('[data-testid="licenses-sub-row"]')
+    if (!(sub instanceof HTMLElement)) throw new Error('sub row missing')
+    expect(
+      within(sub)
+        .getAllByTestId('licenses-detail')
+        .map((d) => d.getAttribute('data-key')),
+    ).toEqual(['Quantity', 'expiry'])
+  })
+})

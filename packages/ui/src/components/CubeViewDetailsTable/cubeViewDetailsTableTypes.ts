@@ -1,11 +1,12 @@
 import type { ReactNode } from 'react'
+import type { CubeTestKeyProps } from '@shared-types/test-id-types'
 import type { CubeBasicTableProps } from '../CubeBasicTable/CubeBasicTable'
 import type { CubeTableRow } from '../CubeBasicTable/cubeTableUtils'
 
 export type CubeViewDetailsTableDetailItem = {
   title: string
   value: string | number
-}
+} & CubeTestKeyProps
 
 export type CubeViewDetailsTableProps<ParentRow extends CubeTableRow> = Omit<
   CubeBasicTableProps<ParentRow> & {

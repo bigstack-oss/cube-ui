@@ -80,7 +80,7 @@ const meta: Meta<CubeViewDetailsTableStoryArgs> = {
     docs: {
       description: {
         component:
-          "A basic table whose rows expand to show details: a title and a list of items, or custom content. It adds an expand button column before the data columns. Create a typed table with `GetCubeViewDetailsTable<Row>()`, and keep the expanded rows with `useExpandedRowIdSet()`.\n\n**Test IDs:** the same as `CubeBasicTable` (set `data-testid` and `getRowTestKey`), plus `<test-id>-expand` on each row's expand button, whose `aria-expanded` shows its state, and `<test-id>-detail` on each detail item, with `data-key` set to its title. See Overview / Test IDs.",
+          "A basic table whose rows expand to show details: a title and a list of items, or custom content. It adds an expand button column before the data columns. Create a typed table with `GetCubeViewDetailsTable<Row>()`, and keep the expanded rows with `useExpandedRowIdSet()`.\n\n**Test IDs:** the same as `CubeBasicTable` (set `data-testid` and `getRowTestKey`), plus `<test-id>-expand` on each row's expand button, whose `aria-expanded` shows its state, and `<test-id>-detail` on each detail item, with `data-key` set to its title unless the item passes one (the title is translated). See Overview / Test IDs.",
       },
       page: CubeViewDetailsTableDocs,
     },

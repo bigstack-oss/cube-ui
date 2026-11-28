@@ -26,7 +26,8 @@ export const DetailCell = (props: DetailCellProps) => {
               key={index}
               className="flex items-center gap-x-4"
               data-testid={testIdOf(testId, 'detail')}
-              data-key={testId ? item.title : undefined}
+              // The title is shown (and translated), so an item can pass its own key.
+              data-key={testId ? (item['data-key'] ?? item.title) : undefined}
             >
               <span className="primary-body4 w-[80px] text-functional-text">
                 {item.title}

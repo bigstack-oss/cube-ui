@@ -591,6 +591,11 @@ export const Guide: Story = {
             test IDs at all.
           </CaptionText>
           <CaptionText>
+            While a component shows a loading skeleton in place of itself, the
+            skeleton has no test ID, so a test that waits for a test ID waits
+            for the loading to end.
+          </CaptionText>
+          <CaptionText>
             The app names its own test IDs. Use kebab-case, named after the
             screen and the element, such as{' '}
             <InlineCode>networks-create-button</InlineCode>.
