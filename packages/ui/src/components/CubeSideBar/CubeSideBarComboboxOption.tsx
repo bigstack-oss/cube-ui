@@ -4,7 +4,11 @@ import { option, optionIcon, optionLabel } from './cubeSideBarStyles'
 import type { CubeSideBarComboboxOptionProps } from './cubeSideBarTypes'
 
 export const CubeSideBarComboboxOption = (
-  props: CubeSideBarComboboxOptionProps,
+  props: Omit<CubeSideBarComboboxOptionProps, 'data-key'> & {
+    /** The option's own test ID; `testKey` is its `data-key`, its label by default. */
+    testId?: string
+    testKey?: string
+  },
 ) => {
   const {
     label,
@@ -12,12 +16,19 @@ export const CubeSideBarComboboxOption = (
     isSelected = false,
     notificationCount = 0,
     onClick,
+    testId,
+    testKey,
   } = props
 
   return (
     // TODO: change this to hyperlink.
     // `twMerge` drops the base `bg-transparent` when selected.
-    <div className={twMerge(option({ isSelected }))} onClick={onClick}>
+    <div
+      className={twMerge(option({ isSelected }))}
+      data-testid={testId}
+      data-key={testId ? (testKey ?? label) : undefined}
+      onClick={onClick}
+    >
       <div className={optionLabel()}>
         <Icon className={optionIcon()} />
         <span>{label}</span>

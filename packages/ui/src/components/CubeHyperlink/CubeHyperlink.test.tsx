@@ -129,3 +129,47 @@ describe('CubeHyperlink', () => {
     expect(await axe(container)).toHaveNoViolations()
   })
 })
+
+describe('CubeHyperlink test IDs', () => {
+  it('puts data-testid on the link, an <a> when it has an href', () => {
+    render(
+      <CubeHyperlink variant="text-only" href="/docs" data-testid="docs-link">
+        Docs
+      </CubeHyperlink>,
+    )
+
+    expect(screen.getByTestId('docs-link')).toBe(
+      screen.getByRole('link', { name: 'Docs' }),
+    )
+  })
+
+  it('puts data-testid on the element it renders without an href', async () => {
+    const user = userEvent.setup()
+    const onClick = vi.fn()
+    render(
+      <CubeHyperlink
+        variant="text-only"
+        onClick={onClick}
+        data-testid="docs-link"
+      >
+        Docs
+      </CubeHyperlink>,
+    )
+
+    await user.click(screen.getByTestId('docs-link'))
+    expect(onClick).toHaveBeenCalledOnce()
+  })
+
+  it.each([undefined, ''])(
+    'renders no test ID for a data-testid of %j',
+    (testId) => {
+      const { container } = render(
+        <CubeHyperlink variant="text-only" href="/docs" data-testid={testId}>
+          Docs
+        </CubeHyperlink>,
+      )
+
+      expect(container.querySelector('[data-testid]')).toBeNull()
+    },
+  )
+})

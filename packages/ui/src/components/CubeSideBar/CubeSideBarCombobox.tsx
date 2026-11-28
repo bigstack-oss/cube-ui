@@ -1,12 +1,15 @@
+import { testIdOf } from '@utils/testId'
 import { CubeSideBarBlock } from './CubeSideBarBlock'
 import { CubeSideBarComboboxOption } from './CubeSideBarComboboxOption'
 import { options as optionsStyle } from './cubeSideBarStyles'
 import type { CubeSideBarProps } from './cubeSideBarTypes'
 
-type CubeSideBarComboboxProps = Pick<CubeSideBarProps, 'options'>
+type CubeSideBarComboboxProps = Pick<CubeSideBarProps, 'options'> & {
+  testId?: string
+}
 
 export const CubeSideBarCombobox = (props: CubeSideBarComboboxProps) => {
-  const { options } = props
+  const { options, testId } = props
 
   return (
     <CubeSideBarBlock className={optionsStyle()}>
@@ -18,6 +21,8 @@ export const CubeSideBarCombobox = (props: CubeSideBarComboboxProps) => {
           isSelected={option.isSelected}
           notificationCount={option.notificationCount}
           onClick={option.onClick}
+          testId={testIdOf(testId, 'option')}
+          testKey={option['data-key']}
         />
       ))}
     </CubeSideBarBlock>

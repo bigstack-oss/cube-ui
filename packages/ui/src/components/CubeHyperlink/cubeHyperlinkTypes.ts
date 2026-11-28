@@ -1,6 +1,10 @@
 import type { AnchorHTMLAttributes, MouseEvent } from 'react'
 import type { SvgComponent } from '../CubeIcon/cubeIconTypes'
 import type { PropsWithClassName } from '@shared-types/react-types'
+import type {
+  CubeTestIdProps,
+  CubeTestKeyProps,
+} from '@shared-types/test-id-types'
 
 export const cubeHyperlinkColors = ['primary', 'secondary'] as const
 
@@ -36,7 +40,8 @@ type BaseHyperlinkProps = {
   href?: string
   target?: AnchorHTMLAttributes<HTMLAnchorElement>['target']
   onClick?: (e: MouseEvent<HTMLElement>) => void
-}
+} & CubeTestIdProps &
+  CubeTestKeyProps
 
 export type CubeHyperlinkProps = PropsWithClassName &
   BaseHyperlinkProps &

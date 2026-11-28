@@ -16,28 +16,34 @@ export const CubeSideBar = (props: CubeSideBarProps) => {
     links,
     naggingProps,
     utcTimeZone,
+    'data-testid': testIdProp,
   } = props
+
+  const testId = testIdProp || undefined
 
   return (
     <div
       className={sideBar()}
       style={{ boxShadow: '0px 0px 2px 0px rgba(0, 0, 0, 0.20)' }}
+      data-testid={testId}
     >
-      <CubeSideBarTitle LogoContainer={LogoContainer} />
+      <CubeSideBarTitle LogoContainer={LogoContainer} testId={testId} />
       <CubeSideBarDivider />
       <CubeSideBarUserInfo
         isLoading={isLoading}
         dataCenter={dataCenter}
         username={username}
         naggingProps={naggingProps}
+        testId={testId}
       />
       <CubeSideBarDivider />
-      <CubeSideBarCombobox options={options} />
+      <CubeSideBarCombobox options={options} testId={testId} />
       <CubeSideBarDivider />
       <CubeSideBarBottom
         isLoading={isLoading}
         utcTimeZone={utcTimeZone}
         links={links}
+        testId={testId}
       />
     </div>
   )

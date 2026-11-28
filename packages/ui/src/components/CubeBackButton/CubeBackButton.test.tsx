@@ -159,3 +159,51 @@ describe('CubeBackButton', () => {
     expect(await axe(container)).toHaveNoViolations()
   })
 })
+
+describe('CubeBackButton test IDs', () => {
+  const renderHeader = (testId?: string) => {
+    const onBack = vi.fn()
+    render(
+      <CubeBackButton
+        data-testid={testId}
+        onClick={onBack}
+        titleRightContent={
+          <>
+            <CubeBackButton.Details>3 subnets</CubeBackButton.Details>
+            <CubeBackButton.Link href="/docs">Docs</CubeBackButton.Link>
+          </>
+        }
+      >
+        web-net
+      </CubeBackButton>,
+    )
+    return onBack
+  }
+
+  it('tags the header, the back button, the title, the details and the link', async () => {
+    const user = userEvent.setup()
+    const onBack = renderHeader('net-header')
+
+    expect(screen.getByTestId('net-header')).toBeInTheDocument()
+    expect(screen.getByTestId('net-header-title')).toHaveTextContent('web-net')
+    expect(screen.getByTestId('net-header-details')).toHaveTextContent(
+      '3 subnets',
+    )
+    expect(screen.getByTestId('net-header-link')).toBe(
+      screen.getByRole('link', { name: 'Docs' }),
+    )
+    const back = screen.getByTestId('net-header-back')
+    expect(back.tagName).toBe('BUTTON')
+    await user.click(back)
+    expect(onBack).toHaveBeenCalledOnce()
+  })
+
+  it.each([undefined, ''])(
+    'renders no test IDs for a data-testid of %j',
+    (testId) => {
+      renderHeader(testId)
+
+      expect(document.body.querySelector('[data-testid]')).toBeNull()
+    },
+  )
+})

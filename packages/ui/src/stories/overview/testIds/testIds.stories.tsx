@@ -210,6 +210,38 @@ const COMPONENT_TEST_IDS: ComponentTestIds[] = [
     target: 'the visible tooltip, only while it is shown',
     parts: [],
   },
+  {
+    component: 'CubeSideBar',
+    target: 'the bar',
+    parts: [
+      { suffix: 'logo', element: 'the logo' },
+      { suffix: 'username', element: 'the user name' },
+      { suffix: 'data-center', element: 'the data center name' },
+      { suffix: 'version', element: 'the data center version' },
+      { suffix: 'option', element: 'each page option, with data-key' },
+      { suffix: 'link', element: 'each link at the bottom, with data-key' },
+    ],
+  },
+  {
+    component: 'CubeBreadcrumb',
+    target: 'the trail',
+    parts: [{ suffix: 'item', element: 'each item, with data-key' }],
+  },
+  {
+    component: 'CubeBackButton',
+    target: 'the header',
+    parts: [
+      { suffix: 'back', element: 'the back button' },
+      { suffix: 'title', element: 'the title' },
+      { suffix: 'details', element: 'the details text' },
+      { suffix: 'link', element: 'the link beside the title' },
+    ],
+  },
+  {
+    component: 'CubeHyperlink',
+    target: 'the link itself (it also takes data-key)',
+    parts: [],
+  },
 ]
 
 const PLAYWRIGHT_SAMPLE = `

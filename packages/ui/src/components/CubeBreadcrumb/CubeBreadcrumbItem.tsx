@@ -1,12 +1,18 @@
-import type { PropsWithChildren, ReactNode } from 'react'
+import { useContext, type PropsWithChildren, type ReactNode } from 'react'
 import { MonochromeChevronRight } from '@icons'
+import { testIdOf } from '@utils/testId'
 import { CubeHyperlink } from '../CubeHyperlink/CubeHyperlink'
+import { CubeBreadcrumbTestIdContext } from './cubeBreadcrumbContext'
 import type { CubeBreadcrumbItemProps } from './cubeBreadcrumbTypes'
 
 export const CubeBreadcrumbItem = <ContainerProps extends PropsWithChildren>(
   props: CubeBreadcrumbItemProps<ContainerProps>,
 ) => {
-  const { label, href, onClick, itemContainer } = props
+  const { label, href, onClick, itemContainer, 'data-key': keyProp } = props
+
+  const itemTestId = testIdOf(useContext(CubeBreadcrumbTestIdContext), 'item')
+  // The label identifies the item unless the consumer passes its own key.
+  const testKey = itemTestId ? (keyProp ?? label) : undefined
 
   const isLink = Boolean(href || onClick || itemContainer)
 
@@ -20,6 +26,8 @@ export const CubeBreadcrumbItem = <ContainerProps extends PropsWithChildren>(
       onClick={onClick}
       disabled={false}
       className="primary-body3"
+      data-testid={itemTestId}
+      data-key={testKey}
     >
       {label}
     </CubeHyperlink>
@@ -34,7 +42,11 @@ export const CubeBreadcrumbItem = <ContainerProps extends PropsWithChildren>(
     }
   } else {
     breadcrumbItem = (
-      <div className="primary-body3 font-medium text-functional-text">
+      <div
+        className="primary-body3 font-medium text-functional-text"
+        data-testid={itemTestId}
+        data-key={testKey}
+      >
         {label}
       </div>
     )

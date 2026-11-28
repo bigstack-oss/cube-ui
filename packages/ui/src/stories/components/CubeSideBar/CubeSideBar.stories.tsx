@@ -35,7 +35,7 @@ const meta: Meta<CubeSideBarProps> = {
     docs: {
       description: {
         component:
-          'The app navigation on the left, full height: the CubeCOS logo, the data center and user, an optional nagging, the page options with notification counts, the data center time and time zone, and links.',
+          'The app navigation on the left, full height: the CubeCOS logo, the data center and user, an optional nagging, the page options with notification counts, the data center time and time zone, and links.\n\n**Test IDs:** `data-testid` goes on the bar; its parts get `<test-id>-logo`, `-username`, `-data-center`, `-version`, `-option` and `-link` (the last two with `data-key`: the label or text, unless the option or link passes one, which is worth doing since they are translated). See Overview / Test IDs.',
       },
       page: CubeSideBarDocs,
     },

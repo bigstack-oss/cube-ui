@@ -1,11 +1,14 @@
 import { twMerge } from 'tailwind-merge'
 import { CubeBreadcrumbItem } from './CubeBreadcrumbItem'
+import { CubeBreadcrumbTestIdContext } from './cubeBreadcrumbContext'
 import { CubeBreadcrumbSkeleton } from './CubeBreadcrumbSkeleton'
 import type { CubeBreadcrumbProps } from './cubeBreadcrumbTypes'
 import { MAX_BREADCRUMB_ITEMS } from './cubeBreadcrumbUtils'
 
 export const CubeBreadcrumb = (props: CubeBreadcrumbProps) => {
-  const { className, children, isLoading } = props
+  const { className, children, isLoading, 'data-testid': testIdProp } = props
+
+  const testId = testIdProp || undefined
 
   if (Array.isArray(children) && children.length > MAX_BREADCRUMB_ITEMS) {
     console.warn(
@@ -22,9 +25,14 @@ export const CubeBreadcrumb = (props: CubeBreadcrumbProps) => {
   }
 
   return (
-    <div className={twMerge('flex w-fit items-center gap-3 py-1', className)}>
-      {children}
-    </div>
+    <CubeBreadcrumbTestIdContext.Provider value={testId}>
+      <div
+        className={twMerge('flex w-fit items-center gap-3 py-1', className)}
+        data-testid={testId}
+      >
+        {children}
+      </div>
+    </CubeBreadcrumbTestIdContext.Provider>
   )
 }
 

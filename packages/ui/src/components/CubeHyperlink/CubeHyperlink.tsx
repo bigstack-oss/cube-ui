@@ -27,6 +27,8 @@ export const CubeHyperlink = (props: CubeHyperlinkProps) => {
     href,
     target,
     onClick,
+    'data-testid': testId,
+    'data-key': testKey,
   } = props
 
   if (!href && !onClick) {
@@ -75,6 +77,8 @@ export const CubeHyperlink = (props: CubeHyperlinkProps) => {
         href: hrefAttribute,
         target: targetAttribute,
         onClick: handleClick,
+        'data-testid': testId || undefined,
+        'data-key': testId ? testKey : undefined,
       },
       renderIcon('icon-left'),
       children,

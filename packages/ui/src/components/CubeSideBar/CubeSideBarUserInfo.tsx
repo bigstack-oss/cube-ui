@@ -1,3 +1,4 @@
+import { testIdOf } from '@utils/testId'
 import { CubeNagging } from '../CubeNagging/CubeNagging'
 import { CubeSkeleton } from '../CubeSkeleton/CubeSkeleton'
 import { CubeSideBarBlock } from './CubeSideBarBlock'
@@ -13,23 +14,42 @@ import type { CubeSideBarProps } from './cubeSideBarTypes'
 type CubeSideBarUserInfoProps = Pick<
   CubeSideBarProps,
   'isLoading' | 'dataCenter' | 'username' | 'naggingProps'
->
+> & {
+  testId?: string
+}
 
 export const CubeSideBarUserInfo = (props: CubeSideBarUserInfoProps) => {
-  const { isLoading = false, dataCenter, username, naggingProps } = props
+  const {
+    isLoading = false,
+    dataCenter,
+    username,
+    naggingProps,
+    testId,
+  } = props
 
   const renderDataCenter = () => {
     if (isLoading) {
       return <CubeSkeleton className="h-[18px] w-[38px]" />
     }
-    return <span className={dataCenterName()}>{dataCenter?.name || '-'}</span>
+    return (
+      <span
+        className={dataCenterName()}
+        data-testid={testIdOf(testId, 'data-center')}
+      >
+        {dataCenter?.name || '-'}
+      </span>
+    )
   }
 
   const renderUserName = () => {
     if (isLoading) {
       return <CubeSkeleton className="h-[18px] w-[42px]" />
     }
-    return <div className={userNameTag()}>{username || '-'}</div>
+    return (
+      <div className={userNameTag()} data-testid={testIdOf(testId, 'username')}>
+        {username || '-'}
+      </div>
+    )
   }
 
   const renderVersion = () => {
@@ -37,7 +57,12 @@ export const CubeSideBarUserInfo = (props: CubeSideBarUserInfoProps) => {
       return <CubeSkeleton className="h-[16px] w-[156px]" />
     }
     return (
-      <span className={dataCenterVersion()}>{dataCenter?.version || '-'}</span>
+      <span
+        className={dataCenterVersion()}
+        data-testid={testIdOf(testId, 'version')}
+      >
+        {dataCenter?.version || '-'}
+      </span>
     )
   }
 

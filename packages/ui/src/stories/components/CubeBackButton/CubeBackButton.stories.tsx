@@ -62,7 +62,7 @@ const meta: Meta<CubeBackButtonStoryArgs> = {
     docs: {
       description: {
         component:
-          'A page header with a back button and the page title. Details, links and resource usage bars can sit next to or below the title, and every part shows a skeleton while loading.',
+          'A page header with a back button and the page title. Details, links and resource usage bars can sit next to or below the title, and every part shows a skeleton while loading.\n\n**Test IDs:** `data-testid` goes on the header; its parts get `<test-id>-back` (the back button), `-title`, `-details` and `-link`. See Overview / Test IDs.',
       },
       page: CubeBackButtonDocs,
     },

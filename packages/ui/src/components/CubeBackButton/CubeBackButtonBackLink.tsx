@@ -1,6 +1,7 @@
 import { createElement, useContext, type PropsWithChildren } from 'react'
 import { MonochromeChevronLeft } from '@icons'
 import { useCubeUiTranslation } from '@i18n/useCubeUiTranslation'
+import { testIdOf } from '@utils/testId'
 import { CubeButton } from '../CubeButton/CubeButton'
 import { CubeSkeleton } from '../CubeSkeleton/CubeSkeleton'
 import { CubeBackButtonContext } from './cubeBackButtonContext'
@@ -14,7 +15,7 @@ export const CubeBackButtonBackLink = <
 ) => {
   const { href, onClick, backButtonContainer } = props
 
-  const { isLoading } = useContext(CubeBackButtonContext)
+  const { isLoading, testId } = useContext(CubeBackButtonContext)
   const { t } = useCubeUiTranslation()
 
   if (!href && !onClick && !backButtonContainer) {
@@ -33,6 +34,7 @@ export const CubeBackButtonBackLink = <
       usage="icon-only"
       Icon={MonochromeChevronLeft}
       aria-label={t('component.backButton.back')}
+      data-testid={testIdOf(testId, 'back')}
     />
   )
 

@@ -22,9 +22,15 @@ export const CubeBackButton = <
     href,
     onClick,
     backButtonContainer,
+    'data-testid': testIdProp,
   } = props
 
-  const contextValue = useMemo(() => ({ isLoading }), [isLoading])
+  const testId = testIdProp || undefined
+
+  const contextValue = useMemo(
+    () => ({ isLoading, testId }),
+    [isLoading, testId],
+  )
 
   return (
     <CubeBackButtonContext.Provider value={contextValue}>
@@ -34,6 +40,7 @@ export const CubeBackButton = <
           // empty, instead of relying on the React node's value.
           hasBottomContent: Boolean(titleBottomContent),
         })}
+        data-testid={testId}
       >
         <CubeBackButtonBackLink
           href={href}
