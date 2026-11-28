@@ -168,3 +168,93 @@ describe('CubeSideBar', () => {
     expect(await axe(container)).toHaveNoViolations()
   })
 })
+
+describe('CubeSideBar test IDs', () => {
+  const baseProps: CubeSideBarProps = {
+    dataCenter: { name: 'Taipei', version: '3.1.0' },
+    username: 'admin',
+    options: [
+      { label: 'Dashboard', Icon: MonochromeHome01, onClick: vi.fn() },
+      {
+        label: 'Nodes',
+        Icon: MonochromeNode,
+        onClick: vi.fn(),
+        'data-key': 'nodes',
+      },
+    ],
+    utcTimeZone: '+08:00',
+    links: [{ text: 'Docs', href: '/docs' }],
+  }
+
+  it('tags the bar, the logo, the user, the data center and its version', () => {
+    render(<CubeSideBar {...baseProps} data-testid="nav" />)
+
+    expect(screen.getByTestId('nav')).toBeInTheDocument()
+    expect(screen.getByTestId('nav-logo')).toBeInTheDocument()
+    expect(screen.getByTestId('nav-username')).toHaveTextContent('admin')
+    expect(screen.getByTestId('nav-data-center')).toHaveTextContent('Taipei')
+    expect(screen.getByTestId('nav-version')).toHaveTextContent('3.1.0')
+  })
+
+  it('tags each option, keyed by its label unless it passes data-key', async () => {
+    const user = userEvent.setup()
+    const onClick = vi.fn()
+    render(
+      <CubeSideBar
+        {...baseProps}
+        options={[
+          { label: 'Dashboard', Icon: MonochromeHome01, onClick: vi.fn() },
+          {
+            label: 'Nodes',
+            Icon: MonochromeNode,
+            onClick,
+            'data-key': 'nodes',
+          },
+        ]}
+        data-testid="nav"
+      />,
+    )
+
+    const options = screen.getAllByTestId('nav-option')
+    expect(options.map((o) => o.getAttribute('data-key'))).toEqual([
+      'Dashboard',
+      'nodes',
+    ])
+    const nodes = options[1]
+    if (!nodes) throw new Error('nodes option not found')
+    await user.click(nodes)
+    expect(onClick).toHaveBeenCalledOnce()
+  })
+
+  it('tags each bottom link, keyed by its text unless it passes data-key', () => {
+    render(
+      <CubeSideBar
+        {...baseProps}
+        links={[
+          { text: 'Docs', href: '/docs' },
+          { text: 'Support', href: '/support', 'data-key': 'help' },
+        ]}
+        data-testid="nav"
+      />,
+    )
+
+    const links = screen.getAllByTestId('nav-link')
+    expect(links.map((l) => l.getAttribute('data-key'))).toEqual([
+      'Docs',
+      'help',
+    ])
+    expect(links[0]).toHaveAttribute('href', '/docs')
+  })
+
+  it.each([undefined, ''])(
+    'renders no test IDs for a data-testid of %j',
+    (testId) => {
+      const { container } = render(
+        <CubeSideBar {...baseProps} data-testid={testId} />,
+      )
+
+      expect(container.querySelector('[data-testid]')).toBeNull()
+      expect(container.querySelector('[data-key]')).toBeNull()
+    },
+  )
+})

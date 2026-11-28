@@ -18,7 +18,10 @@ export const CubeDatePicker = (props: CubeDatePickerProps) => {
     onCancel: onCancelProps,
     onApply: onApplyProps,
     onReset: onResetProps,
+    'data-testid': testIdProp,
   } = props
+
+  const testId = testIdProp || undefined
 
   const timeZone = useContext(CubeTimeZoneContext)
 
@@ -114,6 +117,7 @@ export const CubeDatePicker = (props: CubeDatePickerProps) => {
         onCancel,
         onApply,
         onReset,
+        testId,
       }}
     >
       <CubeDatePickerTrigger />

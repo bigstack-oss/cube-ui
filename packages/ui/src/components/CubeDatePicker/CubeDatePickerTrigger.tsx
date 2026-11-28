@@ -13,6 +13,7 @@ export const CubeDatePickerTrigger = () => {
     calendarOpen: isOpen,
     toggleCalendarOpen,
     displayDates,
+    testId,
   } = useContext(CubeDatePickerContext)
 
   const { start, end } = displayDates
@@ -26,6 +27,7 @@ export const CubeDatePickerTrigger = () => {
       disabled={disabled}
       onClick={toggleCalendarOpen}
       className={trigger({ isSelected, isOpen, disabled })}
+      data-testid={testId}
     >
       <MonochromeCalendar className={triggerIcon()} />
       <span>

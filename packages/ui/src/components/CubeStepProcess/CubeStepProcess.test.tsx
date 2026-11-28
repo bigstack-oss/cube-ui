@@ -68,3 +68,41 @@ describe('CubeStepProcess', () => {
     expect(await axe(container)).toHaveNoViolations()
   })
 })
+
+describe('CubeStepProcess test IDs', () => {
+  it('tags the process and each step, keyed by its number unless it passes data-key', () => {
+    render(
+      <CubeStepProcess data-testid="wizard">
+        <CubeStepProcess.Item stepNumber={1} label="Network" isActive />
+        <CubeStepProcess.Item
+          stepNumber={2}
+          label="Storage"
+          isActive={false}
+          data-key="storage"
+        />
+      </CubeStepProcess>,
+    )
+
+    expect(screen.getByTestId('wizard')).toBeInTheDocument()
+    const steps = screen.getAllByTestId('wizard-item')
+    expect(steps.map((s) => s.getAttribute('data-key'))).toEqual([
+      '1',
+      'storage',
+    ])
+    expect(steps[0]).toHaveTextContent('Network')
+  })
+
+  it.each([undefined, ''])(
+    'renders no test IDs for a data-testid of %j',
+    (testId) => {
+      const { container } = render(
+        <CubeStepProcess data-testid={testId}>
+          <CubeStepProcess.Item stepNumber={1} label="Network" isActive />
+        </CubeStepProcess>,
+      )
+
+      expect(container.querySelector('[data-testid]')).toBeNull()
+      expect(container.querySelector('[data-key]')).toBeNull()
+    },
+  )
+})

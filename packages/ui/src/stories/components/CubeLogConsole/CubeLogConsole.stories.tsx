@@ -33,7 +33,7 @@ const meta: Meta<CubeLogConsoleProps> = {
     docs: {
       description: {
         component:
-          'A dark box that shows text such as a log or script output exactly as written, with a header for an optional title (plain or a link) and a Copy button that copies the text.',
+          'A dark box that shows text such as a log or script output exactly as written, with a header for an optional title (plain or a link) and a Copy button that copies the text.\n\n**Test IDs:** `data-testid` goes on the console; its parts get `<test-id>-title`, `-copy` and `-log` (the text). See Overview / Test IDs.',
       },
       page: CubeLogConsoleDocs,
     },

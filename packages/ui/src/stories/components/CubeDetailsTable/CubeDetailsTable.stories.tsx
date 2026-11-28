@@ -53,7 +53,7 @@ const meta: Meta<CubeDetailsTableStoryArgs> = {
     docs: {
       description: {
         component:
-          'A two-column table of titles and values under a dark header, for showing the details of one item. Each `CubeDetailsTable.Row` is one title and its value.',
+          'A two-column table of titles and values under a dark header, for showing the details of one item. Each `CubeDetailsTable.Row` is one title and its value.\n\n**Test IDs:** `data-testid` goes on the `<table>`; the header gets `<test-id>-header`, each row `<test-id>-row` with `data-key` (its title unless `CubeDetailsTable.Row` passes one, worth doing since titles are translated), and each value `<test-id>-value`. See Overview / Test IDs.',
       },
       page: CubeDetailsTableDocs,
     },

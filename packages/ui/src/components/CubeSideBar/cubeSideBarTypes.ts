@@ -1,4 +1,8 @@
 import type { PropsWithChildren, ReactElement } from 'react'
+import type {
+  CubeTestIdProps,
+  CubeTestKeyProps,
+} from '@shared-types/test-id-types'
 import type { SvgComponent } from '../CubeIcon/cubeIconTypes'
 import type { CubeNaggingProps } from '../CubeNagging/cubeNaggingTypes'
 
@@ -15,7 +19,7 @@ export type CubeSideBarComboboxOptionProps = {
    */
   notificationCount?: number
   onClick: () => void
-}
+} & CubeTestKeyProps
 
 export type CubeSideBarBottomLinkProps = {
   text: string
@@ -23,14 +27,14 @@ export type CubeSideBarBottomLinkProps = {
    * Opened in a new tab.
    */
   href: string
-}
+} & CubeTestKeyProps
 
 export type CubeSideBarDataCenter = {
   name: string
   version: string
 }
 
-export type CubeSideBarProps = {
+export type CubeSideBarProps = CubeTestIdProps & {
   /**
    * An element (for example a router link) the logo is placed in.
    */

@@ -325,3 +325,125 @@ describe('CubeDatePicker', () => {
     expect(await axe(getMenu())).toHaveNoViolations()
   })
 })
+
+describe('CubeDatePicker test IDs', () => {
+  beforeEach(() => {
+    vi.useFakeTimers({ toFake: ['Date'] })
+    vi.setSystemTime(new Date('2026-11-25T12:00:00'))
+  })
+
+  afterEach(() => {
+    vi.useRealTimers()
+  })
+
+  const Harness = (props: {
+    testId?: string
+    initialDates?: CubeDatePickerDates
+    onApply?: (dates: CubeDatePickerDates) => void
+  }) => {
+    const {
+      testId,
+      initialDates = { start: undefined, end: undefined },
+      onApply = () => {},
+    } = props
+    const [dates, setDates] = useState(initialDates)
+    const { displayDates, onChange, onCancel, onReset } =
+      useCubeDatePickerDisplayDates({
+        initialStartDate: dates.start,
+        initialEndDate: dates.end,
+      })
+
+    return (
+      <CubeDatePicker
+        displayDates={displayDates}
+        onChange={onChange}
+        onCancel={onCancel}
+        onApply={() => {
+          setDates(displayDates)
+          onApply(displayDates)
+        }}
+        onReset={() => {
+          onReset()
+          setDates({ start: undefined, end: undefined })
+        }}
+        data-testid={testId}
+      />
+    )
+  }
+
+  const day = (key: string) => {
+    const button = document.querySelector(
+      `[data-testid="range-day"][data-key="${key}"]`,
+    )
+    if (!(button instanceof HTMLElement)) throw new Error(`day ${key} missing`)
+    return button
+  }
+
+  it('puts data-testid on the trigger, which a test clicks to open the calendar', () => {
+    render(<Harness testId="range" />)
+
+    const trigger = screen.getByTestId('range')
+    expect(trigger.tagName).toBe('BUTTON')
+    expect(trigger).toHaveTextContent('Time')
+  })
+
+  it('tags the menu in its portal, the month, and the buttons that change it', async () => {
+    const user = userEvent.setup()
+    const { container } = render(<Harness testId="range" />)
+
+    await user.click(screen.getByTestId('range'))
+
+    expect(container).not.toContainElement(screen.getByTestId('range-menu'))
+    expect(screen.getByTestId('range-month')).toHaveTextContent('November 2026')
+    await user.click(screen.getByTestId('range-next'))
+    expect(screen.getByTestId('range-month')).toHaveTextContent('December 2026')
+    await user.click(screen.getByTestId('range-prev'))
+    await user.click(screen.getByTestId('range-prev'))
+    expect(screen.getByTestId('range-month')).toHaveTextContent('October 2026')
+  })
+
+  it('tags each day by its date, so a test can pick a range and apply it', async () => {
+    const user = userEvent.setup()
+    const onApply = vi.fn()
+    render(<Harness testId="range" onApply={onApply} />)
+
+    await user.click(screen.getByTestId('range'))
+    await user.click(day('2026-11-03'))
+    await user.click(day('2026-11-07'))
+
+    expect(screen.getByTestId('range-start')).toHaveValue('2026/11/03')
+    expect(screen.getByTestId('range-end')).toHaveValue('2026/11/07')
+    await user.click(screen.getByTestId('range-apply'))
+    expect(onApply).toHaveBeenCalledOnce()
+    expect(screen.getByTestId('range')).toHaveTextContent(
+      '2026/11/03 - 2026/11/07',
+    )
+  })
+
+  it('tags reset, which clears the range', async () => {
+    const user = userEvent.setup()
+    render(
+      <Harness
+        testId="range"
+        initialDates={{ start: dayjs('2026-11-03'), end: dayjs('2026-11-07') }}
+      />,
+    )
+
+    await user.click(screen.getByTestId('range'))
+    expect(screen.getByTestId('range-start')).toHaveValue('2026/11/03')
+    await user.click(screen.getByTestId('range-reset'))
+
+    expect(screen.getByTestId('range-start')).toHaveValue('')
+    expect(screen.getByTestId('range')).toHaveTextContent('Time')
+  })
+
+  it.each([undefined, ''])(
+    'renders no test IDs for a data-testid of %j',
+    (testId) => {
+      render(<Harness testId={testId} />)
+
+      expect(document.body.querySelector('[data-testid]')).toBeNull()
+      expect(document.body.querySelector('[data-key]')).toBeNull()
+    },
+  )
+})

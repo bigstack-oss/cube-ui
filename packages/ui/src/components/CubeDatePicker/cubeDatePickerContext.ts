@@ -19,6 +19,9 @@ export type CubeDatePickerContextValue = {
   onCancel: () => void
   onApply: () => void
   onReset: () => void
+
+  /** The consumer's test ID; each part derives its own from it. */
+  testId?: string
 }
 
 export const CubeDatePickerContext = createContext<CubeDatePickerContextValue>({
@@ -43,4 +46,6 @@ export const CubeDatePickerContext = createContext<CubeDatePickerContextValue>({
   onCancel: () => {},
   onApply: () => {},
   onReset: () => {},
+
+  testId: undefined,
 })

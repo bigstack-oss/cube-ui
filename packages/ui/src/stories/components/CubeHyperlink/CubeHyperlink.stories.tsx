@@ -57,7 +57,7 @@ const meta: Meta<CubeHyperlinkStoryArgs> = {
     docs: {
       description: {
         component:
-          'Hyperlinks let users navigate to another page or resource. They can be text-only or paired with a leading or trailing icon.',
+          'Hyperlinks let users navigate to another page or resource. They can be text-only or paired with a leading or trailing icon.\n\n**Test IDs:** `data-testid` goes on the link (an `<a>` with an `href`, otherwise a `<div>`); `data-key` can name one of several links. See Overview / Test IDs.',
       },
       page: CubeHyperlinkDocs,
     },

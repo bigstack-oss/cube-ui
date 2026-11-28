@@ -4,6 +4,7 @@ import type {
   PropsWithChildren,
   ReactNode,
 } from 'react'
+import type { CubeTestIdProps } from '@shared-types/test-id-types'
 import type { CubeHyperlinkProps } from '../CubeHyperlink/cubeHyperlinkTypes'
 
 export type CubeBackButtonBackLinkProps<
@@ -44,7 +45,8 @@ export type CubeBackButtonProps<
    * Content below the title, such as `.BarChart` and `.Divider`.
    */
   titleBottomContent?: ReactNode
-} & CubeBackButtonBackLinkProps<ContainerProps>
+} & CubeBackButtonBackLinkProps<ContainerProps> &
+  CubeTestIdProps
 
 export type CubeBackButtonBarChartProps = {
   label: string

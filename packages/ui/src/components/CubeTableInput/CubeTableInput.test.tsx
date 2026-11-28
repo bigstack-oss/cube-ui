@@ -99,3 +99,41 @@ describe('CubeTableInput', () => {
     expect(await axe(container)).toHaveNoViolations()
   })
 })
+
+describe('CubeTableInput test IDs', () => {
+  it('puts data-testid on the input itself', () => {
+    render(<CubeTableInput data-testid="qty" />)
+
+    expect(screen.getByTestId('qty')).toBe(screen.getByRole('textbox'))
+  })
+
+  it('tags the error icon, and the tooltip it shows on hover', async () => {
+    const user = userEvent.setup()
+    render(<CubeTableInput data-testid="qty" errorMessage="Too large" />)
+
+    await user.hover(screen.getByTestId('qty-error'))
+
+    expect(screen.getByTestId('qty-tooltip')).toHaveTextContent('Too large')
+  })
+
+  it('has no error icon without an error, or when it is hidden', () => {
+    const { rerender } = render(<CubeTableInput data-testid="qty" />)
+    expect(screen.queryByTestId('qty-error')).not.toBeInTheDocument()
+
+    rerender(
+      <CubeTableInput data-testid="qty" errorMessage="Bad" hideErrorIcon />,
+    )
+    expect(screen.queryByTestId('qty-error')).not.toBeInTheDocument()
+  })
+
+  it.each([undefined, ''])(
+    'renders no test IDs for a data-testid of %j',
+    (testId) => {
+      const { container } = render(
+        <CubeTableInput data-testid={testId} errorMessage="Too large" />,
+      )
+
+      expect(container.querySelector('[data-testid]')).toBeNull()
+    },
+  )
+})

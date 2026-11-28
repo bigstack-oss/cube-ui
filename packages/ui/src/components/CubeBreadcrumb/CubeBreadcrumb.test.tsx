@@ -171,3 +171,50 @@ describe('CubeBreadcrumb', () => {
     expect(await axe(container)).toHaveNoViolations()
   })
 })
+
+describe('CubeBreadcrumb test IDs', () => {
+  it('tags the bar and each item, keyed by its label unless it passes data-key', async () => {
+    const user = userEvent.setup()
+    const onNetwork = vi.fn()
+    render(
+      <CubeBreadcrumb data-testid="crumbs">
+        <CubeBreadcrumb.Item label="Projects" href="/projects" />
+        <CubeBreadcrumb.Item
+          label="web-net"
+          data-key="n-1"
+          onClick={onNetwork}
+        />
+        <CubeBreadcrumb.Item label="Details" />
+      </CubeBreadcrumb>,
+    )
+
+    expect(screen.getByTestId('crumbs')).toBeInTheDocument()
+    const items = screen.getAllByTestId('crumbs-item')
+    expect(items.map((i) => i.getAttribute('data-key'))).toEqual([
+      'Projects',
+      'n-1',
+      'Details',
+    ])
+    expect(items[0]).toBe(screen.getByRole('link', { name: 'Projects' }))
+    expect(items[2]).toHaveTextContent('Details')
+    const network = items[1]
+    if (!network) throw new Error('network item not found')
+    await user.click(network)
+    expect(onNetwork).toHaveBeenCalledOnce()
+  })
+
+  it.each([undefined, ''])(
+    'renders no test IDs for a data-testid of %j',
+    (testId) => {
+      const { container } = render(
+        <CubeBreadcrumb data-testid={testId}>
+          <CubeBreadcrumb.Item label="Projects" href="/projects" />
+          <CubeBreadcrumb.Item label="Details" />
+        </CubeBreadcrumb>,
+      )
+
+      expect(container.querySelector('[data-testid]')).toBeNull()
+      expect(container.querySelector('[data-key]')).toBeNull()
+    },
+  )
+})

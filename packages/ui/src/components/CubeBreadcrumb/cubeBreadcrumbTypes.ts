@@ -5,14 +5,19 @@ import type {
   ReactElement,
 } from 'react'
 import type { PropsWithClassName } from '@shared-types/react-types'
+import type {
+  CubeTestIdProps,
+  CubeTestKeyProps,
+} from '@shared-types/test-id-types'
 import type { CubeBreadcrumbItem } from './CubeBreadcrumbItem'
 
-export type CubeBreadcrumbProps = PropsWithClassName & {
-  isLoading?: boolean
-  children:
-    | ReactElement<typeof CubeBreadcrumbItem>[]
-    | ReactElement<typeof CubeBreadcrumbItem>
-}
+export type CubeBreadcrumbProps = PropsWithClassName &
+  CubeTestIdProps & {
+    isLoading?: boolean
+    children:
+      | ReactElement<typeof CubeBreadcrumbItem>[]
+      | ReactElement<typeof CubeBreadcrumbItem>
+  }
 
 export type CubeBreadcrumbItemProps<
   ContainerProps extends PropsWithChildren = PropsWithChildren,
@@ -27,4 +32,4 @@ export type CubeBreadcrumbItemProps<
     Component: ComponentType<ContainerProps>
     props: ContainerProps
   }
-}
+} & CubeTestKeyProps

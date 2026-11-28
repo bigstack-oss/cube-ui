@@ -1,44 +1,46 @@
 import type { ReactNode } from 'react'
 import type { PropsWithClassName } from '@shared-types/react-types'
+import type { CubeTestIdProps } from '@shared-types/test-id-types'
 
-export type CubeUploadProps = PropsWithClassName & {
-  buttonText: string
-  /**
-   * `id` of the hidden file input.
-   */
-  inputId?: string
-  /**
-   * Accepted file types, as in `<input type="file" accept>`.
-   */
-  accept?: string
-  /**
-   * Content next to the upload button.
-   */
-  leftSlot?: ReactNode
-  /**
-   * Content on the right of the button row.
-   */
-  rightSlot?: ReactNode
-  /**
-   * Shows the button as loading and blocks picking a file.
-   * @default false
-   */
-  isUploading?: boolean
-  /**
-   * @default false
-   */
-  disabled?: boolean
-  /**
-   * Shown below the button row, such as `CubeUpload.ProgressBar`,
-   * `CubeUpload.File` or `CubeUpload.Error`.
-   */
-  children?: ReactNode
-  /**
-   * Called with the picked file (`null` if none). The same file can be
-   * picked again.
-   */
-  onFileChange?: (file: File | null) => void | Promise<void>
-}
+export type CubeUploadProps = PropsWithClassName &
+  CubeTestIdProps & {
+    buttonText: string
+    /**
+     * `id` of the hidden file input.
+     */
+    inputId?: string
+    /**
+     * Accepted file types, as in `<input type="file" accept>`.
+     */
+    accept?: string
+    /**
+     * Content next to the upload button.
+     */
+    leftSlot?: ReactNode
+    /**
+     * Content on the right of the button row.
+     */
+    rightSlot?: ReactNode
+    /**
+     * Shows the button as loading and blocks picking a file.
+     * @default false
+     */
+    isUploading?: boolean
+    /**
+     * @default false
+     */
+    disabled?: boolean
+    /**
+     * Shown below the button row, such as `CubeUpload.ProgressBar`,
+     * `CubeUpload.File` or `CubeUpload.Error`.
+     */
+    children?: ReactNode
+    /**
+     * Called with the picked file (`null` if none). The same file can be
+     * picked again.
+     */
+    onFileChange?: (file: File | null) => void | Promise<void>
+  }
 
 export type CubeUploadFileProps = {
   /**

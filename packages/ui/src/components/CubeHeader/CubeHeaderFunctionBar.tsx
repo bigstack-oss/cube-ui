@@ -1,4 +1,5 @@
 import { createElement } from 'react'
+import { testIdOf } from '@utils/testId'
 import { CubeButton } from '../CubeButton/CubeButton'
 import { CubeTooltip } from '../CubeTooltip/CubeTooltip'
 import { bar } from './cubeHeaderStyles'
@@ -6,10 +7,11 @@ import type { CubeHeaderFunctionBarItem } from './cubeHeaderTypes'
 
 type CubeHeaderFunctionBarProps = {
   items: CubeHeaderFunctionBarItem[]
+  testId?: string
 }
 
 export const CubeHeaderFunctionBar = (props: CubeHeaderFunctionBarProps) => {
-  const { items } = props
+  const { items, testId } = props
 
   const renderItem = (item: CubeHeaderFunctionBarItem) => {
     const {
@@ -18,6 +20,7 @@ export const CubeHeaderFunctionBar = (props: CubeHeaderFunctionBarProps) => {
       onClick,
       container,
       additionalElements = [],
+      'data-key': keyProp,
     } = item
 
     const button = (
@@ -28,6 +31,8 @@ export const CubeHeaderFunctionBar = (props: CubeHeaderFunctionBarProps) => {
         Icon={Icon}
         onClick={onClick}
         aria-label={hoverMessage}
+        data-testid={testIdOf(testId, 'action')}
+        data-key={testId ? (keyProp ?? hoverMessage) : undefined}
       />
     )
 

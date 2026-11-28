@@ -70,3 +70,42 @@ describe('CubeDetailsTable', () => {
     expect(await axe(container)).toHaveNoViolations()
   })
 })
+
+describe('CubeDetailsTable test IDs', () => {
+  const renderDetails = (testId?: string) =>
+    render(
+      <CubeDetailsTable header="Network" data-testid={testId}>
+        <CubeDetailsTable.Row title="Name">web-net</CubeDetailsTable.Row>
+        <CubeDetailsTable.Row title="CIDR" data-key="cidr">
+          10.0.0.0/24
+        </CubeDetailsTable.Row>
+      </CubeDetailsTable>,
+    )
+
+  it('tags the table, its header, each row keyed by its title, and each value', () => {
+    renderDetails('info')
+
+    expect(screen.getByTestId('info').tagName).toBe('TABLE')
+    expect(screen.getByTestId('info-header')).toHaveTextContent('Network')
+    const rows = screen.getAllByTestId('info-row')
+    expect(rows.map((r) => r.getAttribute('data-key'))).toEqual([
+      'Name',
+      'cidr',
+    ])
+    const cidr = rows[1]
+    if (!cidr) throw new Error('cidr row not found')
+    expect(within(cidr).getByTestId('info-value')).toHaveTextContent(
+      '10.0.0.0/24',
+    )
+  })
+
+  it.each([undefined, ''])(
+    'renders no test IDs for a data-testid of %j',
+    (testId) => {
+      const { container } = renderDetails(testId)
+
+      expect(container.querySelector('[data-testid]')).toBeNull()
+      expect(container.querySelector('[data-key]')).toBeNull()
+    },
+  )
+})

@@ -123,3 +123,51 @@ describe('CubeLogConsole', () => {
     expect(await axe(container)).toHaveNoViolations()
   })
 })
+
+describe('CubeLogConsole test IDs', () => {
+  it('tags the console, its title, the copy button and the log', async () => {
+    const user = userEvent.setup()
+    render(
+      <CubeLogConsole title={{ label: 'Install log' }} data-testid="log">
+        {'step 1 ok\nstep 2 ok'}
+      </CubeLogConsole>,
+    )
+
+    expect(screen.getByTestId('log')).toBeInTheDocument()
+    expect(screen.getByTestId('log-title')).toHaveTextContent('Install log')
+    expect(screen.getByTestId('log-log')).toHaveTextContent('step 2 ok')
+    await user.click(screen.getByTestId('log-copy'))
+    expect(await navigator.clipboard.readText()).toBe('step 1 ok\nstep 2 ok')
+  })
+
+  it('tags a title that is a link', () => {
+    render(
+      <CubeLogConsole
+        title={{ label: 'Install log', href: '/logs/1' }}
+        data-testid="log"
+      >
+        ok
+      </CubeLogConsole>,
+    )
+
+    expect(screen.getByTestId('log-title')).toBe(
+      screen.getByRole('link', { name: 'Install log' }),
+    )
+  })
+
+  it.each([undefined, ''])(
+    'renders no test IDs for a data-testid of %j',
+    (testId) => {
+      const { container } = render(
+        <CubeLogConsole
+          title={{ label: 'Install log', href: '/logs/1' }}
+          data-testid={testId}
+        >
+          ok
+        </CubeLogConsole>,
+      )
+
+      expect(container.querySelector('[data-testid]')).toBeNull()
+    },
+  )
+})

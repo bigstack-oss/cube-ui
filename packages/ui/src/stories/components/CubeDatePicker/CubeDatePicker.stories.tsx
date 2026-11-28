@@ -78,7 +78,7 @@ const meta: Meta<CubeDatePickerProps> = {
     docs: {
       description: {
         component:
-          'A button that opens a calendar for picking a date range. The first click sets the start, the second the end (an earlier day swaps them); Apply confirms both, Reset clears them, and a click outside cancels. Keep the dates with `useCubeDatePickerDisplayDates`. "Today" follows `CubeTimeZoneContext` (a UTC offset such as `"+08:00"`), or local time without it.',
+          'A button that opens a calendar for picking a date range. The first click sets the start, the second the end (an earlier day swaps them); Apply confirms both, Reset clears them, and a click outside cancels. Keep the dates with `useCubeDatePickerDisplayDates`. "Today" follows `CubeTimeZoneContext` (a UTC offset such as `"+08:00"`), or local time without it.\n\n**Test IDs:** `data-testid` goes on the trigger button; the calendar, rendered in a portal, gets `<test-id>-menu` with `-start` and `-end` (the two read-only fields), `-prev`, `-next` and `-month`, `-day` (each day, with `data-key` set to its date as `YYYY-MM-DD`), `-reset` and `-apply`. See Overview / Test IDs.',
       },
       page: CubeDatePickerDocs,
     },

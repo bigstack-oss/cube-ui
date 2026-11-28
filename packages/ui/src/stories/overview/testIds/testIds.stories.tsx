@@ -3,10 +3,16 @@ import type { Meta, StoryObj } from '@storybook/react-vite'
 import { StoryLayout } from '@internals/components/StoryLayout/StoryLayout'
 import { CaptionText } from '@internals/components/CaptionText'
 import { CubeButton } from '@components/CubeButton'
+import {
+  CubeDatePicker,
+  useCubeDatePickerDisplayDates,
+} from '@components/CubeDatePicker'
 import { CubeDropdown } from '@components/CubeDropdown'
 import { GetCubeBasicTable } from '@components/CubeBasicTable/CubeBasicTable'
 import { CubeInput } from '@components/CubeInput'
 import { CubeModal } from '@components/CubeModal'
+import { CubeUpload } from '@components/CubeUpload'
+import type { CubeDatePickerDates } from '@components/CubeDatePicker'
 import { InlineCode } from '../i18n/InlineCode'
 import { CodeBlock } from '../i18n/CodeBlock'
 import { DemoFrame } from '../i18n/DemoFrame'
@@ -210,6 +216,127 @@ const COMPONENT_TEST_IDS: ComponentTestIds[] = [
     target: 'the visible tooltip, only while it is shown',
     parts: [],
   },
+  {
+    component: 'CubeSideBar',
+    target: 'the bar',
+    parts: [
+      { suffix: 'logo', element: 'the logo' },
+      { suffix: 'username', element: 'the user name' },
+      { suffix: 'data-center', element: 'the data center name' },
+      { suffix: 'version', element: 'the data center version' },
+      { suffix: 'option', element: 'each page option, with data-key' },
+      { suffix: 'link', element: 'each link at the bottom, with data-key' },
+    ],
+  },
+  {
+    component: 'CubeHeader',
+    target: 'the header',
+    parts: [
+      {
+        suffix: 'quick-access',
+        element: 'each quick access link, with data-key',
+      },
+      { suffix: 'action', element: 'each function button, with data-key' },
+      {
+        suffix: 'language',
+        element:
+          'the language dropdown, with the Dropdown parts (-language-trigger, -language-menu, -language-option keyed by value)',
+      },
+    ],
+  },
+  {
+    component: 'CubeTableInput',
+    target: 'the <input>',
+    parts: [
+      { suffix: 'error', element: 'the error icon' },
+      {
+        suffix: 'tooltip',
+        element: 'the tooltip it shows on hover, with the message',
+      },
+    ],
+  },
+  {
+    component: 'CubeUpload',
+    target: 'the wrapper',
+    parts: [
+      { suffix: 'button', element: 'the upload button' },
+      { suffix: 'input', element: 'the hidden file input' },
+      { suffix: 'file', element: 'the picked file (and -file-cancel)' },
+      { suffix: 'progress', element: 'the progress bar (and -progress-abort)' },
+      { suffix: 'error', element: 'the error (and -error-close)' },
+    ],
+  },
+  {
+    component: 'CubeDatePicker',
+    target: 'the trigger button',
+    parts: [
+      { suffix: 'menu', element: 'the calendar, rendered in a portal' },
+      { suffix: 'start', element: 'the start date field' },
+      { suffix: 'end', element: 'the end date field' },
+      { suffix: 'prev', element: 'the previous-month button' },
+      { suffix: 'next', element: 'the next-month button' },
+      { suffix: 'month', element: 'the month title' },
+      { suffix: 'day', element: 'each day, with data-key as YYYY-MM-DD' },
+      { suffix: 'reset', element: 'the Reset button' },
+      { suffix: 'apply', element: 'the Apply button' },
+    ],
+  },
+  {
+    component: 'CubeDetailsTable',
+    target: 'the <table>',
+    parts: [
+      { suffix: 'header', element: 'the header' },
+      { suffix: 'row', element: 'each row, with data-key (its title)' },
+      { suffix: 'value', element: "each row's value" },
+    ],
+  },
+  {
+    component: 'CubeViewDetailsTable',
+    target: 'the <table>, with all the parts of CubeBasicTable',
+    parts: [
+      { suffix: 'expand', element: "each row's expand button (aria-expanded)" },
+      {
+        suffix: 'detail',
+        element: 'each detail item, with data-key (its title)',
+      },
+    ],
+  },
+  {
+    component: 'CubeStepProcess',
+    target: 'the process',
+    parts: [
+      { suffix: 'item', element: 'each step, with data-key (its number)' },
+    ],
+  },
+  {
+    component: 'CubeLogConsole',
+    target: 'the console',
+    parts: [
+      { suffix: 'title', element: 'the title' },
+      { suffix: 'copy', element: 'the Copy button' },
+      { suffix: 'log', element: 'the log text' },
+    ],
+  },
+  {
+    component: 'CubeBreadcrumb',
+    target: 'the trail',
+    parts: [{ suffix: 'item', element: 'each item, with data-key' }],
+  },
+  {
+    component: 'CubeBackButton',
+    target: 'the header',
+    parts: [
+      { suffix: 'back', element: 'the back button' },
+      { suffix: 'title', element: 'the title' },
+      { suffix: 'details', element: 'the details text' },
+      { suffix: 'link', element: 'the link beside the title' },
+    ],
+  },
+  {
+    component: 'CubeHyperlink',
+    target: 'the link itself (it also takes data-key)',
+    parts: [],
+  },
 ]
 
 const PLAYWRIGHT_SAMPLE = `
@@ -362,6 +489,50 @@ const DemoTable = () => (
   </div>
 )
 
+const DemoUpload = () => {
+  const [fileName, setFileName] = useState<string>()
+
+  return (
+    <CubeUpload
+      buttonText="Upload"
+      data-testid="demo-upload"
+      onFileChange={(file) => setFileName(file?.name)}
+    >
+      {fileName && (
+        <CubeUpload.File onCancel={() => setFileName(undefined)}>
+          {fileName}
+        </CubeUpload.File>
+      )}
+    </CubeUpload>
+  )
+}
+
+const DemoDatePicker = () => {
+  const [applied, setApplied] = useState<CubeDatePickerDates>({
+    start: undefined,
+    end: undefined,
+  })
+  const { displayDates, onChange, onCancel, onReset } =
+    useCubeDatePickerDisplayDates({
+      initialStartDate: applied.start,
+      initialEndDate: applied.end,
+    })
+
+  return (
+    <CubeDatePicker
+      displayDates={displayDates}
+      onChange={onChange}
+      onCancel={onCancel}
+      onApply={() => setApplied(displayDates)}
+      onReset={() => {
+        onReset()
+        setApplied({ start: undefined, end: undefined })
+      }}
+      data-testid="demo-range"
+    />
+  )
+}
+
 const LiveDemo = () => {
   const [isOpen, setIsOpen] = useState(false)
 
@@ -390,6 +561,8 @@ const LiveDemo = () => {
       </CubeModal>
       <DemoDropdown />
       <DemoTable />
+      <DemoUpload />
+      <DemoDatePicker />
     </DemoFrame>
   )
 }
@@ -416,6 +589,11 @@ export const Guide: Story = {
           <CaptionText>
             Without <InlineCode>data-testid</InlineCode>, a component renders no
             test IDs at all.
+          </CaptionText>
+          <CaptionText>
+            While a component shows a loading skeleton in place of itself, the
+            skeleton has no test ID, so a test that waits for a test ID waits
+            for the loading to end.
           </CaptionText>
           <CaptionText>
             The app names its own test IDs. Use kebab-case, named after the

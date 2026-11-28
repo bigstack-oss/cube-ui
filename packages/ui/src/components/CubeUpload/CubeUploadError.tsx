@@ -1,6 +1,9 @@
+import { useContext } from 'react'
 import { twMerge } from 'tailwind-merge'
+import { testIdOf } from '@utils/testId'
 import { MonochromeInformationCircle, MonochromeX } from '@icons'
 import { useCubeUiTranslation } from '@i18n/useCubeUiTranslation'
+import { CubeUploadTestIdContext } from './cubeUploadContext'
 import {
   error,
   errorCloseButton,
@@ -15,8 +18,10 @@ export const CubeUploadError = (props: CubeUploadErrorProps) => {
 
   const { t } = useCubeUiTranslation()
 
+  const errorTestId = testIdOf(useContext(CubeUploadTestIdContext), 'error')
+
   return (
-    <div className={error()}>
+    <div className={error()} data-testid={errorTestId}>
       <MonochromeInformationCircle className={errorIcon()} />
       <div className={twMerge('grow', truncatedText())}>{message}</div>
       <button
@@ -24,6 +29,7 @@ export const CubeUploadError = (props: CubeUploadErrorProps) => {
         className={errorCloseButton()}
         onClick={onClose}
         aria-label={t('component.upload.closeError')}
+        data-testid={testIdOf(errorTestId, 'close')}
       >
         <MonochromeX className={errorCloseIcon()} />
       </button>

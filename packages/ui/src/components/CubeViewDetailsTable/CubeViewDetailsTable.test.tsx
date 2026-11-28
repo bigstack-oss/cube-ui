@@ -1,4 +1,4 @@
-import { act, render, renderHook, screen } from '@testing-library/react'
+import { act, render, renderHook, screen, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { axe } from 'jest-axe'
 import { CubeUiLocaleProvider } from '@i18n/CubeUiLocaleProvider'
@@ -237,5 +237,85 @@ describe('CubeViewDetailsTable', () => {
     const { container } = renderTable({ expandedRowIdSet: new Set(['1']) })
 
     expect(await axe(container)).toHaveNoViolations()
+  })
+})
+
+describe('CubeViewDetailsTable test IDs', () => {
+  const byProduct = (license: License) => license.product
+
+  it('tags each row, and its expand button, which shows its state and can be clicked', async () => {
+    const user = userEvent.setup()
+    const onExpandChange = vi.fn()
+    renderTable({
+      'data-testid': 'licenses',
+      getRowTestKey: byProduct,
+      expandedRowIdSet: new Set(['2']),
+      onExpandChange,
+    })
+
+    const row = (key: string) => {
+      const found = document.querySelector(
+        `[data-testid="licenses-row"][data-key="${key}"]`,
+      )
+      if (!(found instanceof HTMLElement)) throw new Error(`row ${key} missing`)
+      return found
+    }
+    const cos = within(row('CubeCOS')).getByTestId('licenses-expand')
+    const cmp = within(row('CubeCMP')).getByTestId('licenses-expand')
+    expect(cos).toHaveAttribute('aria-expanded', 'false')
+    expect(cmp).toHaveAttribute('aria-expanded', 'true')
+    await user.click(cos)
+
+    expect(onExpandChange).toHaveBeenCalledWith('1', true)
+  })
+
+  it("tags each detail item in a row's detail cell, keyed by its title", () => {
+    renderTable({
+      'data-testid': 'licenses',
+      getRowTestKey: byProduct,
+      expandedRowIdSet: new Set(['2']),
+    })
+
+    const sub = document.querySelector(
+      '[data-testid="licenses-sub-row"][data-key="CubeCMP"]',
+    )
+    if (!(sub instanceof HTMLElement)) throw new Error('sub row missing')
+    const detail = within(sub).getByTestId('licenses-detail')
+    expect(detail).toHaveAttribute('data-key', 'Quantity')
+    expect(detail).toHaveTextContent('2')
+  })
+
+  it.each([undefined, ''])(
+    'renders no test IDs for a data-testid of %j',
+    (testId) => {
+      const { container } = renderTable({
+        'data-testid': testId,
+        expandedRowIdSet: new Set(['2']),
+      })
+
+      expect(container.querySelector('[data-testid]')).toBeNull()
+      expect(container.querySelector('[data-key]')).toBeNull()
+    },
+  )
+})
+
+describe('CubeViewDetailsTable detail item keys', () => {
+  it('keys a detail item by its title, or by the data-key it passes', () => {
+    renderTable({
+      'data-testid': 'licenses',
+      expandedRowIdSet: new Set(['2']),
+      getDetailItems: (license) => [
+        { title: 'Quantity', value: license.quantity },
+        { title: 'Expires', value: '2027-01-01', 'data-key': 'expiry' },
+      ],
+    })
+
+    const sub = document.querySelector('[data-testid="licenses-sub-row"]')
+    if (!(sub instanceof HTMLElement)) throw new Error('sub row missing')
+    expect(
+      within(sub)
+        .getAllByTestId('licenses-detail')
+        .map((d) => d.getAttribute('data-key')),
+    ).toEqual(['Quantity', 'expiry'])
   })
 })

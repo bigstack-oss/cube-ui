@@ -1,3 +1,4 @@
+import { testIdOf } from '@utils/testId'
 import { CubeStroke } from '../CubeStroke/CubeStroke'
 import { CubeHeaderFunctionBar } from './CubeHeaderFunctionBar'
 import { CubeHeaderLanguageDropdown } from './CubeHeaderLanguageDropdown'
@@ -12,20 +13,25 @@ export const CubeHeader = (props: CubeHeaderProps) => {
     functionBarItems,
     languageOptions,
     currentLanguage,
+    'data-testid': testIdProp,
   } = props
 
+  const testId = testIdProp || undefined
+
   return (
-    <div className={header()}>
+    <div className={header()} data-testid={testId}>
       <CubeHeaderQuickAccessBar
         isLoading={isLoading}
         quickAccesses={quickAccesses}
+        testId={testId}
       />
       <div className={divider()} />
       <CubeHeaderLanguageDropdown
         currentLanguage={currentLanguage}
         languageOptions={languageOptions}
+        testId={testIdOf(testId, 'language')}
       />
-      <CubeHeaderFunctionBar items={functionBarItems} />
+      <CubeHeaderFunctionBar items={functionBarItems} testId={testId} />
       <div className={bottomStroke()}>
         <CubeStroke />
       </div>

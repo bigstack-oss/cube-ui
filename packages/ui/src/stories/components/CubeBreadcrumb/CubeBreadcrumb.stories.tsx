@@ -59,7 +59,7 @@ const meta: Meta<CubeBreadcrumbStoryArgs> = {
     docs: {
       description: {
         component:
-          'A trail of links showing where the current page sits in the hierarchy, ending with the current page as plain text. Up to 5 items.',
+          'A trail of links showing where the current page sits in the hierarchy, ending with the current page as plain text. Up to 5 items.\n\n**Test IDs:** `data-testid` goes on the trail; each item gets `<test-id>-item` with `data-key` (its label unless `CubeBreadcrumb.Item` passes one), on the link a test clicks, or on the plain text of the current page. See Overview / Test IDs.',
       },
       page: CubeBreadcrumbDocs,
     },
