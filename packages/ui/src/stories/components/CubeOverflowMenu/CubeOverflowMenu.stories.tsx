@@ -97,7 +97,7 @@ const meta: Meta<CubeOverflowMenuStoryArgs> = {
     docs: {
       description: {
         component:
-          'Overflow menus open a floating list of actions or options from a trigger element, grouped with titles and dividers.',
+          'Overflow menus open a floating list of actions or options from a trigger element, grouped with titles and dividers.\n\n**Test IDs:** `CubeOverflowMenu` renders no element of its own, so `data-testid` only names its parts: `<test-id>-trigger` (unless the trigger has its own test ID), `-menu` and `-item` (each with `data-key`, the item title unless it passes one). See Overview / Test IDs.',
       },
       page: CubeOverflowMenuDocs,
     },

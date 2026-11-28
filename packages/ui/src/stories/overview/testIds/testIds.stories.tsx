@@ -3,6 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite'
 import { StoryLayout } from '@internals/components/StoryLayout/StoryLayout'
 import { CaptionText } from '@internals/components/CaptionText'
 import { CubeButton } from '@components/CubeButton'
+import { CubeDropdown } from '@components/CubeDropdown'
 import { CubeInput } from '@components/CubeInput'
 import { CubeModal } from '@components/CubeModal'
 import { InlineCode } from '../i18n/InlineCode'
@@ -84,6 +85,54 @@ const COMPONENT_TEST_IDS: ComponentTestIds[] = [
       { suffix: 'action', element: 'the action button' },
     ],
   },
+  {
+    component: 'CubeDropdown',
+    target: 'a wrapper around its label and trigger',
+    parts: [
+      { suffix: 'trigger', element: 'the button that opens the menu' },
+      { suffix: 'menu', element: 'the menu, rendered in a portal' },
+      { suffix: 'option', element: 'each option, with data-key' },
+      { suffix: 'all', element: 'the select-all checkbox' },
+      { suffix: 'search', element: 'the filter field' },
+      { suffix: 'clear', element: 'the clear-selection icon' },
+      { suffix: 'empty', element: 'the "no data" row' },
+    ],
+  },
+  {
+    component: 'CubeOverflowMenu',
+    target: 'nothing: it renders no element around its trigger',
+    parts: [
+      {
+        suffix: 'trigger',
+        element: 'your trigger element, unless it has a test ID of its own',
+      },
+      { suffix: 'menu', element: 'the menu, rendered in a portal' },
+      { suffix: 'item', element: 'each item, with data-key' },
+    ],
+  },
+  {
+    component: 'CubeSearchBarFilter',
+    target: 'the <input>',
+    parts: [
+      { suffix: 'clear', element: 'the clear icon' },
+      { suffix: 'menu', element: 'the menu, rendered in a portal' },
+      { suffix: 'option', element: 'each item, with data-key' },
+    ],
+  },
+  {
+    component: 'CubeSearchBarGlobal',
+    target: 'the <input>',
+    parts: [
+      { suffix: 'clear', element: 'the clear icon' },
+      { suffix: 'menu', element: 'the suggestions, rendered in a portal' },
+      { suffix: 'option', element: 'each suggestion, with data-key' },
+      { suffix: 'option-clear', element: "a recent suggestion's remove icon" },
+      { suffix: 'category-trigger', element: 'the category picker' },
+      { suffix: 'category-menu', element: 'its menu' },
+      { suffix: 'category-option', element: 'each category, with data-key' },
+      { suffix: 'category-empty', element: 'the "no category" row' },
+    ],
+  },
 ]
 
 const PLAYWRIGHT_SAMPLE = `
@@ -109,6 +158,21 @@ await page.getByTestId('demo-open-modal').click()
 await expect(page.getByTestId('demo-modal')).toBeVisible()
 await page.getByTestId('demo-modal-action').click()
 await expect(page.getByTestId('demo-modal')).toBeHidden()
+`
+
+const KEY_SAMPLE = `
+await page.getByTestId('demo-dropdown-trigger').click()
+await page
+  .getByTestId('demo-dropdown-option')
+  .and(page.locator('[data-key="db-net"]'))
+  .click()
+`
+
+const KEY_SAMPLE_SELENIUM = `
+driver.find_element(
+    By.CSS_SELECTOR,
+    '[data-testid="demo-dropdown-option"][data-key="db-net"]',
+).click()
 `
 
 const USAGE_SAMPLE = `
@@ -153,6 +217,34 @@ const PartsTable = () => (
   </div>
 )
 
+const DEMO_NETWORKS = ['web-net', 'db-net', 'app-net']
+
+const DemoDropdown = () => {
+  const [selected, setSelected] = useState<string[]>([])
+
+  return (
+    <CubeDropdown
+      type="radio"
+      label="Network"
+      selectedItems={selected}
+      data-testid="demo-dropdown"
+    >
+      <CubeDropdown.Trigger>{selected[0]}</CubeDropdown.Trigger>
+      <CubeDropdown.Menu>
+        {DEMO_NETWORKS.map((network) => (
+          <CubeDropdown.Item
+            key={network}
+            item={network}
+            onClick={() => setSelected([network])}
+          >
+            {network}
+          </CubeDropdown.Item>
+        ))}
+      </CubeDropdown.Menu>
+    </CubeDropdown>
+  )
+}
+
 const LiveDemo = () => {
   const [isOpen, setIsOpen] = useState(false)
 
@@ -179,6 +271,7 @@ const LiveDemo = () => {
         demo-modal-body, demo-modal-close, demo-modal-cancel and
         demo-modal-action.
       </CubeModal>
+      <DemoDropdown />
     </DemoFrame>
   )
 }
@@ -256,6 +349,24 @@ export const Guide: Story = {
             it.
           </CaptionText>
           <CodeBlock language="typescript">{MODAL_STATE_SAMPLE}</CodeBlock>
+        </div>
+      </StoryLayout.Section>
+
+      <StoryLayout.Section title="Picking one of several items">
+        <div className="flex flex-col gap-y-4">
+          <CaptionText>
+            Options, menu items and suggestions share one test ID, such as{' '}
+            <InlineCode>demo-dropdown-option</InlineCode>, and each carries a{' '}
+            <InlineCode>data-key</InlineCode> that tells them apart. The key is
+            the item&apos;s text unless the app passes its own, as{' '}
+            <InlineCode>
+              {'<CubeDropdown.Item data-key={network.id}>'}
+            </InlineCode>
+            . Pass one when two items can have the same text, or when the text
+            is translated.
+          </CaptionText>
+          <CodeBlock language="typescript">{KEY_SAMPLE}</CodeBlock>
+          <CodeBlock language="python">{KEY_SAMPLE_SELENIUM}</CodeBlock>
         </div>
       </StoryLayout.Section>
 

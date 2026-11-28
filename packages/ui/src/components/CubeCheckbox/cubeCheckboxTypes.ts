@@ -1,5 +1,8 @@
 import type { InputHTMLAttributes, RefObject } from 'react'
-import type { CubeTestIdProps } from '@shared-types/test-id-types'
+import type {
+  CubeTestIdProps,
+  CubeTestKeyProps,
+} from '@shared-types/test-id-types'
 
 export const cubeCheckboxColors = [
   'primary',
@@ -47,4 +50,5 @@ export type CubeCheckboxProps = Omit<
    */
   isLoading?: boolean
   ref?: RefObject<HTMLInputElement | null>
-} & CubeTestIdProps
+} & CubeTestIdProps &
+  CubeTestKeyProps

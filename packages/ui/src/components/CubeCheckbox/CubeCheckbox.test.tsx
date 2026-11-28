@@ -112,3 +112,14 @@ describe('CubeCheckbox test IDs', () => {
     },
   )
 })
+
+describe('CubeCheckbox data-key', () => {
+  it('puts data-key on the label next to its test ID', () => {
+    render(<CubeCheckbox label="web-net" data-testid="net" data-key="n-1" />)
+
+    expect(screen.getByTestId('net')).toHaveAttribute('data-key', 'n-1')
+    expect(screen.getByRole('checkbox', { hidden: true })).not.toHaveAttribute(
+      'data-key',
+    )
+  })
+})

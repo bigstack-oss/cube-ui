@@ -71,7 +71,7 @@ const meta: Meta<CubeSearchBarFilterProps> = {
     docs: {
       description: {
         component:
-          'A search input for filtering a list or table. While it has a value, the `CubeSearchBarFilter.Item` children show in a menu below it; clicking outside closes the menu. Type in the Playground to see the menu. Other `<input>` props pass through.',
+          'A search input for filtering a list or table. While it has a value, the `CubeSearchBarFilter.Item` children show in a menu below it; clicking outside closes the menu. Type in the Playground to see the menu. Other `<input>` props pass through.\n\n**Test IDs:** `data-testid` goes on the `<input>`; the parts get `<test-id>-clear`, `-menu` and `-option` (each with `data-key`). See Overview / Test IDs.',
       },
       page: CubeSearchBarFilterDocs,
     },

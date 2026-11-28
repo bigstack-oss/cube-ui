@@ -8,6 +8,7 @@ import {
 import { createPortal } from 'react-dom'
 import { twMerge } from 'tailwind-merge'
 import { useCubeUiTranslation } from '@i18n/useCubeUiTranslation'
+import { testIdOf } from '@utils/testId'
 import { ItemCheckbox } from './_components/ItemCheckbox'
 import { ItemNoData } from './_components/ItemNoData'
 import { CubeDropdownFilter } from './CubeDropdownFilter'
@@ -33,6 +34,7 @@ export const CubeDropdownMenu = (props: CubeDropdownMenuProps) => {
     selectedItems,
     enabledItemCount,
     searchValue,
+    testId,
   } = useContext(CubeDropdownContext)
 
   const { t } = useCubeUiTranslation()
@@ -64,6 +66,7 @@ export const CubeDropdownMenu = (props: CubeDropdownMenuProps) => {
         onClick={onAllClick}
         isSelected={isAllSelected}
         disabled={false}
+        testId={testIdOf(testId, 'all')}
       />
     )
   }
@@ -83,7 +86,13 @@ export const CubeDropdownMenu = (props: CubeDropdownMenuProps) => {
           )
 
     if (visibleItems.length === 0) {
-      return <ItemNoData size={size} type={type} />
+      return (
+        <ItemNoData
+          size={size}
+          type={type}
+          testId={testIdOf(testId, 'empty')}
+        />
+      )
     }
 
     return visibleItems
@@ -94,6 +103,7 @@ export const CubeDropdownMenu = (props: CubeDropdownMenuProps) => {
       ref={elementRef}
       className={twMerge(menu({ size, dropdownOpen }), className)}
       style={resolvedStyles?.floatingStyle}
+      data-testid={testIdOf(testId, 'menu')}
     >
       {renderFilter()}
       {renderSelectAllCheckbox()}

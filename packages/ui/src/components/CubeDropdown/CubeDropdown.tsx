@@ -22,7 +22,10 @@ export const CubeDropdown = <Item,>(props: CubeDropdownProps<Item>) => {
     label,
     skeletonClassName,
     children,
+    'data-testid': testIdProp,
   } = props
+
+  const testId = testIdProp || undefined
 
   const optionalProps = getOptionalProps(props)
 
@@ -104,9 +107,11 @@ export const CubeDropdown = <Item,>(props: CubeDropdownProps<Item>) => {
 
         searchValue,
         handleSearchValueChange,
+
+        testId,
       }}
     >
-      <div>
+      <div data-testid={testId}>
         {renderLabel()}
         {triggerNode}
         {menuNode}

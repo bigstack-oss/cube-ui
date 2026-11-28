@@ -26,6 +26,9 @@ export type CubeDropdownContextValue<Item> = {
 
   searchValue?: string
   handleSearchValueChange?: (e: ChangeEvent<HTMLInputElement>) => void
+
+  /** The consumer's test ID; each part derives its own from it. */
+  testId?: string
 }
 
 export const CubeDropdownContext = createContext<
@@ -49,4 +52,6 @@ export const CubeDropdownContext = createContext<
 
   searchValue: '',
   handleSearchValueChange: undefined,
+
+  testId: undefined,
 })

@@ -21,6 +21,8 @@ type ItemCheckboxProps = {
   onClick: () => void
   isSelected: boolean
   disabled: boolean
+  testId?: string
+  testKey?: string
 }
 
 export const ItemCheckbox = (props: ItemCheckboxProps) => {
@@ -32,6 +34,8 @@ export const ItemCheckbox = (props: ItemCheckboxProps) => {
     onClick,
     isSelected,
     disabled,
+    testId,
+    testKey,
   } = props
 
   const getColor = (): CubeCheckboxColor => {
@@ -58,6 +62,8 @@ export const ItemCheckbox = (props: ItemCheckboxProps) => {
         onChange={onClick}
         color={getColor()}
         labelSize={getLabelSize()}
+        data-testid={testId}
+        data-key={testKey}
       />
     </div>
   )

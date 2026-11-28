@@ -1,4 +1,6 @@
 import { useContext } from 'react'
+import type { CubeTestKeyProps } from '@shared-types/test-id-types'
+import { testIdOf } from '@utils/testId'
 import { ItemCheckbox } from './_components/ItemCheckbox'
 import { ItemRadio } from './_components/ItemRadio'
 import { CubeDropdownContext } from './cubeDropdownContext'
@@ -11,7 +13,7 @@ export type CubeDropdownItemProps<Item> = {
    */
   disabled?: boolean
   onClick: () => void
-}
+} & CubeTestKeyProps
 
 export const CubeDropdownItem = <Item,>(props: CubeDropdownItemProps<Item>) => {
   const {
@@ -19,10 +21,15 @@ export const CubeDropdownItem = <Item,>(props: CubeDropdownItemProps<Item>) => {
     item,
     disabled = false,
     onClick: onClickProp,
+    'data-key': keyProp,
   } = props
 
-  const { size, type, variant, selectedItems, toggleDropdownOpen } =
+  const { size, type, variant, selectedItems, toggleDropdownOpen, testId } =
     useContext(CubeDropdownContext)
+
+  const optionTestId = testIdOf(testId, 'option')
+  // The label identifies the option unless the consumer passes its own key.
+  const testKey = optionTestId ? (keyProp ?? label) : undefined
 
   const isSelected = selectedItems.includes(item)
 
@@ -42,6 +49,8 @@ export const CubeDropdownItem = <Item,>(props: CubeDropdownItemProps<Item>) => {
         isSelected={isSelected}
         disabled={disabled}
         onClick={onClick}
+        testId={optionTestId}
+        testKey={testKey}
       />
     )
 
@@ -53,6 +62,8 @@ export const CubeDropdownItem = <Item,>(props: CubeDropdownItemProps<Item>) => {
       isSelected={isSelected}
       disabled={disabled}
       onClick={onClick}
+      testId={optionTestId}
+      testKey={testKey}
     />
   )
 }

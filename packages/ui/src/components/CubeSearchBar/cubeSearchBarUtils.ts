@@ -6,6 +6,7 @@ import {
   type ReactElement,
   type ReactNode,
 } from 'react'
+import type { CubeTestIdProps } from '@shared-types/test-id-types'
 import type {
   CubeSearchBarGlobalCategoryProps,
   CubeSearchBarGlobalProps,
@@ -35,7 +36,7 @@ export const checkIsDropdownChildValid = <P>(
  */
 export const omitNonInputProps = (
   props: CubeSearchBarGlobalProps,
-): ComponentProps<'input'> => {
+): ComponentProps<'input'> & CubeTestIdProps => {
   const { variant, isLoading, children, onInputClear, ...restProps } = props
 
   if (variant === 'category') {

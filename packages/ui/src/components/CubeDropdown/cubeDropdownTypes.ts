@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react'
+import type { CubeTestIdProps } from '@shared-types/test-id-types'
 
 export const cubeDropdownSizes = ['sm', 'md'] as const
 
@@ -38,7 +39,7 @@ type CubeDropdownBaseProps<Item> = {
   label?: string
   skeletonClassName?: string
   children: ReactNode
-}
+} & CubeTestIdProps
 
 type CheckboxPropsWithFilter<Item> = CubeDropdownBaseProps<Item> & {
   type: 'checkbox'

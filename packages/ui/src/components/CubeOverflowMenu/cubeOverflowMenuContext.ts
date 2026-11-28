@@ -1,6 +1,13 @@
 import { createContext } from 'react'
 
-type CubeOverflowMenuContextValue = () => void
+type CubeOverflowMenuContextValue = {
+  closeMenu: () => void
+  /** The consumer's test ID; each part derives its own from it. */
+  testId?: string
+}
 
 export const CubeOverflowMenuContext =
-  createContext<CubeOverflowMenuContextValue>(() => undefined)
+  createContext<CubeOverflowMenuContextValue>({
+    closeMenu: () => undefined,
+    testId: undefined,
+  })

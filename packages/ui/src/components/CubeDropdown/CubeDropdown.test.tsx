@@ -344,3 +344,174 @@ describe('CubeDropdown', () => {
     expect(await axe(container)).toHaveNoViolations()
   })
 })
+
+describe('CubeDropdown test IDs', () => {
+  type Network = { id: string; name: string }
+  const webNet: Network = { id: 'n-1', name: 'web-net' }
+  const dbNet: Network = { id: 'n-2', name: 'db-net' }
+  const networks: Network[] = [webNet, dbNet]
+
+  const TestIdHarness = (props: {
+    type: 'radio' | 'checkbox'
+    withFilter?: boolean
+    testId?: string
+    keyById?: boolean
+    initialSelected?: Network[]
+    onPick?: (network: Network) => void
+  }) => {
+    const {
+      type,
+      withFilter = false,
+      testId,
+      keyById = false,
+      initialSelected = [],
+      onPick,
+    } = props
+    const [selected, setSelected] = useState<Network[]>(initialSelected)
+    const items = networks.map((network) => (
+      <CubeDropdown.Item
+        key={network.id}
+        item={network}
+        data-key={keyById ? network.id : undefined}
+        onClick={() => {
+          onPick?.(network)
+          setSelected((prev) =>
+            type === 'radio'
+              ? [network]
+              : prev.includes(network)
+                ? prev.filter((n) => n !== network)
+                : [...prev, network],
+          )
+        }}
+      >
+        {network.name}
+      </CubeDropdown.Item>
+    ))
+    const children = [
+      <CubeDropdown.Trigger key="trigger">
+        {selected.map((n) => n.name).join(', ')}
+      </CubeDropdown.Trigger>,
+      <CubeDropdown.Menu key="menu">{items}</CubeDropdown.Menu>,
+    ]
+
+    if (type === 'radio') {
+      return (
+        <CubeDropdown
+          type="radio"
+          selectedItems={selected}
+          data-testid={testId}
+        >
+          {children}
+        </CubeDropdown>
+      )
+    }
+    return withFilter ? (
+      <CubeDropdown
+        type="checkbox"
+        variant="withFilter"
+        selectedItems={selected}
+        onAllCheckChange={(all) => setSelected(all ? networks : [])}
+        onClearSelection={() => setSelected([])}
+        data-testid={testId}
+      >
+        {children}
+      </CubeDropdown>
+    ) : (
+      <CubeDropdown
+        type="checkbox"
+        selectedItems={selected}
+        onAllCheckChange={(all) => setSelected(all ? networks : [])}
+        data-testid={testId}
+      >
+        {children}
+      </CubeDropdown>
+    )
+  }
+
+  it('tags the dropdown, its trigger, and the menu rendered in a portal', () => {
+    const { container } = render(
+      <TestIdHarness type="radio" testId="network" />,
+    )
+
+    expect(container).toContainElement(screen.getByTestId('network'))
+    expect(screen.getByTestId('network-trigger').tagName).toBe('BUTTON')
+    expect(container).not.toContainElement(screen.getByTestId('network-menu'))
+  })
+
+  it('tags each option with its label as data-key by default', () => {
+    render(<TestIdHarness type="radio" testId="network" />)
+
+    const options = screen.getAllByTestId('network-option')
+    expect(options.map((o) => o.getAttribute('data-key'))).toEqual([
+      'web-net',
+      'db-net',
+    ])
+  })
+
+  it('uses the data-key an item passes, and a test can pick by it', async () => {
+    const user = userEvent.setup()
+    const onPick = vi.fn()
+    render(
+      <TestIdHarness type="radio" testId="network" keyById onPick={onPick} />,
+    )
+
+    await user.click(screen.getByTestId('network-trigger'))
+    const option = document.querySelector(
+      '[data-testid="network-option"][data-key="n-2"]',
+    )
+    if (!option) throw new Error('option n-2 not found')
+    await user.click(option)
+
+    expect(onPick).toHaveBeenCalledWith(dbNet)
+  })
+
+  it('puts a checkbox option on its visible label, which a test can click', async () => {
+    const user = userEvent.setup()
+    const onPick = vi.fn()
+    render(<TestIdHarness type="checkbox" testId="network" onPick={onPick} />)
+
+    await user.click(screen.getByTestId('network-trigger'))
+    const first = screen.getAllByTestId('network-option')[0]
+    if (!first) throw new Error('no option rendered')
+    expect(first.tagName).toBe('LABEL')
+    expect(first).toHaveAttribute('data-key', 'web-net')
+    await user.click(first)
+
+    expect(onPick).toHaveBeenCalledWith(webNet)
+  })
+
+  it('tags select-all, the search field, the clear button and the empty result', async () => {
+    const user = userEvent.setup()
+    render(
+      <TestIdHarness
+        type="checkbox"
+        withFilter
+        testId="network"
+        initialSelected={[webNet]}
+      />,
+    )
+
+    expect(screen.getByTestId('network-clear')).toBeInTheDocument()
+    await user.click(screen.getByTestId('network-trigger'))
+    expect(screen.getByTestId('network-all')).toBeInTheDocument()
+    await user.type(screen.getByTestId('network-search'), 'nothing-matches')
+    expect(screen.getByTestId('network-empty')).toBeInTheDocument()
+  })
+
+  it.each([undefined, ''])(
+    'renders no test IDs for a data-testid of %j',
+    (testId) => {
+      render(
+        <TestIdHarness
+          type="checkbox"
+          withFilter
+          testId={testId}
+          initialSelected={[webNet]}
+        />,
+      )
+
+      expect(document.body.querySelector('[data-testid]')).toBeNull()
+      expect(document.body.querySelector('[data-key]')).toBeNull()
+    },
+  )
+})

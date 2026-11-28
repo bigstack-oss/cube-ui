@@ -7,3 +7,12 @@
 export type CubeTestIdProps = {
   'data-testid'?: string
 }
+
+/**
+ * The identity of one of several repeated items (an option, a row, a tab),
+ * set beside its test ID as `data-key`, so a test can pick one item:
+ * `[data-testid="networks-option"][data-key="web-net"]`.
+ */
+export type CubeTestKeyProps = {
+  'data-key'?: string
+}

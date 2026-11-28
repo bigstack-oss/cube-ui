@@ -25,6 +25,7 @@ export const CubeSearchBarGlobal = (props: CubeSearchBarGlobalProps) => {
           categories={props.categories}
           selectedCategory={props.selectedCategory}
           onCategoryClick={props.onCategoryClick}
+          testId={props['data-testid'] || undefined}
         />
       )}
     </div>

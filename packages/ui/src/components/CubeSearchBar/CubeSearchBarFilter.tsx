@@ -4,6 +4,8 @@ import { twMerge } from 'tailwind-merge'
 import { MonochromeSearch, MonochromeXSmall } from '@icons'
 import { useCubeUiTranslation } from '@i18n/useCubeUiTranslation'
 import { useFloating } from '@internals/utils/floating/useFloating'
+import { testIdOf } from '@utils/testId'
+import { CubeSearchBarTestIdContext } from './cubeSearchBarContext'
 import { CubeSearchBarFilterItem } from './CubeSearchBarFilterItem'
 import { CubeSearchBarSkeleton } from './CubeSearchBarSkeleton'
 import {
@@ -37,6 +39,8 @@ export const CubeSearchBarFilter = (props: CubeSearchBarFilterProps) => {
   const defaultId = useId()
 
   const inputId = restProps.id || defaultId
+
+  const testId = restProps['data-testid'] || undefined
 
   const hasInputValue = value !== ''
 
@@ -88,6 +92,7 @@ export const CubeSearchBarFilter = (props: CubeSearchBarFilterProps) => {
       <div ref={anchorRef} className={filterInputWrapper()}>
         <input
           {...restProps}
+          data-testid={testId}
           id={inputId}
           ref={inputRef}
           type="text"
@@ -101,6 +106,7 @@ export const CubeSearchBarFilter = (props: CubeSearchBarFilterProps) => {
           {hasInputValue && (
             <MonochromeXSmall
               className={clearIcon()}
+              data-testid={testIdOf(testId, 'clear')}
               onClick={() => onInputClear?.()}
             />
           )}
@@ -112,8 +118,11 @@ export const CubeSearchBarFilter = (props: CubeSearchBarFilterProps) => {
           ref={elementRef}
           className={dropdownMenu({ variant: 'filter' })}
           style={resolvedStyles?.floatingStyle}
+          data-testid={testIdOf(testId, 'menu')}
         >
-          {children}
+          <CubeSearchBarTestIdContext.Provider value={testId}>
+            {children}
+          </CubeSearchBarTestIdContext.Provider>
         </div>,
         document.body,
       )}

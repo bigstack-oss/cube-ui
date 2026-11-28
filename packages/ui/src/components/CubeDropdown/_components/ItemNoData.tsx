@@ -6,15 +6,16 @@ import { itemNoData } from '../cubeDropdownStyles'
 type ItemNoDataProps = {
   size: CubeDropdownSize
   type: CubeDropdownType
+  testId?: string
 }
 
 export const ItemNoData = (props: ItemNoDataProps) => {
-  const { size, type } = props
+  const { size, type, testId } = props
 
   const { t } = useCubeUiTranslation()
 
   return (
-    <div className={twMerge(itemNoData({ size, type }))}>
+    <div className={twMerge(itemNoData({ size, type }))} data-testid={testId}>
       {t('component.common.noData')}
     </div>
   )

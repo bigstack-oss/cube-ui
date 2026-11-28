@@ -297,3 +297,85 @@ describe('CubeOverflowMenu', () => {
     ).toHaveNoViolations()
   })
 })
+
+describe('CubeOverflowMenu test IDs', () => {
+  const renderRowActions = (
+    props: {
+      testId?: string
+      trigger?: ReactNode
+      onDelete?: () => void
+    } = {},
+  ) =>
+    render(
+      <CubeOverflowMenu
+        data-testid={props.testId}
+        triggerElement={
+          (props.trigger as never) ?? <button type="button">Actions</button>
+        }
+      >
+        <CubeOverflowMenu.Title>Network</CubeOverflowMenu.Title>
+        <CubeOverflowMenu.Item type="plain" title="Edit" onClick={vi.fn()} />
+        <CubeOverflowMenu.Item
+          type="plain"
+          title="Delete"
+          data-key="delete"
+          onClick={props.onDelete ?? vi.fn()}
+        />
+      </CubeOverflowMenu>,
+    )
+
+  it('tags the trigger and the menu rendered in a portal', () => {
+    const { container } = renderRowActions({ testId: 'row-actions' })
+
+    expect(screen.getByTestId('row-actions-trigger')).toBe(
+      screen.getByRole('button', { name: 'Actions' }),
+    )
+    expect(container).not.toContainElement(
+      screen.getByTestId('row-actions-menu'),
+    )
+  })
+
+  it('keeps a test ID the trigger already has', () => {
+    renderRowActions({
+      testId: 'row-actions',
+      trigger: (
+        <button type="button" data-testid="my-trigger">
+          Actions
+        </button>
+      ),
+    })
+
+    expect(screen.getByTestId('my-trigger')).toBeInTheDocument()
+    expect(screen.queryByTestId('row-actions-trigger')).not.toBeInTheDocument()
+  })
+
+  it('tags each item, keyed by its title unless it passes data-key', async () => {
+    const user = userEvent.setup()
+    const onDelete = vi.fn()
+    renderRowActions({ testId: 'row-actions', onDelete })
+
+    const items = screen.getAllByTestId('row-actions-item')
+    expect(items.map((i) => i.getAttribute('data-key'))).toEqual([
+      'Edit',
+      'delete',
+    ])
+
+    await user.click(screen.getByTestId('row-actions-trigger'))
+    const del = document.querySelector(
+      '[data-testid="row-actions-item"][data-key="delete"]',
+    )
+    if (!del) throw new Error('delete item not found')
+    await user.click(del)
+    expect(onDelete).toHaveBeenCalledOnce()
+  })
+
+  it.each([undefined, ''])(
+    'renders no test IDs for a data-testid of %j',
+    (testId) => {
+      renderRowActions({ testId })
+
+      expect(document.body.querySelector('[data-testid]')).toBeNull()
+      expect(document.body.querySelector('[data-key]')).toBeNull()
+    },
+  )
+})

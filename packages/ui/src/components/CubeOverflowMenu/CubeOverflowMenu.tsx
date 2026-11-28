@@ -7,6 +7,7 @@ import {
 } from 'react'
 import { createPortal } from 'react-dom'
 import { useFloating } from '@internals/utils/floating/useFloating'
+import { testIdOf } from '@utils/testId'
 import { assignRefValue } from '../CubeTextarea/cubeTextareaUtils'
 import { CubeOverflowMenuContext } from './cubeOverflowMenuContext'
 import { CubeOverflowMenuDivider } from './CubeOverflowMenuDivider'
@@ -16,7 +17,9 @@ import { menu } from './cubeOverflowMenuStyles'
 import type { CubeOverflowMenuProps } from './cubeOverflowMenuTypes'
 
 export const CubeOverflowMenu = (props: CubeOverflowMenuProps) => {
-  const { triggerElement, children } = props
+  const { triggerElement, children, 'data-testid': testIdProp } = props
+
+  const testId = testIdProp || undefined
 
   const [isOpen, setIsOpen] = useState(false)
 
@@ -51,6 +54,9 @@ export const CubeOverflowMenu = (props: CubeOverflowMenuProps) => {
   }, [anchorRef, elementRef])
 
   const clonedAnchor = cloneElement(triggerElement, {
+    // A test ID the trigger already has wins over the derived one.
+    'data-testid':
+      triggerElement.props['data-testid'] ?? testIdOf(testId, 'trigger'),
     ref: (element: HTMLElement | null) => {
       assignRefValue(triggerElement.props.ref, element)
       assignRefValue(anchorRef, element)
@@ -62,13 +68,14 @@ export const CubeOverflowMenu = (props: CubeOverflowMenuProps) => {
   })
 
   return (
-    <CubeOverflowMenuContext.Provider value={closeMenu}>
+    <CubeOverflowMenuContext.Provider value={{ closeMenu, testId }}>
       {clonedAnchor}
       {createPortal(
         <div
           ref={elementRef}
           className={menu()}
           style={resolvedStyles?.floatingStyle}
+          data-testid={testIdOf(testId, 'menu')}
         >
           {children}
         </div>,

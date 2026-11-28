@@ -129,7 +129,7 @@ const meta: Meta<CubeSearchBarGlobalStoryArgs> = {
     docs: {
       description: {
         component:
-          'A rounded search input for searching across the product. While it has a value, the `CubeSearchBarGlobal.Item` suggestions show in a menu below it. The `category` variant adds a category picker on the right. Type in the Playground to see the suggestions. Other `<input>` props pass through.',
+          'A rounded search input for searching across the product. While it has a value, the `CubeSearchBarGlobal.Item` suggestions show in a menu below it. The `category` variant adds a category picker on the right. Type in the Playground to see the suggestions. Other `<input>` props pass through.\n\n**Test IDs:** `data-testid` goes on the `<input>`; the parts get `<test-id>-clear`, `-menu`, `-option` (each with `data-key`) and `-option-clear`, and the category picker `-category-trigger`, `-category-menu`, `-category-option` and `-category-empty`. See Overview / Test IDs.',
       },
       page: CubeSearchBarGlobalDocs,
     },

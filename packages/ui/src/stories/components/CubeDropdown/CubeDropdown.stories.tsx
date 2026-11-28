@@ -96,7 +96,7 @@ const meta: Meta<CubeDropdownStoryArgs> = {
     docs: {
       description: {
         component:
-          'Dropdowns let users pick one (radio) or several (checkbox) items from a floating menu, optionally narrowed down with a search filter.',
+          'Dropdowns let users pick one (radio) or several (checkbox) items from a floating menu, optionally narrowed down with a search filter.\n\n**Test IDs:** `data-testid` goes on a wrapper around the label and trigger; the parts get `<test-id>-trigger`, `-menu`, `-option` (each with `data-key`, the item text unless `CubeDropdown.Item` passes one), `-all`, `-search`, `-clear` and `-empty`. See Overview / Test IDs.',
       },
       page: CubeDropdownDocs,
     },

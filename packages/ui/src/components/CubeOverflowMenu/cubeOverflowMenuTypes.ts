@@ -1,4 +1,8 @@
 import type { MouseEvent, ReactElement, ReactNode, Ref } from 'react'
+import type {
+  CubeTestIdProps,
+  CubeTestKeyProps,
+} from '@shared-types/test-id-types'
 import type { SvgComponent } from '../CubeIcon/cubeIconTypes'
 import type { CubeToggleProps } from '../CubeToggle/CubeToggle'
 
@@ -17,7 +21,7 @@ export type CubeOverflowMenuItemType =
 export type CubeOverflowMenuTriggerProps = {
   ref?: Ref<HTMLElement>
   onClick?: (e: MouseEvent<HTMLElement>) => void
-}
+} & CubeTestIdProps
 
 export type CubeOverflowMenuProps = {
   /**
@@ -26,7 +30,7 @@ export type CubeOverflowMenuProps = {
    */
   triggerElement: ReactElement<CubeOverflowMenuTriggerProps>
   children: ReactNode
-}
+} & CubeTestIdProps
 
 type ClickableItemProps = {
   /**
@@ -80,7 +84,8 @@ export type CubeOverflowMenuItemProps = {
   | ItemWithToggle
   | ItemWithTrailingIcon
   | ItemWithCustomLeadingElement
-)
+) &
+  CubeTestKeyProps
 
 export type CubeOverflowMenuTitleProps = {
   children: string

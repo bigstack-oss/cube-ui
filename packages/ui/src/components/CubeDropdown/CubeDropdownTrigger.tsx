@@ -2,6 +2,7 @@ import { type ButtonHTMLAttributes, type MouseEvent, useContext } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { MonochromeChevronDown, MonochromeXSmall } from '@icons'
 import { useCubeUiTranslation } from '@i18n/useCubeUiTranslation'
+import { testIdOf } from '@utils/testId'
 import { CubeDropdownContext } from './cubeDropdownContext'
 import {
   triggerClearButton,
@@ -31,6 +32,7 @@ export const CubeDropdownTrigger = (props: CubeDropdownTriggerProps) => {
     selectedItems,
     disabled,
     onClearSelection,
+    testId,
   } = useContext(CubeDropdownContext)
 
   const { t } = useCubeUiTranslation()
@@ -60,6 +62,7 @@ export const CubeDropdownTrigger = (props: CubeDropdownTriggerProps) => {
       return (
         <MonochromeXSmall
           className={twMerge(triggerClearButton({ disabled }))}
+          data-testid={testIdOf(testId, 'clear')}
           onClick={(e) => handleClearClick(e)}
         />
       )
@@ -72,6 +75,7 @@ export const CubeDropdownTrigger = (props: CubeDropdownTriggerProps) => {
       ref={floatingProps.anchorRef}
       type="button"
       disabled={disabled}
+      data-testid={testIdOf(testId, 'trigger')}
       onClick={toggleDropdownOpen}
       className={twMerge(
         triggerContainer({

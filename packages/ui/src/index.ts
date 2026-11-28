@@ -58,4 +58,4 @@ export * from './i18n'
 export * from './theme'
 
 // Types
-export type { CubeTestIdProps } from './types/test-id-types'
+export type { CubeTestIdProps, CubeTestKeyProps } from './types/test-id-types'

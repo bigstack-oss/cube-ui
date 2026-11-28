@@ -165,3 +165,54 @@ describe('CubeSearchBarFilter', () => {
     expect(await axe(container)).toHaveNoViolations()
   })
 })
+
+describe('CubeSearchBarFilter test IDs', () => {
+  const Harness = (props: { testId?: string }) => {
+    const [value, setValue] = useState('')
+    return (
+      <CubeSearchBarFilter
+        value={value}
+        onChange={(e) => setValue(e.target.value)}
+        onInputClear={() => setValue('')}
+        data-testid={props.testId}
+      >
+        <CubeSearchBarFilter.Item onClick={vi.fn()}>
+          web-net
+        </CubeSearchBarFilter.Item>
+        <CubeSearchBarFilter.Item data-key="n-2" onClick={vi.fn()}>
+          db-net
+        </CubeSearchBarFilter.Item>
+      </CubeSearchBarFilter>
+    )
+  }
+
+  it('puts data-testid on the input and tags the clear icon, menu and options', async () => {
+    const user = userEvent.setup()
+    const { container } = render(<Harness testId="filter" />)
+
+    const input = screen.getByTestId('filter')
+    expect(input.tagName).toBe('INPUT')
+    await user.type(input, 'net')
+
+    expect(screen.getByTestId('filter-clear')).toBeInTheDocument()
+    expect(container).not.toContainElement(screen.getByTestId('filter-menu'))
+    expect(
+      screen
+        .getAllByTestId('filter-option')
+        .map((o) => o.getAttribute('data-key')),
+    ).toEqual(['web-net', 'n-2'])
+  })
+
+  it.each([undefined, ''])(
+    'renders no test IDs for a data-testid of %j',
+    async (testId) => {
+      const user = userEvent.setup()
+      render(<Harness testId={testId} />)
+
+      await user.type(screen.getByRole('textbox'), 'net')
+
+      expect(document.body.querySelector('[data-testid]')).toBeNull()
+      expect(document.body.querySelector('[data-key]')).toBeNull()
+    },
+  )
+})

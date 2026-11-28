@@ -1,5 +1,6 @@
 import { useContext } from 'react'
 import { twMerge } from 'tailwind-merge'
+import { testIdOf } from '@utils/testId'
 import { CubeOverflowMenuContext } from './cubeOverflowMenuContext'
 import { CubeOverflowMenuItemLeadingContent } from './CubeOverflowMenuItemLeadingContent'
 import { CubeOverflowMenuItemTrailingContent } from './CubeOverflowMenuItemTrailingContent'
@@ -9,7 +10,11 @@ import type { CubeOverflowMenuItemProps } from './cubeOverflowMenuTypes'
 export const CubeOverflowMenuItem = (props: CubeOverflowMenuItemProps) => {
   const { type, title, boldTitle, subText } = props
 
-  const closeMenu = useContext(CubeOverflowMenuContext)
+  const { closeMenu, testId } = useContext(CubeOverflowMenuContext)
+
+  const itemTestId = testIdOf(testId, 'item')
+  // The title identifies the item unless the consumer passes its own key.
+  const testKey = itemTestId ? (props['data-key'] ?? title) : undefined
 
   const getIsDisabled = (): boolean => {
     return 'disabled' in props && !!props.disabled
@@ -38,6 +43,8 @@ export const CubeOverflowMenuItem = (props: CubeOverflowMenuItemProps) => {
           disabled: getIsDisabled(),
         }),
       )}
+      data-testid={itemTestId}
+      data-key={testKey}
       onClick={onClick}
     >
       <CubeOverflowMenuItemLeadingContent {...props} />

@@ -3,6 +3,7 @@ import { createPortal } from 'react-dom'
 import { MonochromeChevronDown } from '@icons'
 import { useCubeUiTranslation } from '@i18n/useCubeUiTranslation'
 import { useFloating } from '@internals/utils/floating/useFloating'
+import { testIdOf } from '@utils/testId'
 import {
   categoryDivider,
   categoryItem,
@@ -14,13 +15,19 @@ import {
 import type { CubeSearchBarGlobalCategoryProps } from './cubeSearchBarTypes'
 
 export const CubeSearchBarGlobalCategory = (
-  props: CubeSearchBarGlobalCategoryProps,
+  props: CubeSearchBarGlobalCategoryProps & {
+    /** The search bar's test ID; the picker's parts are `<test-id>-category-*`. */
+    testId?: string
+  },
 ) => {
   const {
     categories,
     selectedCategory,
     onCategoryClick: onCategoryClickProp,
+    testId,
   } = props
+
+  const categoryTestId = testIdOf(testId, 'category')
 
   const { t } = useCubeUiTranslation()
 
@@ -68,7 +75,10 @@ export const CubeSearchBarGlobalCategory = (
 
     if (!hasData) {
       return (
-        <div className={categoryItem({ hasData })}>
+        <div
+          className={categoryItem({ hasData })}
+          data-testid={testIdOf(categoryTestId, 'empty')}
+        >
           {t('component.searchBar.global.noCategory')}
         </div>
       )
@@ -78,6 +88,8 @@ export const CubeSearchBarGlobalCategory = (
       <div
         key={category}
         className={categoryItem({ hasData })}
+        data-testid={testIdOf(categoryTestId, 'option')}
+        data-key={categoryTestId ? category : undefined}
         onClick={() => onCategoryClick(category)}
       >
         {category}
@@ -91,6 +103,7 @@ export const CubeSearchBarGlobalCategory = (
       <div ref={anchorRef}>
         <div
           className={categoryTrigger()}
+          data-testid={testIdOf(categoryTestId, 'trigger')}
           onClick={() => setDropdownOpen((prev) => !prev)}
         >
           <div className={categoryTriggerLabel()}>
@@ -106,6 +119,7 @@ export const CubeSearchBarGlobalCategory = (
           ref={elementRef}
           className={dropdownMenu({ variant: 'global' })}
           style={resolvedStyles?.floatingStyle}
+          data-testid={testIdOf(categoryTestId, 'menu')}
         >
           {renderItems()}
         </div>,

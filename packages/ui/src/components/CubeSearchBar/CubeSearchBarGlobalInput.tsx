@@ -3,7 +3,10 @@ import { createPortal } from 'react-dom'
 import { twMerge } from 'tailwind-merge'
 import { MonochromeSearch, MonochromeXSmall } from '@icons'
 import { useCubeUiTranslation } from '@i18n/useCubeUiTranslation'
+import type { CubeTestIdProps } from '@shared-types/test-id-types'
 import { useFloating } from '@internals/utils/floating/useFloating'
+import { testIdOf } from '@utils/testId'
+import { CubeSearchBarTestIdContext } from './cubeSearchBarContext'
 import { CubeSearchBarGlobalItem } from './CubeSearchBarGlobalItem'
 import {
   clearIcon,
@@ -19,6 +22,7 @@ import type {
 import { checkIsDropdownChildValid } from './cubeSearchBarUtils'
 
 type CubeSearchBarGlobalInputProps = ComponentProps<'input'> &
+  CubeTestIdProps &
   Pick<CubeSearchBarGlobalProps, 'children' | 'onInputClear'> & {
     variant: CubeSearchBarGlobalVariant
   }
@@ -43,6 +47,8 @@ export const CubeSearchBarGlobalInput = (
   const [dropdownOpen, setDropdownOpen] = useState(false)
 
   const hasInputValue = typeof value === 'string' && value.trim() !== ''
+
+  const testId = restProps['data-testid'] || undefined
 
   const hasMenuItems = checkIsDropdownChildValid(
     children,
@@ -90,6 +96,7 @@ export const CubeSearchBarGlobalInput = (
       <div ref={anchorRef} className="relative flex w-full items-center">
         <input
           {...restProps}
+          data-testid={testId}
           ref={inputRef}
           type="text"
           value={value ?? ''}
@@ -103,7 +110,11 @@ export const CubeSearchBarGlobalInput = (
         />
         <span className={inputIcons()}>
           {hasInputValue && (
-            <MonochromeXSmall className={clearIcon()} onClick={onInputClear} />
+            <MonochromeXSmall
+              className={clearIcon()}
+              data-testid={testIdOf(testId, 'clear')}
+              onClick={onInputClear}
+            />
           )}
           <MonochromeSearch className={searchIcon()} />
         </span>
@@ -114,8 +125,11 @@ export const CubeSearchBarGlobalInput = (
             ref={elementRef}
             className={dropdownMenu({ variant: 'global' })}
             style={resolvedStyles?.floatingStyle}
+            data-testid={testIdOf(testId, 'menu')}
           >
-            {children}
+            <CubeSearchBarTestIdContext.Provider value={testId}>
+              {children}
+            </CubeSearchBarTestIdContext.Provider>
           </div>,
           document.body,
         )}

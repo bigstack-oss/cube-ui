@@ -1,9 +1,13 @@
 import type { ComponentProps, ReactElement, ReactNode } from 'react'
+import type {
+  CubeTestIdProps,
+  CubeTestKeyProps,
+} from '@shared-types/test-id-types'
 
 export type CubeSearchBarFilterItemProps = {
   children: ReactNode
   onClick?: () => void
-}
+} & CubeTestKeyProps
 
 export type CubeSearchBarFilterProps = ComponentProps<'input'> & {
   /**
@@ -18,7 +22,7 @@ export type CubeSearchBarFilterProps = ComponentProps<'input'> & {
   children?:
     | ReactElement<CubeSearchBarFilterItemProps>
     | ReactElement<CubeSearchBarFilterItemProps>[]
-}
+} & CubeTestIdProps
 
 export type CubeSearchBarGlobalItemType = 'suggestion' | 'recentSuggestion'
 
@@ -36,7 +40,8 @@ export type CubeSearchBarGlobalItemProps = {
        */
       onSuggestionClear: () => void
     }
-)
+) &
+  CubeTestKeyProps
 
 export type CubeSearchBarGlobalVariant = 'regular' | 'category'
 
@@ -53,7 +58,7 @@ type BaseSearchBarGlobalProps = ComponentProps<'input'> & {
     | ReactElement<CubeSearchBarGlobalItemProps>
     | ReactElement<CubeSearchBarGlobalItemProps>[]
   onInputClear: () => void
-}
+} & CubeTestIdProps
 
 export type CubeSearchBarGlobalCategoryProps = {
   categories: string[]

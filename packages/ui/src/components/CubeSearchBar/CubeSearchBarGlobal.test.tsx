@@ -247,3 +247,88 @@ describe('CubeSearchBarGlobal', () => {
     expect(await axe(container)).toHaveNoViolations()
   })
 })
+
+describe('CubeSearchBarGlobal test IDs', () => {
+  const Harness = (props: { testId?: string; categories?: string[] }) => {
+    const { testId, categories = ['Networks', 'Volumes'] } = props
+    const [value, setValue] = useState('')
+    const [category, setCategory] = useState<string>()
+    return (
+      <CubeSearchBarGlobal
+        variant="category"
+        value={value}
+        onChange={(e) => setValue(e.target.value)}
+        onInputClear={() => setValue('')}
+        categories={categories}
+        selectedCategory={category}
+        onCategoryClick={setCategory}
+        data-testid={testId}
+      >
+        <CubeSearchBarGlobal.Item type="suggestion" onClick={vi.fn()}>
+          web-net
+        </CubeSearchBarGlobal.Item>
+        <CubeSearchBarGlobal.Item
+          type="recentSuggestion"
+          onClick={vi.fn()}
+          onSuggestionClear={vi.fn()}
+        >
+          db-net
+        </CubeSearchBarGlobal.Item>
+      </CubeSearchBarGlobal>
+    )
+  }
+
+  it('puts data-testid on the input and tags the clear icon, menu and options', async () => {
+    const user = userEvent.setup()
+    const { container } = render(<Harness testId="search" />)
+
+    const input = screen.getByTestId('search')
+    expect(input.tagName).toBe('INPUT')
+    await user.type(input, 'net')
+
+    expect(screen.getByTestId('search-clear')).toBeInTheDocument()
+    expect(container).not.toContainElement(screen.getByTestId('search-menu'))
+    const options = screen.getAllByTestId('search-option')
+    expect(options.map((o) => o.getAttribute('data-key'))).toEqual([
+      'web-net',
+      'db-net',
+    ])
+    expect(screen.getAllByTestId('search-option-clear')).toHaveLength(1)
+  })
+
+  it('tags the category picker, its menu and each category', async () => {
+    const user = userEvent.setup()
+    render(<Harness testId="search" />)
+
+    await user.click(screen.getByTestId('search-category-trigger'))
+    expect(screen.getByTestId('search-category-menu')).toBeInTheDocument()
+    const volumes = document.querySelector(
+      '[data-testid="search-category-option"][data-key="Volumes"]',
+    )
+    if (!volumes) throw new Error('Volumes category not found')
+    await user.click(volumes)
+
+    expect(screen.getByTestId('search-category-trigger')).toHaveTextContent(
+      'Volumes',
+    )
+  })
+
+  it('tags the empty category list', () => {
+    render(<Harness testId="search" categories={[]} />)
+
+    expect(screen.getByTestId('search-category-empty')).toBeInTheDocument()
+  })
+
+  it.each([undefined, ''])(
+    'renders no test IDs for a data-testid of %j',
+    async (testId) => {
+      const user = userEvent.setup()
+      render(<Harness testId={testId} />)
+
+      await user.type(screen.getByRole('textbox'), 'net')
+
+      expect(document.body.querySelector('[data-testid]')).toBeNull()
+      expect(document.body.querySelector('[data-key]')).toBeNull()
+    },
+  )
+})

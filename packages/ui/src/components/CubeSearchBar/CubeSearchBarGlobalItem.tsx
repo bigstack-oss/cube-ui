@@ -1,4 +1,7 @@
+import { useContext } from 'react'
 import { MonochromeRecently, MonochromeXSmall } from '@icons'
+import { testIdOf } from '@utils/testId'
+import { CubeSearchBarTestIdContext } from './cubeSearchBarContext'
 import {
   globalItem,
   globalItemClearIcon,
@@ -10,7 +13,14 @@ import type { CubeSearchBarGlobalItemProps } from './cubeSearchBarTypes'
 export const CubeSearchBarGlobalItem = (
   props: CubeSearchBarGlobalItemProps,
 ) => {
-  const { type, children, onClick } = props
+  const { type, children, onClick, 'data-key': keyProp } = props
+
+  const optionTestId = testIdOf(
+    useContext(CubeSearchBarTestIdContext),
+    'option',
+  )
+  // The text identifies the option unless the consumer passes its own key.
+  const testKey = optionTestId ? (keyProp ?? children) : undefined
 
   const isRecent = type === 'recentSuggestion'
 
@@ -22,6 +32,7 @@ export const CubeSearchBarGlobalItem = (
     return (
       <MonochromeXSmall
         className={globalItemClearIcon()}
+        data-testid={testIdOf(optionTestId, 'clear')}
         onClick={(e) => {
           e.stopPropagation()
           onSuggestionClear()
@@ -33,7 +44,12 @@ export const CubeSearchBarGlobalItem = (
   // The legacy item also set `onClick` on the inner element, so a click on
   // the text called it twice; only the outer element handles it now.
   return (
-    <div className={globalItem({ isRecent })} onClick={onClick}>
+    <div
+      className={globalItem({ isRecent })}
+      data-testid={optionTestId}
+      data-key={testKey}
+      onClick={onClick}
+    >
       <div className={globalItemContent()}>
         {isRecent && <MonochromeRecently className={globalItemIcon()} />}
         {children}
