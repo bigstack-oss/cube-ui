@@ -332,3 +332,107 @@ describe('CubeBasicTable', () => {
     expect(await axe(container)).toHaveNoViolations()
   })
 })
+
+describe('CubeBasicTable test IDs', () => {
+  type Net = { id: string; name: string; status: string }
+  const webNet: Net = { id: 'n-1', name: 'web-net', status: 'Ready' }
+  const dbNet: Net = { id: 'n-2', name: 'db-net', status: 'Pending' }
+  const NetTable = GetCubeBasicTable<Net>()
+
+  const renderNets = (
+    props: { testId?: string; byName?: boolean; rows?: Net[] } = {},
+  ) =>
+    render(
+      <NetTable
+        rows={props.rows ?? [webNet, dbNet]}
+        data-testid={props.testId}
+        getRowTestKey={props.byName ? (row) => row.name : undefined}
+      >
+        <NetTable.Column label="Name" property="name" isSortable />
+        <NetTable.Column label="Status" property="status" />
+        <NetTable.Column label="" data-column="actions">
+          {() => <button type="button">More</button>}
+        </NetTable.Column>
+        <NetTable.SubRow isVisible={(row) => row.status === 'Pending'}>
+          <NetTable.Column property="status">
+            {(status) => `Details: ${status}`}
+          </NetTable.Column>
+        </NetTable.SubRow>
+      </NetTable>,
+    )
+
+  const rowByKey = (key: string) => {
+    const row = document.querySelector(
+      `[data-testid="nets-row"][data-key="${key}"]`,
+    )
+    if (!(row instanceof HTMLElement)) throw new Error(`row ${key} not found`)
+    return row
+  }
+
+  it('tags the table and each row, keyed by the row id', () => {
+    renderNets({ testId: 'nets' })
+
+    expect(screen.getByTestId('nets').tagName).toBe('TABLE')
+    expect(
+      screen.getAllByTestId('nets-row').map((r) => r.getAttribute('data-key')),
+    ).toEqual(['n-1', 'n-2'])
+  })
+
+  it('keys rows by getRowTestKey when it is given', () => {
+    renderNets({ testId: 'nets', byName: true })
+
+    expect(
+      screen.getAllByTestId('nets-row').map((r) => r.getAttribute('data-key')),
+    ).toEqual(['web-net', 'db-net'])
+  })
+
+  it('tags each cell and header by its column', () => {
+    renderNets({ testId: 'nets' })
+
+    const cells = within(rowByKey('n-2')).getAllByTestId('nets-cell')
+    expect(cells.map((c) => c.getAttribute('data-column'))).toEqual([
+      'name',
+      'status',
+      'actions',
+    ])
+    expect(
+      within(rowByKey('n-2')).getAllByTestId('nets-cell')[1],
+    ).toHaveTextContent('Pending')
+    const headers = screen.getAllByTestId('nets-header')
+    expect(headers.map((h) => h.getAttribute('data-column'))).toEqual([
+      'name',
+      'status',
+      'actions',
+    ])
+    const nameHeader = headers[0]
+    if (!nameHeader) throw new Error('name header not found')
+    expect(within(nameHeader).getByTestId('nets-sort')).toBeInTheDocument()
+  })
+
+  it('tags sub rows with their parent row key', () => {
+    renderNets({ testId: 'nets' })
+
+    expect(
+      screen
+        .getAllByTestId('nets-sub-row')
+        .map((r) => r.getAttribute('data-key')),
+    ).toEqual(['n-1', 'n-2'])
+  })
+
+  it('tags the empty row', () => {
+    renderNets({ testId: 'nets', rows: [] })
+
+    expect(screen.getByTestId('nets-empty')).toBeInTheDocument()
+  })
+
+  it.each([undefined, ''])(
+    'renders no test IDs for a data-testid of %j',
+    (testId) => {
+      const { container } = renderNets({ testId })
+
+      expect(container.querySelector('[data-testid]')).toBeNull()
+      expect(container.querySelector('[data-key]')).toBeNull()
+      expect(container.querySelector('[data-column]')).toBeNull()
+    },
+  )
+})

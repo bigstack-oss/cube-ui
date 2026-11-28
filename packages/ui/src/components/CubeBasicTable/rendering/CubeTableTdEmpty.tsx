@@ -4,15 +4,16 @@ import { useCubeUiTranslation } from '@i18n/useCubeUiTranslation'
 
 type CubeTableTdEmptyProps = {
   length: number
+  testId?: string
 }
 
 export const CubeTableTdEmpty = (props: CubeTableTdEmptyProps) => {
-  const { length } = props
+  const { length, testId } = props
 
   const { t } = useCubeUiTranslation()
 
   return (
-    <td colSpan={length} className="p-6">
+    <td colSpan={length} className="p-6" data-testid={testId}>
       <div
         className={twMerge(
           'flex flex-col items-center justify-center text-functional-text-light',

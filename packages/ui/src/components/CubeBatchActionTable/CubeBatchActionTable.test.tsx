@@ -204,3 +204,60 @@ describe('useHeaderCheckboxStatus', () => {
     expect(result.current).toBe(expected)
   })
 })
+
+describe('CubeBatchActionTable test IDs', () => {
+  type Vol = { id: string; name: string }
+  const VolTable = GetCubeBatchActionTable<Vol>()
+  const vols: Vol[] = [
+    { id: 'v-1', name: 'data-01' },
+    { id: 'v-2', name: 'data-02' },
+  ]
+
+  const renderVols = (props: {
+    testId?: string
+    onCheckChange?: (rowId: string, checked: boolean) => void
+  }) =>
+    render(
+      <VolTable
+        rows={vols}
+        selectedRowIds={[]}
+        onCheckChange={props.onCheckChange ?? vi.fn()}
+        showHeaderCheckbox
+        onAllCheckChange={vi.fn()}
+        getRowTestKey={(row) => row.name}
+        data-testid={props.testId}
+      >
+        <VolTable.Column label="Name" property="name" />
+      </VolTable>,
+    )
+
+  it('tags each row checkbox on its label, keyed like its row, and the select-all checkbox', async () => {
+    const user = userEvent.setup()
+    const onCheckChange = vi.fn()
+    renderVols({ testId: 'vols', onCheckChange })
+
+    expect(screen.getByTestId('vols-all').tagName).toBe('LABEL')
+    const selects = screen.getAllByTestId('vols-select')
+    expect(selects.map((s) => s.tagName)).toEqual(['LABEL', 'LABEL'])
+    expect(selects.map((s) => s.getAttribute('data-key'))).toEqual([
+      'data-01',
+      'data-02',
+    ])
+    const second = document.querySelector(
+      '[data-testid="vols-select"][data-key="data-02"]',
+    )
+    if (!second) throw new Error('data-02 checkbox not found')
+    await user.click(second)
+    expect(onCheckChange).toHaveBeenCalledWith('v-2', true)
+  })
+
+  it.each([undefined, ''])(
+    'renders no test IDs for a data-testid of %j',
+    (testId) => {
+      const { container } = renderVols({ testId })
+
+      expect(container.querySelector('[data-testid]')).toBeNull()
+      expect(container.querySelector('[data-key]')).toBeNull()
+    },
+  )
+})

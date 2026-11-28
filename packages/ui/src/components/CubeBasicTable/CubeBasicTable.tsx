@@ -6,6 +6,8 @@ import {
   useMemo,
 } from 'react'
 import { twMerge } from 'tailwind-merge'
+import type { CubeTestIdProps } from '@shared-types/test-id-types'
+import { testIdOf } from '@utils/testId'
 import {
   computeRowClassName,
   type CubeTableRow,
@@ -37,7 +39,13 @@ export type CubeBasicTableProps<Row extends CubeTableRow> = PropsWithChildren<{
   skeletonRowCount?: number
   rowClassName?: RowClassNameProp<Row>
   onRowClick?: (row: Row) => void
-}>
+  /**
+   * The `data-key` of each row for UI tests, such as its name.
+   * Defaults to the row's `id`.
+   */
+  getRowTestKey?: (row: Row) => string
+}> &
+  CubeTestIdProps
 
 export const CubeBasicTable = <Row extends CubeTableRow>(
   props: CubeBasicTableProps<Row>,
@@ -50,7 +58,14 @@ export const CubeBasicTable = <Row extends CubeTableRow>(
     skeletonRowCount = 5,
     rowClassName,
     onRowClick,
+    getRowTestKey,
+    'data-testid': testIdProp,
   } = props
+
+  const testId = testIdProp || undefined
+
+  const rowTestKeyOf = (row: Row) =>
+    testId ? (getRowTestKey?.(row) ?? row.id) : undefined
 
   const { columns, rowCompareFnMapRef } = useColumnPayloads<Row>(children)
 
@@ -84,7 +99,10 @@ export const CubeBasicTable = <Row extends CubeTableRow>(
 
   const renderEmptyRow = () => (
     <tr>
-      <CubeTableTdEmpty length={columns.length} />
+      <CubeTableTdEmpty
+        length={columns.length}
+        testId={testIdOf(testId, 'empty')}
+      />
     </tr>
   )
 
@@ -107,6 +125,8 @@ export const CubeBasicTable = <Row extends CubeTableRow>(
             }),
             computeRowClassName(rowClassName, row),
           )}
+          data-testid={testIdOf(testId, 'row')}
+          data-key={rowTestKeyOf(row)}
           onClick={() => onRowClick?.(row)}
         >
           {columns.map((column, colIndex) => (
@@ -115,6 +135,7 @@ export const CubeBasicTable = <Row extends CubeTableRow>(
               row={row}
               rowIndex={rowIndex}
               column={column}
+              testId={testId}
             />
           ))}
         </tr>
@@ -141,6 +162,8 @@ export const CubeBasicTable = <Row extends CubeTableRow>(
             // content still counts toward the column widths.
             !isVisible(parentRow) && 'collapse',
           )}
+          data-testid={testIdOf(testId, 'sub-row')}
+          data-key={rowTestKeyOf(parentRow)}
         >
           {subRow.columns.map((column, columnIndex) => (
             <CubeTableTd
@@ -148,6 +171,7 @@ export const CubeBasicTable = <Row extends CubeTableRow>(
               row={parentRow}
               rowIndex={subRowIndex}
               column={column}
+              testId={testId}
             />
           ))}
         </tr>
@@ -157,7 +181,7 @@ export const CubeBasicTable = <Row extends CubeTableRow>(
 
   return (
     <div className="overflow-auto">
-      <table className={table()}>
+      <table className={table()} data-testid={testId}>
         <thead>
           <tr>
             {columns.map((column, index) => (
@@ -167,6 +191,7 @@ export const CubeBasicTable = <Row extends CubeTableRow>(
                 sortingState={sortingState}
                 onSortClick={() => onSortDirectionChange(column.property!)}
                 isTableEmpty={sortedRows.length === 0}
+                testId={testId}
               />
             ))}
           </tr>

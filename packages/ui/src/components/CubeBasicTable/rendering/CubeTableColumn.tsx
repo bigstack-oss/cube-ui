@@ -47,6 +47,11 @@ export type CubeTableColumnProps<
    * @default undefined
    */
   colSpan?: number
+  /**
+   * Names the column's header and cells for UI tests, as `data-column`.
+   * Defaults to `property`; set it on a column without one, such as actions.
+   */
+  'data-column'?: string
 }
 
 // Wrapper function to help TypeScript correctly infer the type of `Row[Property]`.

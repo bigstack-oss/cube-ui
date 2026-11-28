@@ -1,4 +1,5 @@
-import type { CubeTableRow } from '../cubeTableUtils'
+import { testIdOf } from '@utils/testId'
+import { columnTestKeyOf, type CubeTableRow } from '../cubeTableUtils'
 import type { SortingState } from '../sorting/sortingUtils'
 import type { CubeTableColumnProps } from './CubeTableColumn'
 import { SortingArrow } from './SortingArrow'
@@ -9,15 +10,27 @@ export type CubeTableThProps<Row extends CubeTableRow> = {
   sortingState: SortingState<Row> | undefined
   onSortClick: () => void
   isTableEmpty?: boolean
+  /** The table's test ID; the header is `<test-id>-header`. */
+  testId?: string
 }
 
 export const CubeTableTh = <Row extends CubeTableRow>(
   props: CubeTableThProps<Row>,
 ) => {
-  const { column, sortingState, onSortClick, isTableEmpty = false } = props
+  const {
+    column,
+    sortingState,
+    onSortClick,
+    isTableEmpty = false,
+    testId,
+  } = props
 
   return (
-    <th className={tableTh({ isTableEmpty })}>
+    <th
+      className={tableTh({ isTableEmpty })}
+      data-testid={testIdOf(testId, 'header')}
+      data-column={testId ? columnTestKeyOf(column) : undefined}
+    >
       <span className="flex items-center gap-x-2 whitespace-nowrap">
         {column.label}
         {column.isSortable && column.property && (
@@ -28,6 +41,7 @@ export const CubeTableTh = <Row extends CubeTableRow>(
                 : undefined
             }
             onClick={onSortClick}
+            testId={testIdOf(testId, 'sort')}
           />
         )}
       </span>

@@ -41,6 +41,12 @@ export type ColumnEmphasizeProp<Row extends CubeTableRow> =
   | boolean
   | ((row: Row) => boolean)
 
+/** The `data-column` of a column's header and cells, for UI tests. */
+export const columnTestKeyOf = (column: {
+  property?: PropertyKey
+  'data-column'?: string
+}): string | undefined => column['data-column'] ?? column.property?.toString()
+
 export const computeRowClassName = <Row extends CubeTableRow>(
   prop: RowClassNameProp<Row> | undefined,
   row: Row,

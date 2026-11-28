@@ -64,7 +64,7 @@ const meta: Meta<CubeBatchActionTableStoryArgs> = {
     docs: {
       description: {
         component:
-          'A basic table with a checkbox column for selecting rows to act on together. The header checkbox selects or clears every enabled row and shows a partial state when only some are selected. Create a typed table with `GetCubeBatchActionTable<Row>()`; the selection is controlled through `selectedRowIds` and the change callbacks.',
+          'A basic table with a checkbox column for selecting rows to act on together. The header checkbox selects or clears every enabled row and shows a partial state when only some are selected. Create a typed table with `GetCubeBatchActionTable<Row>()`; the selection is controlled through `selectedRowIds` and the change callbacks.\n\n**Test IDs:** the same as `CubeBasicTable`, plus `<test-id>-select` on each row checkbox (with the row `data-key`) and `-all` on the header checkbox; the checkbox column is `data-column="select"`. See Overview / Test IDs.',
       },
       page: CubeBatchActionTableDocs,
     },

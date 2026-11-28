@@ -4,6 +4,7 @@ import { StoryLayout } from '@internals/components/StoryLayout/StoryLayout'
 import { CaptionText } from '@internals/components/CaptionText'
 import { CubeButton } from '@components/CubeButton'
 import { CubeDropdown } from '@components/CubeDropdown'
+import { GetCubeBasicTable } from '@components/CubeBasicTable/CubeBasicTable'
 import { CubeInput } from '@components/CubeInput'
 import { CubeModal } from '@components/CubeModal'
 import { InlineCode } from '../i18n/InlineCode'
@@ -157,6 +158,26 @@ const COMPONENT_TEST_IDS: ComponentTestIds[] = [
       { suffix: 'total', element: 'the total amount' },
     ],
   },
+  {
+    component: 'CubeBasicTable',
+    target: 'the <table>',
+    parts: [
+      { suffix: 'row', element: 'each row, with data-key' },
+      { suffix: 'sub-row', element: "each sub row, with its row's data-key" },
+      { suffix: 'cell', element: 'each cell, with data-column' },
+      { suffix: 'header', element: 'each column header, with data-column' },
+      { suffix: 'sort', element: 'the sort arrow of a sortable column' },
+      { suffix: 'empty', element: 'the "no result" row' },
+    ],
+  },
+  {
+    component: 'CubeBatchActionTable',
+    target: 'the <table>, with all the parts of CubeBasicTable',
+    parts: [
+      { suffix: 'select', element: "each row's checkbox, with data-key" },
+      { suffix: 'all', element: 'the select-all checkbox' },
+    ],
+  },
 ]
 
 const PLAYWRIGHT_SAMPLE = `
@@ -197,6 +218,23 @@ driver.find_element(
     By.CSS_SELECTOR,
     '[data-testid="demo-dropdown-option"][data-key="db-net"]',
 ).click()
+`
+
+const TABLE_SAMPLE = `
+const row = page
+  .getByTestId('demo-table-row')
+  .and(page.locator('[data-key="db-net"]'))
+await expect(
+  row.getByTestId('demo-table-cell').and(page.locator('[data-column="status"]')),
+).toHaveText('Pending')
+`
+
+const TABLE_SAMPLE_SELENIUM = `
+driver.find_element(
+    By.CSS_SELECTOR,
+    '[data-testid="demo-table-row"][data-key="db-net"] '
+    '[data-testid="demo-table-cell"][data-column="status"]',
+).text  # "Pending"
 `
 
 const USAGE_SAMPLE = `
@@ -269,6 +307,29 @@ const DemoDropdown = () => {
   )
 }
 
+type DemoNetwork = { id: string; name: string; status: string }
+
+const DemoNetworkTable = GetCubeBasicTable<DemoNetwork>()
+
+const DEMO_TABLE_ROWS: DemoNetwork[] = [
+  { id: 'n-1', name: 'web-net', status: 'Ready' },
+  { id: 'n-2', name: 'db-net', status: 'Pending' },
+  { id: 'n-3', name: 'app-net', status: 'Ready' },
+]
+
+const DemoTable = () => (
+  <div className="w-full">
+    <DemoNetworkTable
+      rows={DEMO_TABLE_ROWS}
+      getRowTestKey={(row) => row.name}
+      data-testid="demo-table"
+    >
+      <DemoNetworkTable.Column label="Name" property="name" isSortable />
+      <DemoNetworkTable.Column label="Status" property="status" />
+    </DemoNetworkTable>
+  </div>
+)
+
 const LiveDemo = () => {
   const [isOpen, setIsOpen] = useState(false)
 
@@ -296,6 +357,7 @@ const LiveDemo = () => {
         demo-modal-action.
       </CubeModal>
       <DemoDropdown />
+      <DemoTable />
     </DemoFrame>
   )
 }
@@ -391,6 +453,31 @@ export const Guide: Story = {
           </CaptionText>
           <CodeBlock language="typescript">{KEY_SAMPLE}</CodeBlock>
           <CodeBlock language="python">{KEY_SAMPLE_SELENIUM}</CodeBlock>
+        </div>
+      </StoryLayout.Section>
+
+      <StoryLayout.Section title="Tables">
+        <div className="flex flex-col gap-y-4">
+          <CaptionText>
+            Every row is <InlineCode>{'<test-id>-row'}</InlineCode> with a{' '}
+            <InlineCode>data-key</InlineCode>: the row&apos;s{' '}
+            <InlineCode>id</InlineCode>, or whatever{' '}
+            <InlineCode>getRowTestKey</InlineCode> returns. Key rows by
+            something a tester knows, such as the resource name:{' '}
+            <InlineCode>{'getRowTestKey={(row) => row.name}'}</InlineCode>.
+            Every cell and header carries <InlineCode>data-column</InlineCode>,
+            the column&apos;s <InlineCode>property</InlineCode>; give a column
+            without one, such as actions, its own{' '}
+            <InlineCode>data-column</InlineCode>.
+          </CaptionText>
+          <CodeBlock language="typescript">{TABLE_SAMPLE}</CodeBlock>
+          <CodeBlock language="python">{TABLE_SAMPLE_SELENIUM}</CodeBlock>
+          <CaptionText>
+            A row action menu (CubeOverflowMenu) renders its menu in a portal
+            for every row, even while closed, so give each row&apos;s menu its
+            own test ID, such as{' '}
+            <InlineCode>networks-actions-web-net</InlineCode>, as with modals.
+          </CaptionText>
         </div>
       </StoryLayout.Section>
 

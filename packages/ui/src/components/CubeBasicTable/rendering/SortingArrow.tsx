@@ -7,6 +7,7 @@ import type { SortDirection } from '../sorting/sortingUtils'
 export type SortingArrowProps = {
   direction: SortDirection
   onClick: () => void
+  testId?: string
 }
 
 const arrow = cva(
@@ -28,7 +29,7 @@ const arrow = cva(
 )
 
 export const SortingArrow = (props: SortingArrowProps) => {
-  const { direction, onClick } = props
+  const { direction, onClick, testId } = props
 
   const Icon = !direction
     ? MonochromeArrowsSwitchVertical01
@@ -42,6 +43,7 @@ export const SortingArrow = (props: SortingArrowProps) => {
           isSelected: !!direction,
         }),
       )}
+      data-testid={testId}
       onClick={onClick}
     />
   )

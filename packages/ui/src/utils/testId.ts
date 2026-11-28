@@ -22,6 +22,8 @@ export const cubeTestIdParts = [
   'go-to',
   'view',
   'total',
+  'header',
+  'sub-row',
   'trigger',
   'menu',
   'option',

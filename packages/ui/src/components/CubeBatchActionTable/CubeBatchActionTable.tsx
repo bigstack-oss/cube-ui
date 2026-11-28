@@ -1,6 +1,7 @@
 import { useMemo } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { useCubeUiTranslation } from '@i18n/useCubeUiTranslation'
+import { testIdOf } from '@utils/testId'
 import {
   CubeBasicTable,
   GetCubeBasicTable,
@@ -31,6 +32,11 @@ export const CubeBatchActionTable = <Row extends CubeBatchActionTableRow>(
   } = props
 
   const { t } = useCubeUiTranslation()
+
+  // Both also pass through to the basic table, which tags the rows.
+  const testId = restProps['data-testid'] || undefined
+  const rowTestKeyOf = (row: Row) =>
+    testId ? (restProps.getRowTestKey?.(row) ?? row.id) : undefined
 
   const TypedBasicTable = GetCubeBasicTable<Row>()
 
@@ -81,6 +87,7 @@ export const CubeBatchActionTable = <Row extends CubeBatchActionTableRow>(
         checked={checkboxStatus}
         onChange={(e) => onAllCheckChange(e.target.checked)}
         aria-label={t('component.table.selectAllRows')}
+        data-testid={testIdOf(testId, 'all')}
       />
     )
   }
@@ -91,7 +98,11 @@ export const CubeBatchActionTable = <Row extends CubeBatchActionTableRow>(
       rows={convertedRows}
       rowClassName={evaluateRowClassName}
     >
-      <TypedBasicTable.Column label={renderHeaderCheckbox()} fitContent={true}>
+      <TypedBasicTable.Column
+        label={renderHeaderCheckbox()}
+        fitContent={true}
+        data-column="select"
+      >
         {(_, row) => {
           if (row.disabled) return null
 
@@ -100,6 +111,8 @@ export const CubeBatchActionTable = <Row extends CubeBatchActionTableRow>(
               checked={row.checked}
               onChange={(e) => onCheckChange(row.id, e.target.checked)}
               aria-label={t('component.table.selectRow')}
+              data-testid={testIdOf(testId, 'select')}
+              data-key={rowTestKeyOf(row)}
             />
           )
         }}

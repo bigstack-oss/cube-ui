@@ -202,7 +202,7 @@ const meta: Meta<CubeBasicTableStoryArgs> = {
     docs: {
       description: {
         component:
-          'A data table whose columns are declared as `CubeBasicTable.Column` children. Create a typed table with `GetCubeBasicTable<Row>()`, so each column infers its value type from `property`. Columns can be sortable, and the table shows an empty state and loading skeletons.',
+          'A data table whose columns are declared as `CubeBasicTable.Column` children. Create a typed table with `GetCubeBasicTable<Row>()`, so each column infers its value type from `property`. Columns can be sortable, and the table shows an empty state and loading skeletons.\n\n**Test IDs:** `data-testid` goes on the `<table>`; rows get `<test-id>-row` with `data-key` (the row `id`, or what `getRowTestKey` returns), sub rows `-sub-row`, cells `-cell` and headers `-header` with `data-column` (the column `property`, or its own `data-column`), sort arrows `-sort` and the empty row `-empty`. See Overview / Test IDs.',
       },
       page: CubeBasicTableDocs,
     },

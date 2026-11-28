@@ -1,4 +1,5 @@
-import type { CubeTableRow } from '../cubeTableUtils'
+import { testIdOf } from '@utils/testId'
+import { columnTestKeyOf, type CubeTableRow } from '../cubeTableUtils'
 import type { CubeTableColumnProps } from './CubeTableColumn'
 import { CubeTableTdSkeleton } from './CubeTableTdSkeleton'
 import { tableTd } from './cubeTableStyles'
@@ -8,12 +9,14 @@ export type CubeTableTdProps<Row extends CubeTableRow> = {
   rowIndex: number
   column: CubeTableColumnProps<Row, keyof Row | never>
   isLoading?: boolean
+  /** The table's test ID; the cell is `<test-id>-cell`. */
+  testId?: string
 }
 
 export const CubeTableTd = <Row extends CubeTableRow>(
   props: CubeTableTdProps<Row>,
 ) => {
-  const { row, rowIndex, column, isLoading } = props
+  const { row, rowIndex, column, isLoading, testId } = props
 
   const getEmphasize = (): boolean | undefined => {
     const { emphasize } = column
@@ -57,6 +60,8 @@ export const CubeTableTd = <Row extends CubeTableRow>(
         fitContent: column.fitContent,
       })}
       colSpan={column.colSpan}
+      data-testid={testIdOf(testId, 'cell')}
+      data-column={testId ? columnTestKeyOf(column) : undefined}
     >
       {isLoading ? (
         <CubeTableTdSkeleton variant={column.skeletonVariant ?? 'regular'} />
