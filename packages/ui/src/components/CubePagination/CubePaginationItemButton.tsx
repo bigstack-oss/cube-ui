@@ -6,6 +6,8 @@ import { paginationItemButton } from './cubePaginationStyles'
 type CubePaginationItemButtonProps = PropsWithChildren<{
   isMinimal: boolean
   onClick: () => void
+  testId?: string
+  testKey?: string
 }> &
   Pick<AriaAttributes, 'aria-label' | 'aria-current'> &
   (
@@ -29,6 +31,8 @@ export const CubePaginationItemButton = (
     onClick,
     'aria-label': ariaLabel,
     'aria-current': ariaCurrent,
+    testId,
+    testKey,
   } = props
 
   const isActive =
@@ -52,6 +56,8 @@ export const CubePaginationItemButton = (
         disabled={disabled}
         aria-label={ariaLabel}
         aria-current={ariaCurrent}
+        data-testid={testId}
+        data-key={testKey}
       >
         {children}
       </button>

@@ -35,7 +35,7 @@ const meta: Meta<CubePaginationProps> = {
     docs: {
       description: {
         component:
-          'Page navigation for a list or table: the total amount, page buttons, a "go to page" input, and an items-per-page dropdown. Below 798px wide it switches to a minimal layout with fewer page buttons and no labels. The page input works like the table input and the dropdown like the dropdown, both at 28px high.',
+          'Page navigation for a list or table: the total amount, page buttons, a "go to page" input, and an items-per-page dropdown. Below 798px wide it switches to a minimal layout with fewer page buttons and no labels. The page input works like the table input and the dropdown like the dropdown, both at 28px high.\n\n**Test IDs:** `data-testid` goes on the pager; its parts get `<test-id>-first`, `-prev`, `-page` (with `data-key`, the page number; the current page has `aria-current="page"`), `-next`, `-last`, `-go-to`, `-view` (a dropdown, so also `-view-trigger`, `-view-option` and so on) and `-total`. See Overview / Test IDs.',
       },
       page: CubePaginationDocs,
     },

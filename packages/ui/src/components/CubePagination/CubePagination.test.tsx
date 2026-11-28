@@ -254,3 +254,53 @@ describe('CubePagination', () => {
     expect(await axe(container)).toHaveNoViolations()
   })
 })
+
+describe('CubePagination test IDs', () => {
+  it('tags the pager, its buttons, page numbers, go-to field, view dropdown and total', async () => {
+    const user = userEvent.setup()
+    const onPageChange = vi.fn()
+    render(
+      <CubePagination
+        totalItems={125}
+        currentPage={2}
+        itemsPerPage={25}
+        onPageChange={onPageChange}
+        data-testid="pager"
+      />,
+    )
+
+    expect(screen.getByTestId('pager')).toBeInTheDocument()
+    for (const part of ['first', 'prev', 'next', 'last']) {
+      expect(screen.getByTestId(`pager-${part}`).tagName).toBe('BUTTON')
+    }
+    const pages = screen.getAllByTestId('pager-page')
+    expect(pages.map((p) => p.getAttribute('data-key'))).toContain('3')
+    const current = document.querySelector(
+      '[data-testid="pager-page"][data-key="2"]',
+    )
+    expect(current).toHaveAttribute('aria-current', 'page')
+    expect(screen.getByTestId('pager-go-to').tagName).toBe('INPUT')
+    expect(screen.getByTestId('pager-view-trigger')).toHaveTextContent('25')
+    expect(screen.getByTestId('pager-total')).toHaveTextContent('125')
+
+    await user.click(screen.getByTestId('pager-next'))
+    expect(onPageChange).toHaveBeenCalledWith(3)
+  })
+
+  it.each([undefined, ''])(
+    'renders no test IDs for a data-testid of %j',
+    (testId) => {
+      render(
+        <CubePagination
+          totalItems={125}
+          currentPage={2}
+          itemsPerPage={25}
+          data-testid={testId}
+        />,
+      )
+
+      expect(document.body.querySelector('[data-testid]')).toBeNull()
+      expect(document.body.querySelector('[data-key]')).toBeNull()
+    },
+  )
+})

@@ -133,6 +133,30 @@ const COMPONENT_TEST_IDS: ComponentTestIds[] = [
       { suffix: 'category-empty', element: 'the "no category" row' },
     ],
   },
+  {
+    component: 'CubeTabs',
+    target: 'the tab bar',
+    parts: [{ suffix: 'tab', element: 'each tab, with data-key' }],
+  },
+  {
+    component: 'CubeContentSwitcher',
+    target: 'the switcher',
+    parts: [{ suffix: 'item', element: 'each item button, with data-key' }],
+  },
+  {
+    component: 'CubePagination',
+    target: 'the pager',
+    parts: [
+      { suffix: 'first', element: 'the first-page button' },
+      { suffix: 'prev', element: 'the previous-page button' },
+      { suffix: 'page', element: 'each page number, with data-key' },
+      { suffix: 'next', element: 'the next-page button' },
+      { suffix: 'last', element: 'the last-page button' },
+      { suffix: 'go-to', element: 'the "go to page" input' },
+      { suffix: 'view', element: 'the items-per-page dropdown' },
+      { suffix: 'total', element: 'the total amount' },
+    ],
+  },
 ]
 
 const PLAYWRIGHT_SAMPLE = `

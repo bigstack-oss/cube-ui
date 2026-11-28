@@ -6,6 +6,8 @@ import {
   MonochromeChevronRightEnd,
 } from '@icons'
 import { useCubeUiTranslation } from '@i18n/useCubeUiTranslation'
+import type { CubeTestIdProps } from '@shared-types/test-id-types'
+import { testIdOf } from '@utils/testId'
 import { CubePaginationAmount } from './CubePaginationAmount'
 import { CubePaginationGoToPageInput } from './CubePaginationGoToPageInput'
 import { CubePaginationItemButton } from './CubePaginationItemButton'
@@ -36,7 +38,7 @@ export type CubePaginationProps = {
   itemsPerPage: ItemsPerPage
   onPageChange?: (page: number) => void
   onItemsPerPageChange?: (itemsPerPage: ItemsPerPage) => void
-}
+} & CubeTestIdProps
 
 export const CubePagination = (props: CubePaginationProps) => {
   const {
@@ -46,7 +48,10 @@ export const CubePagination = (props: CubePaginationProps) => {
     itemsPerPage = DEFAULT_ITEMS_PER_PAGE,
     onPageChange,
     onItemsPerPageChange,
+    'data-testid': testIdProp,
   } = props
+
+  const testId = testIdProp || undefined
 
   const { t } = useCubeUiTranslation()
 
@@ -86,12 +91,20 @@ export const CubePagination = (props: CubePaginationProps) => {
   const pageNumbers = getPageNumbers({ isMinimal, totalPages, currentPage })
 
   return (
-    <div ref={containerRef} className="flex items-center justify-between">
+    <div
+      ref={containerRef}
+      className="flex items-center justify-between"
+      data-testid={testId}
+    >
       {isLoading ? (
         <CubePaginationSkeleton isMinimal={isMinimal} />
       ) : (
         <>
-          <CubePaginationAmount isMinimal={isMinimal} totalItems={totalItems} />
+          <CubePaginationAmount
+            isMinimal={isMinimal}
+            totalItems={totalItems}
+            testId={testIdOf(testId, 'total')}
+          />
           <div className="flex items-center">
             <CubePaginationItemButton
               type="icon"
@@ -99,6 +112,7 @@ export const CubePagination = (props: CubePaginationProps) => {
               disabled={isEmpty || currentPage === 1}
               onClick={() => handlePageChange(1)}
               aria-label={t('component.pagination.firstPage')}
+              testId={testIdOf(testId, 'first')}
             >
               <MonochromeChevronLeftEnd className="icon-md" />
             </CubePaginationItemButton>
@@ -108,6 +122,7 @@ export const CubePagination = (props: CubePaginationProps) => {
               disabled={isEmpty || currentPage === 1}
               onClick={() => handlePageChange(currentPage - 1)}
               aria-label={t('component.pagination.previousPage')}
+              testId={testIdOf(testId, 'prev')}
             >
               <MonochromeChevronLeft className="icon-md" />
             </CubePaginationItemButton>
@@ -128,6 +143,8 @@ export const CubePagination = (props: CubePaginationProps) => {
                   onClick={() => handlePageChange(page)}
                   aria-label={t('component.pagination.pageNumber', { page })}
                   aria-current={currentPage === page ? 'page' : undefined}
+                  testId={testIdOf(testId, 'page')}
+                  testKey={testId ? String(page) : undefined}
                 >
                   {page}
                 </CubePaginationItemButton>
@@ -139,6 +156,7 @@ export const CubePagination = (props: CubePaginationProps) => {
               disabled={isEmpty || currentPage === totalPages}
               onClick={() => handlePageChange(currentPage + 1)}
               aria-label={t('component.pagination.nextPage')}
+              testId={testIdOf(testId, 'next')}
             >
               <MonochromeChevronRight className="icon-md" />
             </CubePaginationItemButton>
@@ -148,6 +166,7 @@ export const CubePagination = (props: CubePaginationProps) => {
               disabled={isEmpty || currentPage === totalPages}
               onClick={() => handlePageChange(totalPages)}
               aria-label={t('component.pagination.lastPage')}
+              testId={testIdOf(testId, 'last')}
             >
               <MonochromeChevronRightEnd className="icon-md" />
             </CubePaginationItemButton>
@@ -159,12 +178,14 @@ export const CubePagination = (props: CubePaginationProps) => {
               onKeyDown={handleKeyDown}
               onBlur={handleGoToPage}
               disabled={isEmpty}
+              data-testid={testIdOf(testId, 'go-to')}
             />
           </div>
           <CubePaginationViewDropdown
             isMinimal={isMinimal}
             itemsPerPage={itemsPerPage}
             onItemsPerPageChange={handleItemsPerPageChange}
+            testId={testIdOf(testId, 'view')}
           />
         </>
       )}

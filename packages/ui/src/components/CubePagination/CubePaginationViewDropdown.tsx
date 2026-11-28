@@ -10,6 +10,7 @@ type CubePaginationViewDropdownProps = {
   isMinimal: boolean
   itemsPerPage: ItemsPerPage
   onItemsPerPageChange: (num: ItemsPerPage) => void
+  testId?: string
 }
 
 export const CubePaginationViewDropdown = (
@@ -19,6 +20,7 @@ export const CubePaginationViewDropdown = (
     isMinimal,
     itemsPerPage = DEFAULT_ITEMS_PER_PAGE,
     onItemsPerPageChange,
+    testId,
   } = props
 
   const { t } = useCubeUiTranslation()
@@ -33,6 +35,7 @@ export const CubePaginationViewDropdown = (
         type="radio"
         variant="regular"
         selectedItems={[itemsPerPage]}
+        data-testid={testId}
       >
         <CubeDropdown.Trigger placeholder="View" className="h-7">
           {itemsPerPage.toString()}

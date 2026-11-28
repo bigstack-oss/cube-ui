@@ -70,7 +70,7 @@ const meta: Meta<CubeContentSwitcherStoryArgs> = {
     docs: {
       description: {
         component:
-          'Content Switchers let users compare and toggle between alternate views of similar or related content. The grouped content belongs to the same bigger context but does not overlap. Each `CubeContentSwitcher.Item` is one view; render `CubeContentSwitcher.Skeleton` in its place while loading.',
+          'Content Switchers let users compare and toggle between alternate views of similar or related content. The grouped content belongs to the same bigger context but does not overlap. Each `CubeContentSwitcher.Item` is one view; render `CubeContentSwitcher.Skeleton` in its place while loading.\n\n**Test IDs:** `data-testid` goes on the switcher; each item button gets `<test-id>-item` with `data-key` (its label unless it passes one). See Overview / Test IDs.',
       },
       page: CubeContentSwitcherDocs,
     },

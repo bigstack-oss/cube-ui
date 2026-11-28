@@ -1,5 +1,6 @@
 import { useContext } from 'react'
 import { twMerge } from 'tailwind-merge'
+import { testIdOf } from '@utils/testId'
 import { CubeContentSwitcherContext } from './cubeContentSwitcherContext'
 import {
   defaultItem,
@@ -11,9 +12,19 @@ import type { CubeContentSwitcherItemProps } from './cubeContentSwitcherTypes'
 export const CubeContentSwitcherItem = (
   props: CubeContentSwitcherItemProps,
 ) => {
-  const { isActive, disabled = false, children, onClick } = props
+  const {
+    isActive,
+    disabled = false,
+    children,
+    onClick,
+    'data-key': keyProp,
+  } = props
 
-  const { variant, size } = useContext(CubeContentSwitcherContext)
+  const { variant, size, testId } = useContext(CubeContentSwitcherContext)
+
+  const itemTestId = testIdOf(testId, 'item')
+  // The label identifies the item unless the consumer passes its own key.
+  const testKey = itemTestId ? (keyProp ?? children) : undefined
 
   const className =
     variant === 'default'
@@ -25,6 +36,8 @@ export const CubeContentSwitcherItem = (
       type="button"
       disabled={disabled}
       className={className}
+      data-testid={itemTestId}
+      data-key={testKey}
       onClick={onClick}
     >
       {children}

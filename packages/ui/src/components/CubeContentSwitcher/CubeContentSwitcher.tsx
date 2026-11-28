@@ -5,7 +5,14 @@ import { CubeContentSwitcherSkeleton } from './CubeContentSwitcherSkeleton'
 import type { CubeContentSwitcherProps } from './cubeContentSwitcherTypes'
 
 export const CubeContentSwitcher = (props: CubeContentSwitcherProps) => {
-  const { className: classNameProp, children, variant = 'default' } = props
+  const {
+    className: classNameProp,
+    children,
+    variant = 'default',
+    'data-testid': testIdProp,
+  } = props
+
+  const testId = testIdProp || undefined
 
   const getSize = () => {
     if (props.variant === 'default') {
@@ -19,8 +26,10 @@ export const CubeContentSwitcher = (props: CubeContentSwitcherProps) => {
   const className = twMerge('flex w-fit', classNameProp)
 
   return (
-    <CubeContentSwitcherContext.Provider value={{ variant, size }}>
-      <div className={className}>{children}</div>
+    <CubeContentSwitcherContext.Provider value={{ variant, size, testId }}>
+      <div className={className} data-testid={testId}>
+        {children}
+      </div>
     </CubeContentSwitcherContext.Provider>
   )
 }

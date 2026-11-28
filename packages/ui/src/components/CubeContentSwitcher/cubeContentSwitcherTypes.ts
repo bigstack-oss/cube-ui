@@ -1,5 +1,9 @@
 import type { MouseEvent, ReactNode } from 'react'
 import type { PropsWithClassName } from '@shared-types/react-types'
+import type {
+  CubeTestIdProps,
+  CubeTestKeyProps,
+} from '@shared-types/test-id-types'
 
 export const cubeContentSwitcherVariants = ['default', 'radius'] as const
 
@@ -10,13 +14,14 @@ export type CubeContentSwitcherVariant =
 
 export type CubeContentSwitcherSize = (typeof cubeContentSwitcherSizes)[number]
 
-export type CubeContentSwitcherProps = PropsWithClassName & {
-  /**
-   * @default 'default'
-   */
-  variant: CubeContentSwitcherVariant
-  children: ReactNode
-} & (
+export type CubeContentSwitcherProps = PropsWithClassName &
+  CubeTestIdProps & {
+    /**
+     * @default 'default'
+     */
+    variant: CubeContentSwitcherVariant
+    children: ReactNode
+  } & (
     | {
         variant: 'default'
         /**
@@ -34,4 +39,4 @@ export type CubeContentSwitcherItemProps = {
   disabled?: boolean
   children: string
   onClick?: (e: MouseEvent<HTMLButtonElement>) => void
-}
+} & CubeTestKeyProps

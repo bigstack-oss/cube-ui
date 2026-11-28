@@ -1,9 +1,11 @@
-import { createElement, type MouseEvent } from 'react'
+import { createElement, useContext, type MouseEvent } from 'react'
+import { testIdOf } from '@utils/testId'
 import { twJoin, twMerge } from 'tailwind-merge'
 import type { CubeTabProps } from './cubeTabsTypes'
 import { tab, innerContainer } from './cubeTabsStyles'
 import { NumberSpan } from './NumberSpan/NumberSpan'
 import { DotSpan } from './DotSpan/DotSpan'
+import { CubeTabsTestIdContext } from './cubeTabsContext'
 
 export const CubeTab = (props: CubeTabProps) => {
   const {
@@ -14,7 +16,12 @@ export const CubeTab = (props: CubeTabProps) => {
     number,
     dot,
     onClick: onClickProp,
+    'data-key': keyProp,
   } = props
+
+  const tabTestId = testIdOf(useContext(CubeTabsTestIdContext), 'tab')
+  // The label identifies the tab unless the consumer passes its own key.
+  const testKey = tabTestId ? (keyProp ?? children) : undefined
 
   const onClick = (e: MouseEvent<HTMLElement>) => {
     if (!disabled) {
@@ -61,6 +68,8 @@ export const CubeTab = (props: CubeTabProps) => {
         ),
         href: hrefAttribute,
         onClick,
+        'data-testid': tabTestId,
+        'data-key': testKey,
       },
       <div
         className={twMerge(

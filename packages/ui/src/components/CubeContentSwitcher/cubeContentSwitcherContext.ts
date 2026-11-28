@@ -7,6 +7,8 @@ import type {
 export type CubeContentSwitcherContextValue = {
   variant: CubeContentSwitcherVariant
   size?: CubeContentSwitcherSize
+  /** The consumer's test ID, so each item can derive `<test-id>-item`. */
+  testId?: string
 }
 
 export const CubeContentSwitcherContext =

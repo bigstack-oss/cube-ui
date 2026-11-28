@@ -1,8 +1,12 @@
 import type { MouseEvent, ReactNode } from 'react'
+import type {
+  CubeTestIdProps,
+  CubeTestKeyProps,
+} from '@shared-types/test-id-types'
 
 export type CubeTabsProps = {
   children: ReactNode
-}
+} & CubeTestIdProps
 
 export type CubeTabProps = {
   children: string
@@ -15,4 +19,5 @@ export type CubeTabProps = {
   | { number: number; dot?: never }
   | { number?: never; dot: true }
   | { number?: never; dot?: never }
-)
+) &
+  CubeTestKeyProps

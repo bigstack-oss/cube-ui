@@ -43,7 +43,7 @@ const meta: Meta<CubeTabsStoryArgs> = {
     docs: {
       description: {
         component:
-          'Tabs let users switch between related views or sections of content.',
+          'Tabs let users switch between related views or sections of content.\n\n**Test IDs:** `data-testid` goes on the tab bar; each tab gets `<test-id>-tab` with `data-key` (its label unless it passes one). See Overview / Test IDs.',
       },
       page: CubeTabsDocs,
     },

@@ -129,3 +129,43 @@ describe('CubeTabs', () => {
     expect(await axe(container)).toHaveNoViolations()
   })
 })
+
+describe('CubeTabs test IDs', () => {
+  it('tags the tab bar and each tab, keyed by its label unless it passes data-key', async () => {
+    const user = userEvent.setup()
+    const onVolumes = vi.fn()
+    render(
+      <CubeTabs data-testid="project-tabs">
+        <CubeTabs.Tab isActive>Networks</CubeTabs.Tab>
+        <CubeTabs.Tab isActive={false} data-key="volumes" onClick={onVolumes}>
+          Volumes
+        </CubeTabs.Tab>
+      </CubeTabs>,
+    )
+
+    expect(screen.getByTestId('project-tabs')).toBeInTheDocument()
+    const tabs = screen.getAllByTestId('project-tabs-tab')
+    expect(tabs.map((t) => t.getAttribute('data-key'))).toEqual([
+      'Networks',
+      'volumes',
+    ])
+    const volumes = tabs[1]
+    if (!volumes) throw new Error('volumes tab not found')
+    await user.click(volumes)
+    expect(onVolumes).toHaveBeenCalledOnce()
+  })
+
+  it.each([undefined, ''])(
+    'renders no test IDs for a data-testid of %j',
+    (testId) => {
+      const { container } = render(
+        <CubeTabs data-testid={testId}>
+          <CubeTabs.Tab isActive>Networks</CubeTabs.Tab>
+        </CubeTabs>,
+      )
+
+      expect(container.querySelector('[data-testid]')).toBeNull()
+      expect(container.querySelector('[data-key]')).toBeNull()
+    },
+  )
+})

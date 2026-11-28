@@ -135,3 +135,45 @@ describe('CubeContentSwitcher', () => {
     expect(await axe(container)).toHaveNoViolations()
   })
 })
+
+describe('CubeContentSwitcher test IDs', () => {
+  it('tags the switcher and each item button, keyed by its label unless it passes data-key', async () => {
+    const user = userEvent.setup()
+    const onWeek = vi.fn()
+    render(
+      <CubeContentSwitcher variant="default" data-testid="range">
+        <CubeContentSwitcher.Item isActive>Day</CubeContentSwitcher.Item>
+        <CubeContentSwitcher.Item
+          isActive={false}
+          data-key="7d"
+          onClick={onWeek}
+        >
+          Week
+        </CubeContentSwitcher.Item>
+      </CubeContentSwitcher>,
+    )
+
+    expect(screen.getByTestId('range')).toBeInTheDocument()
+    const items = screen.getAllByTestId('range-item')
+    expect(items.map((i) => i.tagName)).toEqual(['BUTTON', 'BUTTON'])
+    expect(items.map((i) => i.getAttribute('data-key'))).toEqual(['Day', '7d'])
+    const week = items[1]
+    if (!week) throw new Error('week item not found')
+    await user.click(week)
+    expect(onWeek).toHaveBeenCalledOnce()
+  })
+
+  it.each([undefined, ''])(
+    'renders no test IDs for a data-testid of %j',
+    (testId) => {
+      const { container } = render(
+        <CubeContentSwitcher variant="radius" data-testid={testId}>
+          <CubeContentSwitcher.Item isActive>Day</CubeContentSwitcher.Item>
+        </CubeContentSwitcher>,
+      )
+
+      expect(container.querySelector('[data-testid]')).toBeNull()
+      expect(container.querySelector('[data-key]')).toBeNull()
+    },
+  )
+})
