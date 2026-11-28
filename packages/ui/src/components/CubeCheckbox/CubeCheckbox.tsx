@@ -79,7 +79,7 @@ export const CubeCheckbox = (props: CubeCheckboxProps) => {
         containerClassName,
       )}
       data-testid={testId || undefined}
-      data-key={testKey}
+      data-key={testId ? testKey : undefined}
     >
       <input
         {...restProps}

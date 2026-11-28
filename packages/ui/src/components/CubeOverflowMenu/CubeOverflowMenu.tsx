@@ -3,6 +3,7 @@ import {
   type MouseEvent as ReactMouseEvent,
   useCallback,
   useEffect,
+  useMemo,
   useState,
 } from 'react'
 import { createPortal } from 'react-dom'
@@ -35,6 +36,11 @@ export const CubeOverflowMenu = (props: CubeOverflowMenuProps) => {
     setIsOpen(false)
   }, [])
 
+  const contextValue = useMemo(
+    () => ({ closeMenu, testId }),
+    [closeMenu, testId],
+  )
+
   useEffect(() => {
     const onOutsideClick = (e: MouseEvent) => {
       const target = e.target as HTMLElement
@@ -56,7 +62,7 @@ export const CubeOverflowMenu = (props: CubeOverflowMenuProps) => {
   const clonedAnchor = cloneElement(triggerElement, {
     // A test ID the trigger already has wins over the derived one.
     'data-testid':
-      triggerElement.props['data-testid'] ?? testIdOf(testId, 'trigger'),
+      triggerElement.props['data-testid'] || testIdOf(testId, 'trigger'),
     ref: (element: HTMLElement | null) => {
       assignRefValue(triggerElement.props.ref, element)
       assignRefValue(anchorRef, element)
@@ -68,7 +74,7 @@ export const CubeOverflowMenu = (props: CubeOverflowMenuProps) => {
   })
 
   return (
-    <CubeOverflowMenuContext.Provider value={{ closeMenu, testId }}>
+    <CubeOverflowMenuContext.Provider value={contextValue}>
       {clonedAnchor}
       {createPortal(
         <div

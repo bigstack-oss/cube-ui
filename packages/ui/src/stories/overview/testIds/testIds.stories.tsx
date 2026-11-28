@@ -480,8 +480,9 @@ export const Guide: Story = {
             <InlineCode>
               {'<CubeDropdown.Item data-key={network.id}>'}
             </InlineCode>
-            . Pass one when two items can have the same text, or when the text
-            is translated.
+            . Pass one when two items can have the same text, when the text is
+            translated, or when an item&apos;s content is not plain text (a
+            search filter item with markup has no key of its own).
           </CaptionText>
           <CodeBlock language="typescript">{KEY_SAMPLE}</CodeBlock>
           <CodeBlock language="python">{KEY_SAMPLE_SELENIUM}</CodeBlock>

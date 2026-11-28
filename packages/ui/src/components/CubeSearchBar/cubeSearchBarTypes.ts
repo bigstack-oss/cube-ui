@@ -5,6 +5,10 @@ import type {
 } from '@shared-types/test-id-types'
 
 export type CubeSearchBarFilterItemProps = {
+  /**
+   * Plain text is also the item's `data-key`. Pass `data-key` when the
+   * content is not plain text, or an item has no key for tests to pick it by.
+   */
   children: ReactNode
   onClick?: () => void
 } & CubeTestKeyProps

@@ -68,7 +68,7 @@ export const CubeTag = (props: CubeTagProps) => {
         className,
       )}
       data-testid={testId}
-      data-key={testKey}
+      data-key={testId ? testKey : undefined}
     >
       {renderIcon()}
       {children}

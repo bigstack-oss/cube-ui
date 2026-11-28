@@ -1,9 +1,10 @@
-import { createRef, type ReactNode } from 'react'
+import { createRef, useContext, type ReactNode } from 'react'
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { axe } from 'jest-axe'
 import { MonochromeHome01, MonochromePower } from '@icons'
 import { CubeOverflowMenu } from './CubeOverflowMenu'
+import { CubeOverflowMenuContext } from './cubeOverflowMenuContext'
 import type { CubeOverflowMenuItemProps } from './cubeOverflowMenuTypes'
 
 // The menu is always portaled into document.body; `useFloating` hides it with
@@ -378,4 +379,47 @@ describe('CubeOverflowMenu test IDs', () => {
       expect(document.body.querySelector('[data-key]')).toBeNull()
     },
   )
+})
+
+describe('CubeOverflowMenu empty trigger test ID', () => {
+  it('uses the derived trigger ID when the trigger has an empty one', () => {
+    render(
+      <CubeOverflowMenu
+        data-testid="row-actions"
+        triggerElement={
+          <button type="button" data-testid="">
+            Actions
+          </button>
+        }
+      >
+        <CubeOverflowMenu.Item type="plain" title="Edit" onClick={vi.fn()} />
+      </CubeOverflowMenu>,
+    )
+
+    expect(screen.getByTestId('row-actions-trigger')).toBe(
+      screen.getByRole('button', { name: 'Actions' }),
+    )
+  })
+
+  it('keeps the context value stable across re-renders', () => {
+    const seen: unknown[] = []
+    const Probe = () => {
+      seen.push(useContext(CubeOverflowMenuContext))
+      return null
+    }
+    // A new element each time, so React renders the menu and the probe again.
+    const menu = () => (
+      <CubeOverflowMenu
+        data-testid="m"
+        triggerElement={<button type="button">Open</button>}
+      >
+        <Probe />
+      </CubeOverflowMenu>
+    )
+    const { rerender } = render(menu())
+    rerender(menu())
+
+    expect(seen.length).toBeGreaterThan(1)
+    expect(new Set(seen).size).toBe(1)
+  })
 })

@@ -123,3 +123,16 @@ describe('CubeCheckbox data-key', () => {
     )
   })
 })
+
+describe('CubeCheckbox data-key without a test ID', () => {
+  it.each([undefined, ''])(
+    'renders no data-key for a data-testid of %j',
+    (testId) => {
+      const { container } = render(
+        <CubeCheckbox label="web-net" data-testid={testId} data-key="n-1" />,
+      )
+
+      expect(container.querySelector('[data-key]')).toBeNull()
+    },
+  )
+})

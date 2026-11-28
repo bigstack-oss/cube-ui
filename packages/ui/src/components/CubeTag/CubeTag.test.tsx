@@ -103,3 +103,18 @@ describe('CubeTag test IDs', () => {
     },
   )
 })
+
+describe('CubeTag data-key without a test ID', () => {
+  it.each([undefined, ''])(
+    'renders no data-key for a data-testid of %j',
+    (testId) => {
+      const { container } = render(
+        <CubeTag variant="filled" data-testid={testId} data-key="env:prod">
+          env:prod
+        </CubeTag>,
+      )
+
+      expect(container.querySelector('[data-key]')).toBeNull()
+    },
+  )
+})
