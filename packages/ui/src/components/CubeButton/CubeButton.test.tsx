@@ -128,3 +128,57 @@ describe('CubeButton empty test ID', () => {
     expect(container.querySelector('[data-testid]')).toBeNull()
   })
 })
+
+describe('CubeButton icon-only accessible name', () => {
+  it('is named by aria-label', () => {
+    render(
+      <CubeButton
+        usage="icon-only"
+        Icon={MonochromeSettings}
+        aria-label="Settings"
+      />,
+    )
+
+    expect(screen.getByRole('button', { name: 'Settings' })).toBeInTheDocument()
+  })
+
+  it('is named by aria-labelledby', () => {
+    render(
+      <>
+        <span id="settings-name">Settings</span>
+        <CubeButton
+          usage="icon-only"
+          Icon={MonochromeSettings}
+          aria-labelledby="settings-name"
+        />
+      </>,
+    )
+
+    expect(screen.getByRole('button', { name: 'Settings' })).toBeInTheDocument()
+  })
+
+  it('needs a name in its type: aria-label or aria-labelledby', () => {
+    render(
+      // @ts-expect-error an icon-only button has no text, so it needs a name
+      <CubeButton usage="icon-only" Icon={MonochromeSettings} />,
+    )
+
+    expect(screen.getByRole('button')).toBeInTheDocument()
+  })
+
+  it('does not ask a button with text for a name', () => {
+    render(
+      <>
+        <CubeButton usage="text-only">Save</CubeButton>
+        <CubeButton usage="icon-left" Icon={MonochromeSettings}>
+          Settings
+        </CubeButton>
+        <CubeButton usage="icon-right" Icon={MonochromeSettings}>
+          More
+        </CubeButton>
+      </>,
+    )
+
+    expect(screen.getAllByRole('button')).toHaveLength(3)
+  })
+})

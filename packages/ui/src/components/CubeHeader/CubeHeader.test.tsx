@@ -128,3 +128,20 @@ describe('CubeHeader', () => {
     expect(await axe(container)).toHaveNoViolations()
   })
 })
+
+describe('CubeHeader function bar item name', () => {
+  it('needs a hoverMessage in its type, since it names the icon-only button', () => {
+    // @ts-expect-error an item without a hoverMessage has no accessible name
+    const unnamed: CubeHeaderFunctionBarItem = { Icon: MonochromeLogout }
+
+    expect(unnamed.Icon).toBe(MonochromeLogout)
+  })
+
+  it('names every function bar button by its hoverMessage', () => {
+    render(<CubeHeader {...makeProps()} />)
+
+    for (const name of ['Events', 'Logout']) {
+      expect(screen.getByRole('button', { name })).toBeInTheDocument()
+    }
+  })
+})

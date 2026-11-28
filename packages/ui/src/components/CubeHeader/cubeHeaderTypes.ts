@@ -18,9 +18,10 @@ export type CubeHeaderFunctionBarItem<
 > = {
   Icon: SvgComponent
   /**
-   * Tooltip text, also the button's accessible name.
+   * Tooltip text, also the button's accessible name. Required, since the
+   * button is an icon with no text.
    */
-  hoverMessage?: string
+  hoverMessage: string
   onClick?: () => void
   /**
    * Wraps the button in a custom component, for example a router link.

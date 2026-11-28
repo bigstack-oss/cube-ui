@@ -26,7 +26,14 @@ const ButtonCell = (props: ButtonCellProps) => {
 
   switch (usage) {
     case 'icon-only':
-      return <CubeButton {...rest} usage={usage} Icon={MonochromeHome01} />
+      return (
+        <CubeButton
+          {...rest}
+          usage={usage}
+          Icon={MonochromeHome01}
+          aria-label="Home"
+        />
+      )
     case 'icon-left':
       return (
         <CubeButton {...rest} usage={usage} Icon={MonochromeHome01}>

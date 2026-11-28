@@ -25,6 +25,15 @@ export type CubeButtonSize = (typeof cubeButtonSizes)[number]
 
 export type CubeButtonUsage = (typeof cubeButtonUsages)[number]
 
+/**
+ * An icon-only button has no text, so it must be named for screen readers
+ * and for tests that find it by role: `aria-label`, or `aria-labelledby`
+ * pointing at visible text.
+ */
+type CubeButtonAccessibleName =
+  | { 'aria-label': string }
+  | { 'aria-labelledby': string }
+
 export type CubeButtonProps = Omit<
   JSX.IntrinsicElements['button'],
   'type' | 'children'
@@ -58,10 +67,10 @@ export type CubeButtonProps = Omit<
         usage: Extract<CubeButtonUsage, 'text-only'>
         children: string
       }
-    | {
+    | ({
         usage: Extract<CubeButtonUsage, 'icon-only'>
         Icon: SvgComponent
-      }
+      } & CubeButtonAccessibleName)
     | {
         usage: Extract<CubeButtonUsage, 'icon-left' | 'icon-right'>
         children: string
