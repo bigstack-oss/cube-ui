@@ -223,6 +223,22 @@ const COMPONENT_TEST_IDS: ComponentTestIds[] = [
     ],
   },
   {
+    component: 'CubeHeader',
+    target: 'the header',
+    parts: [
+      {
+        suffix: 'quick-access',
+        element: 'each quick access link, with data-key',
+      },
+      { suffix: 'action', element: 'each function button, with data-key' },
+      {
+        suffix: 'language',
+        element:
+          'the language dropdown, with the Dropdown parts (-language-trigger, -language-menu, -language-option keyed by value)',
+      },
+    ],
+  },
+  {
     component: 'CubeBreadcrumb',
     target: 'the trail',
     parts: [{ suffix: 'item', element: 'each item, with data-key' }],

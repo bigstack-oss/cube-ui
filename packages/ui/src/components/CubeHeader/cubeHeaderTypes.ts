@@ -1,4 +1,8 @@
 import type { ComponentType, PropsWithChildren, ReactNode } from 'react'
+import type {
+  CubeTestIdProps,
+  CubeTestKeyProps,
+} from '@shared-types/test-id-types'
 import type { SvgComponent } from '../CubeIcon/cubeIconTypes'
 
 export type CubeHeaderQuickAccess = {
@@ -11,7 +15,7 @@ export type CubeHeaderQuickAccess = {
    * Tooltip text, also the link's accessible name.
    */
   hoverMessage: string
-}
+} & CubeTestKeyProps
 
 export type CubeHeaderFunctionBarItem<
   ContainerProps extends PropsWithChildren = PropsWithChildren,
@@ -34,7 +38,7 @@ export type CubeHeaderFunctionBarItem<
    * Rendered inside `container` after the button, for example a badge.
    */
   additionalElements?: ReactNode[]
-}
+} & CubeTestKeyProps
 
 export type CubeHeaderLanguageOption = {
   label: string
@@ -42,7 +46,7 @@ export type CubeHeaderLanguageOption = {
   onClick: (value: string) => void
 }
 
-export type CubeHeaderProps = {
+export type CubeHeaderProps = CubeTestIdProps & {
   /**
    * Shows skeletons for the quick accesses.
    * @default false

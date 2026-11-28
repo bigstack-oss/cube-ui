@@ -40,7 +40,7 @@ const meta: Meta<CubeHeaderProps> = {
     docs: {
       description: {
         component:
-          'The top bar of the app, aligned right: quick access links to integrated services (opened in a new tab), a language dropdown, and function buttons such as notifications and logout. Every icon button shows its `hoverMessage` as a tooltip and uses it as its accessible name.',
+          'The top bar of the app, aligned right: quick access links to integrated services (opened in a new tab), a language dropdown, and function buttons such as notifications and logout. Every icon button shows its `hoverMessage` as a tooltip and uses it as its accessible name.\n\n**Test IDs:** `data-testid` goes on the header; its parts get `<test-id>-quick-access` (the link, with `data-key`), `-action` (a function button, with `data-key`) and `-language` (the language dropdown, so also `-language-trigger`, `-language-menu` and `-language-option`, keyed by the option `value`). A `data-key` is the `hoverMessage` unless the item passes one, which is worth doing since it is translated. See Overview / Test IDs.',
       },
       page: CubeHeaderDocs,
     },

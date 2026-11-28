@@ -145,3 +145,119 @@ describe('CubeHeader function bar item name', () => {
     }
   })
 })
+
+describe('CubeHeader test IDs', () => {
+  it('tags the header, and each quick access on its link, keyed by its message unless it passes data-key', () => {
+    render(
+      <CubeHeader
+        {...makeProps({
+          quickAccesses: [
+            {
+              Icon: ColoredKeycloak,
+              href: '/keycloak',
+              hoverMessage: 'Keycloak',
+              'data-key': 'keycloak',
+            },
+            { Icon: ColoredCeph, href: '/ceph', hoverMessage: 'Ceph' },
+          ],
+        })}
+        data-testid="top"
+      />,
+    )
+
+    expect(screen.getByTestId('top')).toBeInTheDocument()
+    const links = screen.getAllByTestId('top-quick-access')
+    expect(links.map((l) => l.tagName)).toEqual(['A', 'A'])
+    expect(links.map((l) => l.getAttribute('data-key'))).toEqual([
+      'keycloak',
+      'Ceph',
+    ])
+    expect(links[1]).toHaveAttribute('href', '/ceph')
+  })
+
+  it('tags each function bar button, which a test can click', async () => {
+    const user = userEvent.setup()
+    const onLogout = vi.fn()
+    render(
+      <CubeHeader
+        {...makeProps({
+          functionBarItems: [
+            { Icon: MonochromeNotification, hoverMessage: 'Events' },
+            {
+              Icon: MonochromeLogout,
+              hoverMessage: 'Logout',
+              'data-key': 'logout',
+              onClick: onLogout,
+            },
+          ],
+        })}
+        data-testid="top"
+      />,
+    )
+
+    const actions = screen.getAllByTestId('top-action')
+    expect(actions.map((a) => a.tagName)).toEqual(['BUTTON', 'BUTTON'])
+    expect(actions.map((a) => a.getAttribute('data-key'))).toEqual([
+      'Events',
+      'logout',
+    ])
+    const logout = actions[1]
+    if (!logout) throw new Error('logout action not found')
+    await user.click(logout)
+    expect(onLogout).toHaveBeenCalledOnce()
+  })
+
+  it('tags the button, not its container, when an item has a container', () => {
+    const events: CubeHeaderFunctionBarItem<{
+      href: string
+      children?: React.ReactNode
+    }> = {
+      Icon: MonochromeNotification,
+      hoverMessage: 'Events',
+      container: { Component: LinkContainer, props: { href: '/events' } },
+    }
+    render(
+      <CubeHeader
+        {...makeProps({
+          functionBarItems: [events as CubeHeaderFunctionBarItem],
+        })}
+        data-testid="top"
+      />,
+    )
+
+    const action = screen.getByTestId('top-action')
+    expect(action.tagName).toBe('BUTTON')
+    expect(screen.getByTestId('link-container')).toContainElement(action)
+  })
+
+  it('tags the language picker, its menu and each option, keyed by its value', async () => {
+    const user = userEvent.setup()
+    const props = makeProps()
+    render(<CubeHeader {...props} data-testid="top" />)
+
+    expect(screen.getByTestId('top-language')).toBeInTheDocument()
+    const trigger = screen.getByTestId('top-language-trigger')
+    expect(trigger).toHaveTextContent('English')
+    await user.click(trigger)
+    expect(screen.getByTestId('top-language-menu')).toBeInTheDocument()
+    const options = screen.getAllByTestId('top-language-option')
+    expect(options.map((o) => o.getAttribute('data-key'))).toEqual([
+      'en-US',
+      'zh-TW',
+    ])
+    const chinese = options[1]
+    if (!chinese) throw new Error('zh-TW option not found')
+    await user.click(chinese)
+    expect(props.languageOptions[1]?.onClick).toHaveBeenCalledWith('zh-TW')
+  })
+
+  it.each([undefined, ''])(
+    'renders no test IDs for a data-testid of %j',
+    (testId) => {
+      render(<CubeHeader {...makeProps()} data-testid={testId} />)
+
+      expect(document.body.querySelector('[data-testid]')).toBeNull()
+      expect(document.body.querySelector('[data-key]')).toBeNull()
+    },
+  )
+})
