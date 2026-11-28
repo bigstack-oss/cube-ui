@@ -3,10 +3,16 @@ import type { Meta, StoryObj } from '@storybook/react-vite'
 import { StoryLayout } from '@internals/components/StoryLayout/StoryLayout'
 import { CaptionText } from '@internals/components/CaptionText'
 import { CubeButton } from '@components/CubeButton'
+import {
+  CubeDatePicker,
+  useCubeDatePickerDisplayDates,
+} from '@components/CubeDatePicker'
 import { CubeDropdown } from '@components/CubeDropdown'
 import { GetCubeBasicTable } from '@components/CubeBasicTable/CubeBasicTable'
 import { CubeInput } from '@components/CubeInput'
 import { CubeModal } from '@components/CubeModal'
+import { CubeUpload } from '@components/CubeUpload'
+import type { CubeDatePickerDates } from '@components/CubeDatePicker'
 import { InlineCode } from '../i18n/InlineCode'
 import { CodeBlock } from '../i18n/CodeBlock'
 import { DemoFrame } from '../i18n/DemoFrame'
@@ -239,6 +245,43 @@ const COMPONENT_TEST_IDS: ComponentTestIds[] = [
     ],
   },
   {
+    component: 'CubeTableInput',
+    target: 'the <input>',
+    parts: [
+      { suffix: 'error', element: 'the error icon' },
+      {
+        suffix: 'tooltip',
+        element: 'the tooltip it shows on hover, with the message',
+      },
+    ],
+  },
+  {
+    component: 'CubeUpload',
+    target: 'the wrapper',
+    parts: [
+      { suffix: 'button', element: 'the upload button' },
+      { suffix: 'input', element: 'the hidden file input' },
+      { suffix: 'file', element: 'the picked file (and -file-cancel)' },
+      { suffix: 'progress', element: 'the progress bar (and -progress-abort)' },
+      { suffix: 'error', element: 'the error (and -error-close)' },
+    ],
+  },
+  {
+    component: 'CubeDatePicker',
+    target: 'the trigger button',
+    parts: [
+      { suffix: 'menu', element: 'the calendar, rendered in a portal' },
+      { suffix: 'start', element: 'the start date field' },
+      { suffix: 'end', element: 'the end date field' },
+      { suffix: 'prev', element: 'the previous-month button' },
+      { suffix: 'next', element: 'the next-month button' },
+      { suffix: 'month', element: 'the month title' },
+      { suffix: 'day', element: 'each day, with data-key as YYYY-MM-DD' },
+      { suffix: 'reset', element: 'the Reset button' },
+      { suffix: 'apply', element: 'the Apply button' },
+    ],
+  },
+  {
     component: 'CubeBreadcrumb',
     target: 'the trail',
     parts: [{ suffix: 'item', element: 'each item, with data-key' }],
@@ -410,6 +453,50 @@ const DemoTable = () => (
   </div>
 )
 
+const DemoUpload = () => {
+  const [fileName, setFileName] = useState<string>()
+
+  return (
+    <CubeUpload
+      buttonText="Upload"
+      data-testid="demo-upload"
+      onFileChange={(file) => setFileName(file?.name)}
+    >
+      {fileName && (
+        <CubeUpload.File onCancel={() => setFileName(undefined)}>
+          {fileName}
+        </CubeUpload.File>
+      )}
+    </CubeUpload>
+  )
+}
+
+const DemoDatePicker = () => {
+  const [applied, setApplied] = useState<CubeDatePickerDates>({
+    start: undefined,
+    end: undefined,
+  })
+  const { displayDates, onChange, onCancel, onReset } =
+    useCubeDatePickerDisplayDates({
+      initialStartDate: applied.start,
+      initialEndDate: applied.end,
+    })
+
+  return (
+    <CubeDatePicker
+      displayDates={displayDates}
+      onChange={onChange}
+      onCancel={onCancel}
+      onApply={() => setApplied(displayDates)}
+      onReset={() => {
+        onReset()
+        setApplied({ start: undefined, end: undefined })
+      }}
+      data-testid="demo-range"
+    />
+  )
+}
+
 const LiveDemo = () => {
   const [isOpen, setIsOpen] = useState(false)
 
@@ -438,6 +525,8 @@ const LiveDemo = () => {
       </CubeModal>
       <DemoDropdown />
       <DemoTable />
+      <DemoUpload />
+      <DemoDatePicker />
     </DemoFrame>
   )
 }

@@ -208,3 +208,74 @@ describe('CubeUpload', () => {
     style.remove()
   })
 })
+
+describe('CubeUpload test IDs', () => {
+  it('tags the wrapper, the button and the file input, which a test can fill', async () => {
+    const user = userEvent.setup()
+    const onFileChange = vi.fn()
+    render(
+      <CubeUpload
+        buttonText="Upload"
+        data-testid="config"
+        onFileChange={onFileChange}
+      />,
+    )
+
+    expect(screen.getByTestId('config')).toBeInTheDocument()
+    expect(screen.getByTestId('config-button')).toBe(
+      screen.getByRole('button', { name: 'Upload' }),
+    )
+    const input = screen.getByTestId('config-input')
+    expect(input).toHaveAttribute('type', 'file')
+    const file = new File(['key: value'], 'config.yaml')
+    await user.upload(input, file)
+
+    expect(onFileChange).toHaveBeenCalledWith(file)
+  })
+
+  it('tags the file, the progress bar and the error, each with its own button', async () => {
+    const user = userEvent.setup()
+    const onCancel = vi.fn()
+    const onAbortClick = vi.fn()
+    const onClose = vi.fn()
+    render(
+      <CubeUpload buttonText="Upload" data-testid="config">
+        <CubeUpload.File onCancel={onCancel}>config.yaml</CubeUpload.File>
+        <CubeUpload.ProgressBar
+          fileName="image.iso"
+          progress={40}
+          onAbortClick={onAbortClick}
+        />
+        <CubeUpload.Error message="File too large" onClose={onClose} />
+      </CubeUpload>,
+    )
+
+    expect(screen.getByTestId('config-file')).toHaveTextContent('config.yaml')
+    await user.click(screen.getByTestId('config-file-cancel'))
+    expect(onCancel).toHaveBeenCalledOnce()
+
+    expect(screen.getByTestId('config-progress')).toHaveTextContent('image.iso')
+    await user.click(screen.getByTestId('config-progress-abort'))
+    expect(onAbortClick).toHaveBeenCalledOnce()
+
+    expect(screen.getByTestId('config-error')).toHaveTextContent(
+      'File too large',
+    )
+    await user.click(screen.getByTestId('config-error-close'))
+    expect(onClose).toHaveBeenCalledOnce()
+  })
+
+  it.each([undefined, ''])(
+    'renders no test IDs for a data-testid of %j',
+    (testId) => {
+      const { container } = render(
+        <CubeUpload buttonText="Upload" data-testid={testId}>
+          <CubeUpload.File onCancel={vi.fn()}>config.yaml</CubeUpload.File>
+          <CubeUpload.Error message="File too large" />
+        </CubeUpload>,
+      )
+
+      expect(container.querySelector('[data-testid]')).toBeNull()
+    },
+  )
+})

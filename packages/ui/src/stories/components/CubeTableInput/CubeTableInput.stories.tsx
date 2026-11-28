@@ -48,7 +48,7 @@ const meta: Meta<CubeTableInputStoryArgs> = {
     docs: {
       description: {
         component:
-          'A compact text input for use inside a table cell. The text area is at least 35px and at most 320px wide. Errors show as a tooltip on an icon beside the input, because a table cell has no room for a message below it. Accepts every native input attribute and forwards its ref to the input.',
+          'A compact text input for use inside a table cell. The text area is at least 35px and at most 320px wide. Errors show as a tooltip on an icon beside the input, because a table cell has no room for a message below it. Accepts every native input attribute and forwards its ref to the input.\n\n**Test IDs:** `data-testid` goes on the `<input>`; the error icon gets `<test-id>-error`, and the tooltip it shows on hover `<test-id>-tooltip`. See Overview / Test IDs.',
       },
       page: CubeTableInputDocs,
     },

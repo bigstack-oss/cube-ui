@@ -7,10 +7,11 @@ type CubeDatePickerInputProps = {
   type: 'start' | 'end'
   value?: string
   placeholder?: string
+  testId?: string
 }
 
 export const CubeDatePickerInput = (props: CubeDatePickerInputProps) => {
-  const { type, value, placeholder } = props
+  const { type, value, placeholder, testId } = props
 
   const { t } = useCubeUiTranslation()
 
@@ -25,6 +26,7 @@ export const CubeDatePickerInput = (props: CubeDatePickerInputProps) => {
         placeholder={placeholder}
         hideErrorIcon={true}
         readOnly
+        data-testid={testId}
       />
     </div>
   )

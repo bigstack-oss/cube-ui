@@ -1,6 +1,8 @@
 import { forwardRef, useId, type InputHTMLAttributes } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { MonochromeWarningFilled } from '@icons'
+import type { CubeTestIdProps } from '@shared-types/test-id-types'
+import { testIdOf } from '@utils/testId'
 import { CubeTooltip } from '../CubeTooltip/CubeTooltip'
 import { CubeTableInputSkeleton } from './CubeTableInputSkeleton'
 import { tableInput } from './cubeTableInputStyles'
@@ -12,7 +14,7 @@ export type CubeTableInputProps = InputHTMLAttributes<HTMLInputElement> & {
    * @default false
    */
   hideErrorIcon?: boolean
-}
+} & CubeTestIdProps
 
 export const CubeTableInput = Object.assign(
   forwardRef<HTMLInputElement, CubeTableInputProps>(
@@ -23,8 +25,11 @@ export const CubeTableInput = Object.assign(
         errorMessage,
         hideErrorIcon = false,
         disabled,
+        'data-testid': testIdProp,
         ...restProps
       } = props
+
+      const testId = testIdProp || undefined
 
       const defaultId = useId()
       const inputId = restProps.id || defaultId
@@ -39,8 +44,12 @@ export const CubeTableInput = Object.assign(
                 hoverContent={{
                   message: errorMessage?.toString(),
                 }}
+                data-testid={testIdOf(testId, 'tooltip')}
               >
-                <MonochromeWarningFilled className="icon-md text-status-negative" />
+                <MonochromeWarningFilled
+                  className="icon-md text-status-negative"
+                  data-testid={testIdOf(testId, 'error')}
+                />
               </CubeTooltip>
             )}
           </div>
@@ -56,6 +65,7 @@ export const CubeTableInput = Object.assign(
               {...restProps}
               id={inputId}
               ref={ref}
+              data-testid={testId}
               disabled={disabled}
               className={twMerge(
                 tableInput({ isError: showErrorMessage, disabled }),

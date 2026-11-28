@@ -68,7 +68,7 @@ const meta: Meta<CubeUploadStoryArgs> = {
     docs: {
       description: {
         component:
-          'A button that picks a file, with slots next to it and room below for the upload: `CubeUpload.ProgressBar` while uploading, `CubeUpload.File` once done, and `CubeUpload.Error` when it fails. The same file can be picked again.',
+          "A button that picks a file, with slots next to it and room below for the upload: `CubeUpload.ProgressBar` while uploading, `CubeUpload.File` once done, and `CubeUpload.Error` when it fails. The same file can be picked again.\n\n**Test IDs:** `data-testid` goes on the wrapper; its parts get `<test-id>-button`, `-input` (the hidden file input: fill it with Playwright's `setInputFiles`), `-file` (with `-file-cancel`), `-progress` (with `-progress-abort`) and `-error` (with `-error-close`). See Overview / Test IDs.",
       },
       page: CubeUploadDocs,
     },

@@ -1,4 +1,5 @@
 import type { Dayjs } from 'dayjs'
+import type { CubeTestIdProps } from '@shared-types/test-id-types'
 
 export const cubeDatePickerDateStatuses = [
   'unselected',
@@ -17,7 +18,7 @@ export type CubeDatePickerDates = {
   end: Dayjs | undefined
 }
 
-export type CubeDatePickerProps = {
+export type CubeDatePickerProps = CubeTestIdProps & {
   /**
    * @default false
    */

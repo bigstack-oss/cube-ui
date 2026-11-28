@@ -46,6 +46,18 @@ export const cubeTestIdParts = [
   'prev',
   'next',
   'page',
+  'tooltip',
+  'button',
+  'input',
+  'file',
+  'progress',
+  'abort',
+  'start',
+  'end',
+  'month',
+  'day',
+  'reset',
+  'apply',
 ] as const
 
 export type CubeTestIdPart = (typeof cubeTestIdParts)[number]

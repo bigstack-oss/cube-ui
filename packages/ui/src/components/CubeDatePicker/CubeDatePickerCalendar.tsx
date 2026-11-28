@@ -2,6 +2,7 @@ import { useContext, useMemo } from 'react'
 import dayjs from 'dayjs'
 import { MonochromeChevronLeft, MonochromeChevronRight } from '@icons'
 import { useCubeUiTranslation } from '@i18n/useCubeUiTranslation'
+import { testIdOf } from '@utils/testId'
 import { CubeDatePickerContext } from './cubeDatePickerContext'
 import {
   calendar,
@@ -28,6 +29,7 @@ export const CubeDatePickerCalendar = () => {
     onNextMonthClick,
     onDateClick,
     displayDates,
+    testId,
   } = useContext(CubeDatePickerContext)
 
   const { start, end } = displayDates
@@ -57,13 +59,21 @@ export const CubeDatePickerCalendar = () => {
   return (
     <div className={calendar()}>
       <div className={calendarHeader()}>
-        <div onClick={onPreviousMonthClick} className={monthButton()}>
+        <div
+          onClick={onPreviousMonthClick}
+          className={monthButton()}
+          data-testid={testIdOf(testId, 'prev')}
+        >
           <MonochromeChevronLeft className={monthIcon()} />
         </div>
-        <div className={monthTitle()}>
+        <div className={monthTitle()} data-testid={testIdOf(testId, 'month')}>
           {dayjs(currentMonth).format('MMMM YYYY')}
         </div>
-        <div onClick={onNextMonthClick} className={monthButton()}>
+        <div
+          onClick={onNextMonthClick}
+          className={monthButton()}
+          data-testid={testIdOf(testId, 'next')}
+        >
           <MonochromeChevronRight className={monthIcon()} />
         </div>
       </div>
@@ -82,6 +92,9 @@ export const CubeDatePickerCalendar = () => {
                 key={dayIndex}
                 onClick={() => onDateClick(date)}
                 disabled={false}
+                data-testid={testIdOf(testId, 'day')}
+                // The date, so a test does not depend on the month's layout or language.
+                data-key={testId ? date.format('YYYY-MM-DD') : undefined}
                 className={dayButton({
                   status: getDateButtonStatus({
                     date,
