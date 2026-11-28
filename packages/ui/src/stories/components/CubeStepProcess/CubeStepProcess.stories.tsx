@@ -45,7 +45,7 @@ const meta: Meta<CubeStepProcessStoryArgs> = {
     docs: {
       description: {
         component:
-          'A horizontal sequence of steps that shows progress through a multi-step process, highlighting the currently active step.',
+          'A horizontal sequence of steps that shows progress through a multi-step process, highlighting the currently active step.\n\n**Test IDs:** `data-testid` goes on the process; each step gets `<test-id>-item` with `data-key` set to its step number unless `CubeStepProcess.Item` passes one (the number is stable, the label is translated). See Overview / Test IDs.',
       },
       page: CubeStepProcessDocs,
     },

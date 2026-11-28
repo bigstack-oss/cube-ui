@@ -1,5 +1,6 @@
 import { MonochromeChevronDown } from '@icons'
 import { useCubeUiTranslation } from '@i18n/useCubeUiTranslation'
+import { testIdOf } from '@utils/testId'
 import { type ClassNameValue, twMerge } from 'tailwind-merge'
 import {
   CubeBasicTable,
@@ -30,6 +31,9 @@ export const CubeViewDetailsTable = <ParentRow extends CubeTableRow>(
   } = props
 
   const { t } = useCubeUiTranslation()
+
+  // Also passed on to the basic table, which tags the table, rows and cells.
+  const testId = restProps['data-testid'] || undefined
 
   const TypedBasicTable = GetCubeBasicTable<ParentRow>()
 
@@ -86,6 +90,7 @@ export const CubeViewDetailsTable = <ParentRow extends CubeTableRow>(
           isExpanded={isExpanded(row.id)}
           title={computeDetailTitle(row)}
           items={getDetailItems(row)}
+          testId={testId}
         />
       )
     }
@@ -120,6 +125,7 @@ export const CubeViewDetailsTable = <ParentRow extends CubeTableRow>(
           disabled={disabled}
           aria-label={t('component.table.rowDetails')}
           aria-expanded={isExpanded(parentRow.id)}
+          data-testid={testIdOf(testId, 'expand')}
         >
           <MonochromeChevronDown className="icon-md" />
         </button>

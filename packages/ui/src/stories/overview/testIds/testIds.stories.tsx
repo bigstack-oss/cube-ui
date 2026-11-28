@@ -282,6 +282,42 @@ const COMPONENT_TEST_IDS: ComponentTestIds[] = [
     ],
   },
   {
+    component: 'CubeDetailsTable',
+    target: 'the <table>',
+    parts: [
+      { suffix: 'header', element: 'the header' },
+      { suffix: 'row', element: 'each row, with data-key (its title)' },
+      { suffix: 'value', element: "each row's value" },
+    ],
+  },
+  {
+    component: 'CubeViewDetailsTable',
+    target: 'the <table>, with all the parts of CubeBasicTable',
+    parts: [
+      { suffix: 'expand', element: "each row's expand button (aria-expanded)" },
+      {
+        suffix: 'detail',
+        element: 'each detail item, with data-key (its title)',
+      },
+    ],
+  },
+  {
+    component: 'CubeStepProcess',
+    target: 'the process',
+    parts: [
+      { suffix: 'item', element: 'each step, with data-key (its number)' },
+    ],
+  },
+  {
+    component: 'CubeLogConsole',
+    target: 'the console',
+    parts: [
+      { suffix: 'title', element: 'the title' },
+      { suffix: 'copy', element: 'the Copy button' },
+      { suffix: 'log', element: 'the log text' },
+    ],
+  },
+  {
     component: 'CubeBreadcrumb',
     target: 'the trail',
     parts: [{ suffix: 'item', element: 'each item, with data-key' }],

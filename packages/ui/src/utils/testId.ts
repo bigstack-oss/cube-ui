@@ -58,6 +58,11 @@ export const cubeTestIdParts = [
   'day',
   'reset',
   'apply',
+  'value',
+  'expand',
+  'detail',
+  'log',
+  'copy',
 ] as const
 
 export type CubeTestIdPart = (typeof cubeTestIdParts)[number]
