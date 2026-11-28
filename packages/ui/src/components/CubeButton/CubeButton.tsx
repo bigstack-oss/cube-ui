@@ -73,6 +73,7 @@ export const CubeButton = (props: CubeButtonProps) => {
       disabled={disabled}
       onClick={onClick}
       {...omit(restProps, 'Icon')}
+      data-testid={restProps['data-testid'] || undefined}
     >
       {renderButtonContent()}
     </button>

@@ -106,6 +106,7 @@ export const CubeInput = Object.assign(
       return (
         <input
           {...restProps}
+          data-testid={restProps['data-testid'] || undefined}
           id={inputId}
           ref={ref}
           disabled={disabled}
@@ -128,7 +129,7 @@ export const CubeInput = Object.assign(
             isError ? 'error' : 'help',
           )}
         >
-          {errorMessage ?? helpMessage}
+          {isError ? errorMessage : helpMessage}
         </div>
       )
     }

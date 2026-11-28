@@ -120,3 +120,11 @@ describe('CubeButton test IDs', () => {
     expect(container.querySelector('[data-testid]')).toBeNull()
   })
 })
+
+describe('CubeButton empty test ID', () => {
+  it('renders no test ID for an empty data-testid', () => {
+    const { container } = render(<CubeButton data-testid="">Save</CubeButton>)
+
+    expect(container.querySelector('[data-testid]')).toBeNull()
+  })
+})

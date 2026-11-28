@@ -45,6 +45,14 @@ const COMPONENT_TEST_IDS: ComponentTestIds[] = [
     ],
   },
   {
+    component: 'CubePasswordInput',
+    target: 'the <input>',
+    parts: [
+      { suffix: 'help', element: 'the help message' },
+      { suffix: 'error', element: 'the error message' },
+    ],
+  },
+  {
     component: 'CubeModal',
     target: 'the dialog panel',
     parts: [
@@ -73,6 +81,13 @@ def by_test_id(test_id):
 driver.find_element(*by_test_id('demo-email')).send_keys('hello@cube.dev')
 driver.find_element(*by_test_id('demo-open-modal')).click()
 driver.find_element(*by_test_id('demo-modal-action')).click()
+`
+
+const MODAL_STATE_SAMPLE = `
+await page.getByTestId('demo-open-modal').click()
+await expect(page.getByTestId('demo-modal')).toBeVisible()
+await page.getByTestId('demo-modal-action').click()
+await expect(page.getByTestId('demo-modal')).toBeHidden()
 `
 
 const USAGE_SAMPLE = `
@@ -180,7 +195,38 @@ export const Guide: Story = {
       </StoryLayout.Section>
 
       <StoryLayout.Section title="Parts by component">
-        <PartsTable />
+        <div className="flex flex-col gap-y-4">
+          <PartsTable />
+          <CaptionText>
+            CubePasswordInput&apos;s show / hide button does not have a test ID
+            yet; it gets one with the next set of components.
+          </CaptionText>
+        </div>
+      </StoryLayout.Section>
+
+      <StoryLayout.Section title="Open, closed and repeated modals">
+        <div className="flex flex-col gap-y-4">
+          <CaptionText>
+            A CubeModal stays in the page while it is closed. Once it has faded
+            out it is hidden with <InlineCode>visibility: hidden</InlineCode>,
+            so check whether it is open with Playwright&apos;s{' '}
+            <InlineCode>toBeVisible()</InlineCode> and{' '}
+            <InlineCode>toBeHidden()</InlineCode>, or Selenium&apos;s{' '}
+            <InlineCode>is_displayed()</InlineCode>.
+          </CaptionText>
+          <CaptionText>
+            Because a closed modal is still in the page, every CubeModal that
+            can be mounted at the same time needs its own test ID. A modal
+            rendered once per table row, for example, should include the
+            row&apos;s name:{' '}
+            <InlineCode>networks-delete-modal-web-net</InlineCode>. Otherwise{' '}
+            <InlineCode>getByTestId</InlineCode> matches several elements, and
+            Playwright refuses to pick one. A modal renders in a portal at the
+            end of the page, so narrowing the search to the table does not find
+            it.
+          </CaptionText>
+          <CodeBlock language="typescript">{MODAL_STATE_SAMPLE}</CodeBlock>
+        </div>
       </StoryLayout.Section>
 
       <StoryLayout.Section title="Selecting them in tests">

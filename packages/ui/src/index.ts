@@ -56,3 +56,6 @@ export * from './i18n'
 
 // Theme
 export * from './theme'
+
+// Types
+export type { CubeTestIdProps } from './types/test-id-types'

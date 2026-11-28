@@ -5,21 +5,23 @@ import type { CubeModalSize } from './cubeModalTypes'
 export const backdrop = cva(
   [
     'fixed left-0 top-0 h-dvh w-dvw bg-[rgba(0,26,104,0.1)]',
-    'transition-opacity duration-200',
+    'transition-[opacity,visibility] duration-200',
   ],
   {
     variants: {
       isOpen: {
-        true: 'pointer-events-auto opacity-100',
-        false: 'pointer-events-none opacity-0',
+        true: 'pointer-events-auto visible opacity-100',
+        false: 'pointer-events-none invisible opacity-0',
       },
     },
   },
 )
 
 // For now the modal content stays mounted even when the modal is closed.
-// This is because we use CSS properties (opacity and pointer-events` for a simple,
-// smooth transition without dealing with JS animations.
+// This is because we use CSS properties (opacity, visibility and pointer-events)
+// for a simple, smooth transition without dealing with JS animations. Visibility
+// is transitioned with opacity, so it only turns hidden once the fade-out ends;
+// a hidden modal is then neither focusable nor visible to UI test automation.
 // Consider switching to a JS-based solution if performance becomes an issue.
 export const modal = cva(
   [
@@ -27,7 +29,7 @@ export const modal = cva(
     'max-h-[calc(100dvh-80px)] min-h-[204px] max-w-[min(1080px,_100dvw)]',
     'flex flex-col',
     'rounded-[5px] border border-functional-border-divider bg-grey-0',
-    'transition-opacity duration-200',
+    'transition-[opacity,visibility] duration-200',
   ],
   {
     variants: {
@@ -36,8 +38,8 @@ export const modal = cva(
         md: 'w-[70%]',
       } satisfies Record<CubeModalSize, ClassValue>,
       isOpen: {
-        true: 'pointer-events-auto opacity-100',
-        false: 'pointer-events-none opacity-0',
+        true: 'pointer-events-auto visible opacity-100',
+        false: 'pointer-events-none invisible opacity-0',
       },
     },
   },

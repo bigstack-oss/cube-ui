@@ -120,3 +120,31 @@ describe('CubeInput test IDs', () => {
     expect(container.querySelector('[data-testid]')).toBeNull()
   })
 })
+
+describe('CubeInput footer and empty test IDs', () => {
+  it.each([true, ''])(
+    'shows the help message for an errorMessage of %j, which is not an error',
+    (errorMessage) => {
+      render(
+        <CubeInput
+          label="Email"
+          helpMessage="We'll never share it."
+          errorMessage={errorMessage}
+          data-testid="email"
+        />,
+      )
+
+      expect(screen.getByTestId('email-help')).toHaveTextContent(
+        "We'll never share it.",
+      )
+    },
+  )
+
+  it('renders no test IDs for an empty data-testid', () => {
+    const { container } = render(
+      <CubeInput label="Email" helpMessage="Hint" data-testid="" />,
+    )
+
+    expect(container.querySelector('[data-testid]')).toBeNull()
+  })
+})

@@ -234,3 +234,32 @@ describe('CubeModal test IDs', () => {
     expect(document.body.querySelector('[data-testid]')).toBeNull()
   })
 })
+
+describe('CubeModal visibility while closed', () => {
+  it('hides the closed dialog and backdrop with visibility, so a test sees them as hidden', () => {
+    renderModal({ isOpen: false, 'data-testid': 'delete-modal' })
+
+    expect(getPanel()).toHaveClass('invisible')
+    expect(getBackdrop()).toHaveClass('invisible')
+  })
+
+  it('shows the open dialog and backdrop', () => {
+    renderModal({ 'data-testid': 'delete-modal' })
+
+    expect(getPanel()).not.toHaveClass('invisible')
+    expect(getBackdrop()).not.toHaveClass('invisible')
+  })
+
+  it('transitions visibility with opacity, so the fade-out still plays', () => {
+    renderModal({ isOpen: false })
+
+    expect(getPanel()).toHaveClass('transition-[opacity,visibility]')
+    expect(getBackdrop()).toHaveClass('transition-[opacity,visibility]')
+  })
+
+  it('renders no test IDs for an empty data-testid', () => {
+    renderModal({ 'data-testid': '' })
+
+    expect(document.body.querySelector('[data-testid]')).toBeNull()
+  })
+})
