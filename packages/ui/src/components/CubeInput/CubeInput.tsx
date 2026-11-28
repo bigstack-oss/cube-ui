@@ -6,6 +6,8 @@ import {
 } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { MonochromeWarningFilled } from '@icons'
+import type { CubeTestIdProps } from '@shared-types/test-id-types'
+import { testIdOf } from '@utils/testId'
 import type { SvgElement } from '../CubeIcon'
 import { CubeInputSkeleton } from './CubeInputSkeleton'
 import {
@@ -24,7 +26,7 @@ export type CubeInputProps = InputHTMLAttributes<HTMLInputElement> & {
   helpMessage?: string
   errorMessage?: string | boolean
   trailingIcon?: SvgElement
-}
+} & CubeTestIdProps
 
 export const CubeInput = Object.assign(
   forwardRef<HTMLInputElement, CubeInputProps>((props: CubeInputProps, ref) => {
@@ -119,7 +121,13 @@ export const CubeInput = Object.assign(
       if (isLoading) return <CubeInputSkeleton type="footer" />
 
       return (
-        <div className={twMerge(footer({ isError }))}>
+        <div
+          className={twMerge(footer({ isError }))}
+          data-testid={testIdOf(
+            restProps['data-testid'],
+            isError ? 'error' : 'help',
+          )}
+        >
           {errorMessage ?? helpMessage}
         </div>
       )

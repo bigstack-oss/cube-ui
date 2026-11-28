@@ -106,3 +106,17 @@ describe('CubeButton', () => {
     expect(await axe(container)).toHaveNoViolations()
   })
 })
+
+describe('CubeButton test IDs', () => {
+  it('puts data-testid on the button', () => {
+    render(<CubeButton data-testid="save">Save</CubeButton>)
+
+    expect(screen.getByTestId('save')).toBe(screen.getByRole('button'))
+  })
+
+  it('renders no test ID when none is set', () => {
+    const { container } = render(<CubeButton>Save</CubeButton>)
+
+    expect(container.querySelector('[data-testid]')).toBeNull()
+  })
+})

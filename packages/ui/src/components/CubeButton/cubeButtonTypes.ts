@@ -1,4 +1,5 @@
 import type { ButtonHTMLAttributes, JSX } from 'react'
+import type { CubeTestIdProps } from '@shared-types/test-id-types'
 import type { SvgComponent } from '../CubeIcon/cubeIconTypes'
 
 export const cubeButtonTypes = [
@@ -66,4 +67,5 @@ export type CubeButtonProps = Omit<
         children: string
         Icon: SvgComponent
       }
-  )
+  ) &
+  CubeTestIdProps

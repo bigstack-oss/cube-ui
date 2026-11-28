@@ -48,7 +48,7 @@ const meta: Meta<CubeInputStoryArgs> = {
     docs: {
       description: {
         component:
-          'Inputs allow users to enter and edit text, numbers, and other data. The min width of text frame is 170px.',
+          'Inputs allow users to enter and edit text, numbers, and other data. The min width of text frame is 170px.\n\n**Test IDs:** `data-testid` goes on the `<input>`; the help message gets `<test-id>-help` and the error message `<test-id>-error`. See Overview / Test IDs.',
       },
       page: CubeInputDocs,
     },

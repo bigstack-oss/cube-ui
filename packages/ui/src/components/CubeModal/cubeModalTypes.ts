@@ -1,5 +1,6 @@
 import type { ReactNode, RefObject } from 'react'
 import type { PropsWithClassName } from '@shared-types/react-types'
+import type { CubeTestIdProps } from '@shared-types/test-id-types'
 import type { CubeButtonProps } from '../CubeButton/cubeButtonTypes'
 
 export const cubeModalSizes = ['sm', 'md'] as const
@@ -32,4 +33,5 @@ export type CubeModalProps = {
   bodyRef?: RefObject<HTMLDivElement | null>
   onActionClick?: () => void
   onCloseClick: () => void
-} & PropsWithClassName
+} & PropsWithClassName &
+  CubeTestIdProps

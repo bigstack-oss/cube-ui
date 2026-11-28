@@ -3,6 +3,7 @@ import { createPortal } from 'react-dom'
 import { twMerge } from 'tailwind-merge'
 import { MonochromeX } from '@icons'
 import { useCubeUiTranslation } from '@i18n/useCubeUiTranslation'
+import { testIdOf } from '@utils/testId'
 import { CubeButton } from '../CubeButton/CubeButton'
 import type { CubeModalProps } from './cubeModalTypes'
 import { backdrop, modal } from './cubeModalStyles'
@@ -27,6 +28,7 @@ export const CubeModal = (props: CubeModalProps) => {
     bodyRef,
     onActionClick,
     onCloseClick,
+    'data-testid': testId,
   } = props
 
   useCloseModalWithEsc({
@@ -55,13 +57,17 @@ export const CubeModal = (props: CubeModalProps) => {
       <div className={backdrop({ isOpen })} onClick={onCloseClick} />
       <div
         className={twMerge(modal({ size, isOpen }), classNameProp)}
+        data-testid={testId}
         style={{
           boxShadow: '0px 0px 2px 0px rgba(0, 0, 0, 0.20)',
         }}
       >
         <MemoChildren shouldUpdate={isOpen}>
           <div className="flex items-center justify-between border-b border-functional-border-divider px-7 py-4 pr-5">
-            <div className="primary-h4 truncate text-cosmos-primary">
+            <div
+              className="primary-h4 truncate text-cosmos-primary"
+              data-testid={testIdOf(testId, 'title')}
+            >
               {title}
             </div>
             <CubeButton
@@ -70,10 +76,15 @@ export const CubeModal = (props: CubeModalProps) => {
               type="ghost"
               Icon={MonochromeX}
               aria-label={t('component.modal.close')}
+              data-testid={testIdOf(testId, 'close')}
               onClick={onCloseClick}
             />
           </div>
-          <div ref={bodyRef} className="flex-1 overflow-auto p-7">
+          <div
+            ref={bodyRef}
+            className="flex-1 overflow-auto p-7"
+            data-testid={testIdOf(testId, 'body')}
+          >
             {children}
           </div>
           <div className="flex items-center justify-end gap-x-2.5 border-t border-functional-border-divider px-7 py-4">
@@ -83,6 +94,7 @@ export const CubeModal = (props: CubeModalProps) => {
                 type="ghost"
                 usage="text-only"
                 size="lg"
+                data-testid={testIdOf(testId, 'cancel')}
                 onClick={onCloseClick}
                 {...cancelButtonProps}
               >
@@ -93,6 +105,7 @@ export const CubeModal = (props: CubeModalProps) => {
               <CubeButton
                 usage="text-only"
                 size="lg"
+                data-testid={testIdOf(testId, 'action')}
                 onClick={onActionClick}
                 {...actionButtonProps}
               >

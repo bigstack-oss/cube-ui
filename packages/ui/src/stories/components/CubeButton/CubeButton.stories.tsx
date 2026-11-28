@@ -55,7 +55,7 @@ const meta: Meta<CubeButtonStoryArgs> = {
     docs: {
       description: {
         component:
-          'Buttons allow users to take actions, and make choices, with a single tap.',
+          'Buttons allow users to take actions, and make choices, with a single tap.\n\n**Test IDs:** `data-testid` goes on the `<button>`. See Overview / Test IDs.',
       },
       page: CubeButtonDocs,
     },

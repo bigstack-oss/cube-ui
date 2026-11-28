@@ -187,3 +187,50 @@ describe('CubeModal', () => {
     expect(await axe(panel)).toHaveNoViolations()
   })
 })
+
+describe('CubeModal test IDs', () => {
+  it('tags the dialog and each of its parts, inside the portal', () => {
+    renderModal({ 'data-testid': 'delete-modal' })
+
+    expect(screen.getByTestId('delete-modal')).toBe(getPanel())
+    expect(screen.getByTestId('delete-modal-title')).toHaveTextContent(
+      'Delete resource',
+    )
+    expect(screen.getByTestId('delete-modal-body')).toHaveTextContent(
+      'Do you want to delete this resource?',
+    )
+    expect(screen.getByTestId('delete-modal-close')).toHaveAccessibleName(
+      'Close',
+    )
+    expect(screen.getByTestId('delete-modal-cancel')).toHaveTextContent(
+      'Cancel',
+    )
+    expect(screen.getByTestId('delete-modal-action')).toHaveTextContent(
+      'Action',
+    )
+  })
+
+  it('keeps the test IDs while closed, since the modal stays mounted', () => {
+    renderModal({ isOpen: false, 'data-testid': 'delete-modal' })
+
+    expect(screen.getByTestId('delete-modal')).toBeInTheDocument()
+    expect(screen.getByTestId('delete-modal-action')).toBeInTheDocument()
+  })
+
+  it('has no test ID for a button it hides', () => {
+    renderModal({
+      'data-testid': 'delete-modal',
+      isCancelButtonVisible: false,
+      isActionButtonVisible: false,
+    })
+
+    expect(screen.queryByTestId('delete-modal-cancel')).not.toBeInTheDocument()
+    expect(screen.queryByTestId('delete-modal-action')).not.toBeInTheDocument()
+  })
+
+  it('renders no test IDs when none is set', () => {
+    renderModal()
+
+    expect(document.body.querySelector('[data-testid]')).toBeNull()
+  })
+})
