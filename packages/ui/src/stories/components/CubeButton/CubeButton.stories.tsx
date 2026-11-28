@@ -55,7 +55,7 @@ const meta: Meta<CubeButtonStoryArgs> = {
     docs: {
       description: {
         component:
-          'Buttons allow users to take actions, and make choices, with a single tap.\n\n**Test IDs:** `data-testid` goes on the `<button>`. See Overview / Test IDs.\n\n**Accessible name:** an `icon-only` button has no text, so it needs `aria-label` (or `aria-labelledby` pointing at visible text); the type requires one.',
+          'Buttons allow users to take actions, and make choices, with a single tap.\n\n**Test IDs:** `data-testid` goes on the `<button>`. See Overview / Test IDs.\n\n**Accessible name:** an `icon-only` button has no text, so it needs `aria-label` (or `aria-labelledby` pointing at visible text); the type requires one. It checks that a name is given, not that it has text, so an empty `aria-label`, or an `aria-labelledby` that matches no element, still compiles and leaves the button unnamed.',
       },
       page: CubeButtonDocs,
     },

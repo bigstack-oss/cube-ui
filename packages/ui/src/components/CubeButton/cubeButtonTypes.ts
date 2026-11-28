@@ -29,6 +29,10 @@ export type CubeButtonUsage = (typeof cubeButtonUsages)[number]
  * An icon-only button has no text, so it must be named for screen readers
  * and for tests that find it by role: `aria-label`, or `aria-labelledby`
  * pointing at visible text.
+ *
+ * The type checks that a name is given, not that it has text: an empty
+ * `aria-label`, or an `aria-labelledby` that matches no element, still
+ * compiles and leaves the button unnamed.
  */
 type CubeButtonAccessibleName =
   | { 'aria-label': string }
