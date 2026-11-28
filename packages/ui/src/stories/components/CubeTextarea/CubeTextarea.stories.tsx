@@ -43,7 +43,7 @@ const meta: Meta<CubeTextareaStoryArgs> = {
     docs: {
       description: {
         component:
-          'Textareas let users enter and edit multi-line text, with a live character counter against a maximum length.',
+          'Textareas let users enter and edit multi-line text, with a live character counter against a maximum length.\n\n**Test IDs:** `data-testid` goes on the `<textarea>`; the error message gets `<test-id>-error`. See Overview / Test IDs.',
       },
       page: CubeTextareaDocs,
     },

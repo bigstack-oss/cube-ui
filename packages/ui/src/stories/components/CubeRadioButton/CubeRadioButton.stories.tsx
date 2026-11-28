@@ -43,7 +43,7 @@ const meta: Meta<CubeRadioButtonStoryArgs> = {
     docs: {
       description: {
         component:
-          'Radio buttons let users select exactly one option from a set.',
+          'Radio buttons let users select exactly one option from a set.\n\n**Test IDs:** `data-testid` goes on the visible label, since the `<input>` inside it is hidden. See Overview / Test IDs.',
       },
       page: CubeRadioButtonDocs,
     },

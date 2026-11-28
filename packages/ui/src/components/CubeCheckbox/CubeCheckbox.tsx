@@ -24,6 +24,7 @@ export const CubeCheckbox = (props: CubeCheckboxProps) => {
     disabled,
     isLoading = false,
     ref,
+    'data-testid': testId,
     ...restProps
   } = props
 
@@ -76,6 +77,7 @@ export const CubeCheckbox = (props: CubeCheckboxProps) => {
         container({ labelSize, disabled }),
         containerClassName,
       )}
+      data-testid={testId || undefined}
     >
       <input
         {...restProps}

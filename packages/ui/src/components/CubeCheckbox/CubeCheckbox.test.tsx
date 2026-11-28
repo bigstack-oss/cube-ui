@@ -76,3 +76,39 @@ describe('CubeCheckbox', () => {
     expect(await axe(container)).toHaveNoViolations()
   })
 })
+
+describe('CubeCheckbox test IDs', () => {
+  it('puts data-testid on the visible label, which a test can click', async () => {
+    const user = userEvent.setup()
+    render(
+      <CubeCheckbox
+        label="Accept the terms"
+        name="group"
+        data-testid="terms"
+      />,
+    )
+
+    const target = screen.getByTestId('terms')
+    expect(target.tagName).toBe('LABEL')
+    expect(screen.getByRole('checkbox', { hidden: true })).not.toHaveAttribute(
+      'data-testid',
+    )
+    await user.click(target)
+    expect(screen.getByRole('checkbox', { hidden: true })).toBeChecked()
+  })
+
+  it.each([undefined, ''])(
+    'renders no test IDs for a data-testid of %j',
+    (testId) => {
+      const { container } = render(
+        <CubeCheckbox
+          label="Accept the terms"
+          name="group"
+          data-testid={testId}
+        />,
+      )
+
+      expect(container.querySelector('[data-testid]')).toBeNull()
+    },
+  )
+})

@@ -5,6 +5,7 @@ import {
   type RefObject,
 } from 'react'
 import { twMerge } from 'tailwind-merge'
+import type { CubeTestIdProps } from '@shared-types/test-id-types'
 import {
   MonochromeRadioButton as RadioButtonUnselected,
   MonochromeRadioButtonFilled as RadioButtonSelected,
@@ -24,7 +25,7 @@ export type CubeRadioButtonProps = InputHTMLAttributes<HTMLInputElement> & {
    */
   isLoading?: boolean
   ref?: RefObject<HTMLInputElement | null>
-}
+} & CubeTestIdProps
 
 export const CubeRadioButton = (props: CubeRadioButtonProps) => {
   const {
@@ -36,6 +37,7 @@ export const CubeRadioButton = (props: CubeRadioButtonProps) => {
     onChange: onControlledCheckedChange,
     disabled,
     isLoading = false,
+    'data-testid': testId,
     ...restProps
   } = props
 
@@ -74,7 +76,11 @@ export const CubeRadioButton = (props: CubeRadioButtonProps) => {
   if (isLoading) return <CubeRadioButtonSkeleton />
 
   return (
-    <label htmlFor={id} className={twMerge(container({ disabled }))}>
+    <label
+      htmlFor={id}
+      className={twMerge(container({ disabled }))}
+      data-testid={testId || undefined}
+    >
       <input
         {...restProps}
         id={id}

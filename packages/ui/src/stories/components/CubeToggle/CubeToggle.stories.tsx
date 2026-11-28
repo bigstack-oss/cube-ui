@@ -41,7 +41,7 @@ const meta: Meta<CubeToggleStoryArgs> = {
     docs: {
       description: {
         component:
-          'Toggles let users switch a single option on or off immediately.',
+          'Toggles let users switch a single option on or off immediately.\n\n**Test IDs:** `data-testid` goes on the switch `<button>`. See Overview / Test IDs.',
       },
       page: CubeToggleDocs,
     },

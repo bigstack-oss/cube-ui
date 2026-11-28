@@ -64,3 +64,35 @@ describe('CubeRadioButton', () => {
     expect(await axe(container)).toHaveNoViolations()
   })
 })
+
+describe('CubeRadioButton test IDs', () => {
+  it('puts data-testid on the visible label, which a test can click', async () => {
+    const user = userEvent.setup()
+    render(
+      <CubeRadioButton
+        label="Monthly"
+        name="group"
+        data-testid="billing-monthly"
+      />,
+    )
+
+    const target = screen.getByTestId('billing-monthly')
+    expect(target.tagName).toBe('LABEL')
+    expect(screen.getByRole('radio', { hidden: true })).not.toHaveAttribute(
+      'data-testid',
+    )
+    await user.click(target)
+    expect(screen.getByRole('radio', { hidden: true })).toBeChecked()
+  })
+
+  it.each([undefined, ''])(
+    'renders no test IDs for a data-testid of %j',
+    (testId) => {
+      const { container } = render(
+        <CubeRadioButton label="Monthly" name="group" data-testid={testId} />,
+      )
+
+      expect(container.querySelector('[data-testid]')).toBeNull()
+    },
+  )
+})

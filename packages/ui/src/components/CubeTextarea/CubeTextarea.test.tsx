@@ -107,3 +107,42 @@ describe('CubeTextarea', () => {
     expect(await axe(container)).toHaveNoViolations()
   })
 })
+
+describe('CubeTextarea test IDs', () => {
+  it('puts data-testid on the textarea, so a test can type into it', () => {
+    render(<CubeTextarea label="Notes" maxLength={100} data-testid="notes" />)
+
+    // Not found by its label: the label is not linked to the textarea unless
+    // the consumer passes an id (pre-existing, tracked in cubecos#2456).
+    expect(screen.getByTestId('notes')).toBe(screen.getByRole('textbox'))
+  })
+
+  it('tags the error message', () => {
+    render(
+      <CubeTextarea
+        label="Notes"
+        maxLength={100}
+        errorMessage="Too short"
+        data-testid="notes"
+      />,
+    )
+
+    expect(screen.getByTestId('notes-error')).toHaveTextContent('Too short')
+  })
+
+  it.each([undefined, ''])(
+    'renders no test IDs for a data-testid of %j',
+    (testId) => {
+      const { container } = render(
+        <CubeTextarea
+          label="Notes"
+          maxLength={100}
+          errorMessage="Too short"
+          data-testid={testId}
+        />,
+      )
+
+      expect(container.querySelector('[data-testid]')).toBeNull()
+    },
+  )
+})

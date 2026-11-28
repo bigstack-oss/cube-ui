@@ -50,7 +50,28 @@ const COMPONENT_TEST_IDS: ComponentTestIds[] = [
     parts: [
       { suffix: 'help', element: 'the help message' },
       { suffix: 'error', element: 'the error message' },
+      { suffix: 'toggle', element: 'the show / hide icon' },
     ],
+  },
+  {
+    component: 'CubeTextarea',
+    target: 'the <textarea>',
+    parts: [{ suffix: 'error', element: 'the error message' }],
+  },
+  {
+    component: 'CubeCheckbox',
+    target: 'the visible <label> (the <input> inside it is hidden)',
+    parts: [],
+  },
+  {
+    component: 'CubeRadioButton',
+    target: 'the visible <label> (the <input> inside it is hidden)',
+    parts: [],
+  },
+  {
+    component: 'CubeToggle',
+    target: 'the switch <button>',
+    parts: [],
   },
   {
     component: 'CubeModal',
@@ -198,8 +219,17 @@ export const Guide: Story = {
         <div className="flex flex-col gap-y-4">
           <PartsTable />
           <CaptionText>
-            CubePasswordInput&apos;s show / hide button does not have a test ID
-            yet; it gets one with the next set of components.
+            CubeCheckbox and CubeRadioButton hide their real{' '}
+            <InlineCode>{'<input>'}</InlineCode>, so their test ID is on the
+            label a person clicks. In Playwright,{' '}
+            <InlineCode>check()</InlineCode> and{' '}
+            <InlineCode>toBeChecked()</InlineCode> work on that label directly.
+            In Selenium, click the label, and read the state from the input
+            inside it:{' '}
+            <InlineCode>
+              {'label.find_element(By.TAG_NAME, "input").is_selected()'}
+            </InlineCode>
+            .
           </CaptionText>
         </div>
       </StoryLayout.Section>

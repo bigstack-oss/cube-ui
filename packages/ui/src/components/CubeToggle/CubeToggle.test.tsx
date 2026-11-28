@@ -173,3 +173,38 @@ describe('CubeToggle', () => {
     expect(await axe(container)).toHaveNoViolations()
   })
 })
+
+describe('CubeToggle test IDs', () => {
+  it('puts data-testid on the switch, which a test can click', async () => {
+    const user = userEvent.setup()
+    const onCheckedChange = vi.fn()
+    render(
+      <CubeToggle
+        checked={false}
+        onCheckedChange={onCheckedChange}
+        label="Notify me"
+        data-testid="notify"
+      />,
+    )
+
+    expect(screen.getByTestId('notify')).toBe(screen.getByRole('switch'))
+    await user.click(screen.getByTestId('notify'))
+    expect(onCheckedChange).toHaveBeenCalledWith(true)
+  })
+
+  it.each([undefined, ''])(
+    'renders no test IDs for a data-testid of %j',
+    (testId) => {
+      const { container } = render(
+        <CubeToggle
+          checked={false}
+          onCheckedChange={vi.fn()}
+          label="Notify me"
+          data-testid={testId}
+        />,
+      )
+
+      expect(container.querySelector('[data-testid]')).toBeNull()
+    },
+  )
+})

@@ -11,6 +11,7 @@ export const cubeTestIdParts = [
   'action',
   'help',
   'error',
+  'toggle',
   'trigger',
   'menu',
   'option',

@@ -46,7 +46,7 @@ const meta: Meta<CubePasswordInputStoryArgs> = {
     docs: {
       description: {
         component:
-          'Password inputs allow users to enter sensitive text with a show/hide toggle. The min width of text frame is 170px.',
+          'Password inputs allow users to enter sensitive text with a show/hide toggle. The min width of text frame is 170px.\n\n**Test IDs:** `data-testid` goes on the `<input>`; the help and error messages get `<test-id>-help` and `<test-id>-error`, and the show / hide icon `<test-id>-toggle`. See Overview / Test IDs.',
       },
       page: CubePasswordInputDocs,
     },

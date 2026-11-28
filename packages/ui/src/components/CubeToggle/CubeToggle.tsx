@@ -1,5 +1,6 @@
 import { useId } from 'react'
 import type { PropsWithClassName } from '@shared-types/react-types'
+import type { CubeTestIdProps } from '@shared-types/test-id-types'
 import { twMerge } from 'tailwind-merge'
 import { label as labelStyles, thumb, track } from './cubeToggleStyles'
 
@@ -29,7 +30,7 @@ export type CubeToggleProps = PropsWithClassName & {
    * @default false
    */
   disabled?: boolean
-}
+} & CubeTestIdProps
 
 export const CubeToggle = (props: CubeToggleProps) => {
   const {
@@ -39,6 +40,7 @@ export const CubeToggle = (props: CubeToggleProps) => {
     label,
     disabled = false,
     'aria-label': ariaLabel,
+    'data-testid': testId,
   } = props
 
   const toggleId = useId()
@@ -60,6 +62,7 @@ export const CubeToggle = (props: CubeToggleProps) => {
         aria-label={label ? undefined : ariaLabel}
         className={twMerge(track({ checked, disabled }))}
         disabled={disabled}
+        data-testid={testId || undefined}
         onClick={toggleChecked}
       >
         <span className={thumb({ checked })} aria-hidden />

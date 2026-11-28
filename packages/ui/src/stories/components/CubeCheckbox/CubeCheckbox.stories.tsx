@@ -65,7 +65,7 @@ const meta: Meta<CubeCheckboxStoryArgs> = {
     docs: {
       description: {
         component:
-          'Checkboxes let users select one or more items from a set, or toggle a single option on or off.',
+          'Checkboxes let users select one or more items from a set, or toggle a single option on or off.\n\n**Test IDs:** `data-testid` goes on the visible label, since the `<input>` inside it is hidden. See Overview / Test IDs.',
       },
       page: CubeCheckboxDocs,
     },

@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { type CubeInputProps, CubeInput } from '../CubeInput/CubeInput'
 import { MonochromeView as View, MonochromeViewOff as ViewOff } from '@icons'
+import { testIdOf } from '@utils/testId'
 
 export type CubePasswordInputProps = Omit<
   CubeInputProps,
@@ -29,7 +30,10 @@ export const CubePasswordInput = (props: CubePasswordInputProps) => {
       type={showPassword ? 'text' : 'password'}
       disabled={disabled}
       trailingIcon={
-        <IconComponent onClick={disabled ? undefined : handleShowHide} />
+        <IconComponent
+          data-testid={testIdOf(restProps['data-testid'], 'toggle')}
+          onClick={disabled ? undefined : handleShowHide}
+        />
       }
     />
   )

@@ -6,6 +6,8 @@ import {
   type TextareaHTMLAttributes,
 } from 'react'
 import { twMerge } from 'tailwind-merge'
+import type { CubeTestIdProps } from '@shared-types/test-id-types'
+import { testIdOf } from '@utils/testId'
 import { CubeTextareaSkeleton } from './CubeTextareaSkeleton'
 import { assignRefValue, calculateValueLength } from './cubeTextareaUtils'
 import { useVisibleRowsCount } from './useVisibleRowsCount'
@@ -22,7 +24,7 @@ export type CubeTextareaProps = DetailedHTMLProps<
    */
   isLoading?: boolean
   errorMessage?: string
-}
+} & CubeTestIdProps
 
 export const CubeTextarea = (props: CubeTextareaProps) => {
   const {
@@ -79,6 +81,7 @@ export const CubeTextarea = (props: CubeTextareaProps) => {
       </div>
       <textarea
         {...restProps}
+        data-testid={restProps['data-testid'] || undefined}
         id={textareaId}
         disabled={disabled}
         ref={(element) => {
@@ -113,7 +116,12 @@ export const CubeTextarea = (props: CubeTextareaProps) => {
         }
       />
       {errorMessage && (
-        <p className="primary-body4 text-status-negative">{errorMessage}</p>
+        <p
+          className="primary-body4 text-status-negative"
+          data-testid={testIdOf(restProps['data-testid'], 'error')}
+        >
+          {errorMessage}
+        </p>
       )}
     </div>
   )
