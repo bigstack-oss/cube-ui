@@ -263,3 +263,13 @@ describe('CubeModal visibility while closed', () => {
     expect(document.body.querySelector('[data-testid]')).toBeNull()
   })
 })
+
+describe('CubeModal accessibility semantics', () => {
+  it('is a modal dialog named by its title', () => {
+    renderModal()
+
+    const dialog = screen.getByRole('dialog', { name: 'Delete resource' })
+    expect(dialog).toBe(getPanel())
+    expect(dialog).toHaveAttribute('aria-modal', 'true')
+  })
+})

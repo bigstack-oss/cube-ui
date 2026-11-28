@@ -45,10 +45,15 @@ export const CubeInput = Object.assign(
 
     const defaultId = useId()
     const inputId = restProps.id || defaultId
+    const footerId = useId()
 
     const isError = !!errorMessage && typeof errorMessage === 'string'
     const hasFooter = !!helpMessage || isError
     const hasIcon = !!trailingIcon
+    const describedBy =
+      [restProps['aria-describedby'], hasFooter ? footerId : undefined]
+        .filter(Boolean)
+        .join(' ') || undefined
 
     const renderLabel = () => {
       if (!label && !tooltip) return null
@@ -108,6 +113,8 @@ export const CubeInput = Object.assign(
           {...restProps}
           data-testid={restProps['data-testid'] || undefined}
           id={inputId}
+          aria-invalid={isError || restProps['aria-invalid']}
+          aria-describedby={describedBy}
           ref={ref}
           disabled={disabled}
           className={twMerge(input({ isError, disabled, hasIcon }), className)}
@@ -123,6 +130,7 @@ export const CubeInput = Object.assign(
 
       return (
         <div
+          id={footerId}
           className={twMerge(footer({ isError }))}
           data-testid={testIdOf(
             restProps['data-testid'],

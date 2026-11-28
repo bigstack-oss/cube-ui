@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react'
+import { useId, type ReactNode } from 'react'
 import { createPortal } from 'react-dom'
 import { twMerge } from 'tailwind-merge'
 import { MonochromeX } from '@icons'
@@ -31,6 +31,8 @@ export const CubeModal = (props: CubeModalProps) => {
     'data-testid': testId,
   } = props
 
+  const titleId = useId()
+
   useCloseModalWithEsc({
     isOpen,
     onCloseClick,
@@ -56,6 +58,9 @@ export const CubeModal = (props: CubeModalProps) => {
     <>
       <div className={backdrop({ isOpen })} onClick={onCloseClick} />
       <div
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby={titleId}
         className={twMerge(modal({ size, isOpen }), classNameProp)}
         data-testid={testId || undefined}
         style={{
@@ -65,6 +70,7 @@ export const CubeModal = (props: CubeModalProps) => {
         <MemoChildren shouldUpdate={isOpen}>
           <div className="flex items-center justify-between border-b border-functional-border-divider px-7 py-4 pr-5">
             <div
+              id={titleId}
               className="primary-h4 truncate text-cosmos-primary"
               data-testid={testIdOf(testId, 'title')}
             >

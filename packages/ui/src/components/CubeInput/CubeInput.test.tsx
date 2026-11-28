@@ -148,3 +148,52 @@ describe('CubeInput footer and empty test IDs', () => {
     expect(container.querySelector('[data-testid]')).toBeNull()
   })
 })
+
+describe('CubeInput accessibility semantics', () => {
+  it('describes the input with its help message', () => {
+    render(<CubeInput label="Email" helpMessage="We'll never share it." />)
+
+    const input = screen.getByLabelText('Email')
+    expect(input).toHaveAccessibleDescription("We'll never share it.")
+    expect(input).toBeValid()
+  })
+
+  it('marks the input invalid and describes it with the error message', () => {
+    render(
+      <CubeInput
+        label="Email"
+        helpMessage="We'll never share it."
+        errorMessage="Email is invalid"
+      />,
+    )
+
+    const input = screen.getByLabelText('Email')
+    expect(input).toBeInvalid()
+    expect(input).toHaveAccessibleDescription('Email is invalid')
+  })
+
+  it('keeps a description the consumer passes', () => {
+    render(
+      <>
+        <p id="email-hint">Use your work email.</p>
+        <CubeInput
+          label="Email"
+          helpMessage="We'll never share it."
+          aria-describedby="email-hint"
+        />
+      </>,
+    )
+
+    expect(screen.getByLabelText('Email')).toHaveAccessibleDescription(
+      "Use your work email. We'll never share it.",
+    )
+  })
+
+  it('has no description without a message', () => {
+    render(<CubeInput label="Email" />)
+
+    expect(screen.getByLabelText('Email')).not.toHaveAttribute(
+      'aria-describedby',
+    )
+  })
+})

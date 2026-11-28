@@ -48,7 +48,7 @@ const meta: Meta<CubeModalProps> = {
     docs: {
       description: {
         component:
-          'A dialog shown over the page, with a title, a scrollable body, and Cancel / action buttons. It closes on the close icon, Cancel, a backdrop click, or Esc (Esc first blurs a focused input). It stays mounted while closed and fades in and out.\n\n**Test IDs:** `data-testid` goes on the dialog; its parts get `<test-id>-title`, `-body`, `-close`, `-cancel` and `-action`. See Overview / Test IDs.',
+          'A dialog shown over the page, with a title, a scrollable body, and Cancel / action buttons. It closes on the close icon, Cancel, a backdrop click, or Esc (Esc first blurs a focused input). It is a modal dialog named by its title. It stays mounted while closed, fades in and out, and is hidden once it has faded out.\n\n**Test IDs:** `data-testid` goes on the dialog; its parts get `<test-id>-title`, `-body`, `-close`, `-cancel` and `-action`. See Overview / Test IDs.',
       },
       page: CubeModalDocs,
     },
