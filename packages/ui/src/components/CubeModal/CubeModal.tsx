@@ -59,8 +59,7 @@ export const CubeModal = (props: CubeModalProps) => {
       <div className={backdrop({ isOpen })} onClick={onCloseClick} />
       <div
         role="dialog"
-        aria-modal="true"
-        aria-labelledby={titleId}
+        aria-labelledby={title ? titleId : undefined}
         className={twMerge(modal({ size, isOpen }), classNameProp)}
         data-testid={testId || undefined}
         style={{

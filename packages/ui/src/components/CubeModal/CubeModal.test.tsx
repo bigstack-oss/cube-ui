@@ -265,11 +265,24 @@ describe('CubeModal visibility while closed', () => {
 })
 
 describe('CubeModal accessibility semantics', () => {
-  it('is a modal dialog named by its title', () => {
+  it('is a dialog named by its title', () => {
     renderModal()
 
     const dialog = screen.getByRole('dialog', { name: 'Delete resource' })
     expect(dialog).toBe(getPanel())
-    expect(dialog).toHaveAttribute('aria-modal', 'true')
+  })
+
+  // aria-modal comes with focus management (cubecos#2457); declaring a modal
+  // while focus stays on the page behind it misleads screen readers.
+  it('does not declare itself modal yet', () => {
+    renderModal()
+
+    expect(getPanel()).not.toHaveAttribute('aria-modal')
+  })
+
+  it('points to no label when the title is empty', () => {
+    renderModal({ title: '' })
+
+    expect(getPanel()).not.toHaveAttribute('aria-labelledby')
   })
 })
