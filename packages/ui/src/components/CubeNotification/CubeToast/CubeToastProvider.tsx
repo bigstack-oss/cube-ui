@@ -1,11 +1,16 @@
 import { useCallback, useRef, useState, type PropsWithChildren } from 'react'
 import { createPortal } from 'react-dom'
+import type { CubeTestIdProps } from '@shared-types/test-id-types'
 import { MAX_VISIBLE_TOASTS_AMOUNT, type CubeToastType } from './cubeToastUtils'
 import { CubeToastContext } from './cubeToastContext'
 import { CubeToastList } from './CubeToastList'
 
-export const CubeToastProvider = (props: PropsWithChildren) => {
-  const { children } = props
+export const CubeToastProvider = (
+  props: PropsWithChildren<CubeTestIdProps>,
+) => {
+  const { children, 'data-testid': testIdProp } = props
+
+  const testId = testIdProp || undefined
 
   const [toasts, setToasts] = useState<CubeToastType[]>([])
 
@@ -38,7 +43,11 @@ export const CubeToastProvider = (props: PropsWithChildren) => {
     <CubeToastContext.Provider value={contextValueRef.current}>
       {children}
       {createPortal(
-        <CubeToastList toasts={toasts} removeToast={removeToast} />,
+        <CubeToastList
+          toasts={toasts}
+          removeToast={removeToast}
+          testId={testId}
+        />,
         document.body,
       )}
     </CubeToastContext.Provider>

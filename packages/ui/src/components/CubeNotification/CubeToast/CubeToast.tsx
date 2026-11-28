@@ -1,4 +1,5 @@
 import { useEffect } from 'react'
+import { testIdOf } from '@utils/testId'
 import {
   renderCloseButton,
   renderIcon,
@@ -10,6 +11,8 @@ import { toast } from './cubeToastStyles'
 
 export type CubeToastProps = CubeToastType & {
   onToastClose: (id: string) => void
+  /** The toast's own test ID; it is keyed by its `id`. */
+  testId?: string
 }
 
 export const CubeToast = (props: CubeToastProps) => {
@@ -21,6 +24,7 @@ export const CubeToast = (props: CubeToastProps) => {
     link,
     onToastClose,
     time,
+    testId,
   } = props
 
   const renderHeader = () => {
@@ -41,13 +45,17 @@ export const CubeToast = (props: CubeToastProps) => {
   const handleClose = () => onToastClose(id)
 
   return (
-    <div className={toast({ type })}>
+    <div
+      className={toast({ type })}
+      data-testid={testId}
+      data-key={testId ? id : undefined}
+    >
       <div className="flex gap-4">
         <div className="flex flex-1 flex-col gap-3 break-all">
           {renderHeader()}
           {message}
         </div>
-        {renderCloseButton(handleClose)}
+        {renderCloseButton(handleClose, testIdOf(testId, 'close'))}
       </div>
       <div className="flex w-full items-center">
         {renderLink(link)}

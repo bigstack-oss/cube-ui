@@ -62,7 +62,7 @@ const meta: Meta<CubeTagStoryArgs> = {
     docs: {
       description: {
         component:
-          'Tags label or categorize content with a short piece of text, optionally paired with an icon or a close action.',
+          'Tags label or categorize content with a short piece of text, optionally paired with an icon or a close action.\n\n**Test IDs:** `data-testid` (and `data-key`, for one of several tags) goes on the tag; the close icon gets `<test-id>-close`. See Overview / Test IDs.',
       },
       page: CubeTagDocs,
     },

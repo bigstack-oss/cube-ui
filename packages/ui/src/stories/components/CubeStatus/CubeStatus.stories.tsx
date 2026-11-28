@@ -41,7 +41,7 @@ const meta: Meta<CubeStatusStoryArgs> = {
     docs: {
       description: {
         component:
-          'A compact badge that shows a resource or process status, with built-in text and coloring for a set of well-known status values.',
+          'A compact badge that shows a resource or process status, with built-in text and coloring for a set of well-known status values.\n\n**Test IDs:** `data-testid` goes on the status, which then also carries `data-status`, the untranslated value (such as `active`), so a test does not depend on the display language. See Overview / Test IDs.',
       },
       page: CubeStatusDocs,
     },

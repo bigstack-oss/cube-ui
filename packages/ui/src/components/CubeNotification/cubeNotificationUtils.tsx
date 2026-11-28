@@ -30,11 +30,15 @@ export const renderIcon = (type: CubeNotificationType) => {
   }
 }
 
-export const renderTitle = (title?: string) => {
+export const renderTitle = (title?: string, testId?: string) => {
   if (!title) {
     return null
   }
-  return <div className="font-semibold text-functional-title">{title}</div>
+  return (
+    <div className="font-semibold text-functional-title" data-testid={testId}>
+      {title}
+    </div>
+  )
 }
 
 export const renderLink = (link?: CubeNotificationBaseProps['link']) => {
@@ -65,10 +69,11 @@ export const renderLink = (link?: CubeNotificationBaseProps['link']) => {
   return cubeHyperlink
 }
 
-export const renderCloseButton = (handleClose: () => void) => {
+export const renderCloseButton = (handleClose: () => void, testId?: string) => {
   return (
     <MonochromeXSmall
       className="icon-md shrink-0 cursor-pointer text-functional-text hover:text-functional-text-light"
+      data-testid={testId}
       onClick={handleClose}
     />
   )

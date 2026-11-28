@@ -23,6 +23,7 @@ export const CubeTooltip = (props: CubeTooltipProps) => {
     hoverContent,
     clickContent,
     children: anchorElement,
+    'data-testid': testIdProp,
   } = props
 
   const [visibilityState, setVisibilityState] =
@@ -143,6 +144,7 @@ export const CubeTooltip = (props: CubeTooltipProps) => {
             placement={placement}
             mouseX={mouseX}
             anchorRef={anchorRef}
+            testId={testIdProp || undefined}
           />,
           document.body,
         )}

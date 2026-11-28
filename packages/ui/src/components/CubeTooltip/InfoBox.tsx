@@ -12,6 +12,8 @@ export type InfoBoxProps = {
   placement: Placement
   mouseX: number
   anchorRef: RefObject<HTMLElement | null>
+  /** Set on the visible box only, never on its measuring copy. */
+  testId?: string
 }
 
 export const InfoBox = (props: InfoBoxProps) => {
@@ -21,6 +23,7 @@ export const InfoBox = (props: InfoBoxProps) => {
     placement,
     mouseX,
     anchorRef,
+    testId,
   } = props
 
   const { elementRef, resolvedStyles } = useFloating({
@@ -73,6 +76,7 @@ export const InfoBox = (props: InfoBoxProps) => {
       element until its position has been resolved. */}
       <div
         id={id}
+        data-testid={testId}
         role="tooltip"
         className={infoBoxContainer({
           verticalPlacement,

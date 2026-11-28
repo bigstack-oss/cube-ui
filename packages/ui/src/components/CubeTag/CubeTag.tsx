@@ -1,5 +1,6 @@
 import { twMerge } from 'tailwind-merge'
 import { MonochromeX } from '@icons'
+import { testIdOf } from '@utils/testId'
 import type { CubeTagProps } from './cubeTagTypes'
 import { closeButton, tag } from './cubeTagStyles'
 import { CubeTagSkeleton } from './CubeTagSkeleton'
@@ -12,7 +13,11 @@ export const CubeTag = (props: CubeTagProps) => {
     variant,
     disabled = false,
     isLoading = false,
+    'data-testid': testIdProp,
+    'data-key': testKey,
   } = props
+
+  const testId = testIdProp || undefined
 
   const hasIcon = 'Icon' in props
   const hasCloseButton = 'showCloseButton' in props && props.showCloseButton
@@ -40,7 +45,11 @@ export const CubeTag = (props: CubeTagProps) => {
     }
 
     return (
-      <MonochromeX className={closeButton({ disabled })} onClick={onClose} />
+      <MonochromeX
+        className={closeButton({ disabled })}
+        data-testid={testIdOf(testId, 'close')}
+        onClick={onClose}
+      />
     )
   }
 
@@ -58,6 +67,8 @@ export const CubeTag = (props: CubeTagProps) => {
         }),
         className,
       )}
+      data-testid={testId}
+      data-key={testKey}
     >
       {renderIcon()}
       {children}

@@ -1,5 +1,6 @@
 import type { FocusEvent, MouseEvent, ReactElement, Ref } from 'react'
 import type { Placement } from '@internals/utils/floating/types'
+import type { CubeTestIdProps } from '@shared-types/test-id-types'
 
 export const cubeTooltipPlacements = [
   'top-left',
@@ -46,4 +47,4 @@ export type CubeTooltipProps = {
    * the tooltip reachable by keyboard.
    */
   children: ReactElement<CubeTooltipInteractiveElementProps>
-}
+} & CubeTestIdProps

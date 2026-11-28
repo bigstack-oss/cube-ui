@@ -134,3 +134,38 @@ describe('CubeInlineNotification', () => {
     expect(await axe(container)).toHaveNoViolations()
   })
 })
+
+describe('CubeInlineNotification test IDs', () => {
+  it('tags the notification, its title and its close icon', async () => {
+    const user = userEvent.setup()
+    const onClose = vi.fn()
+    render(
+      <CubeInlineNotification
+        type="warning"
+        title="Quota"
+        onClose={onClose}
+        data-testid="quota-warning"
+      >
+        80% used
+      </CubeInlineNotification>,
+    )
+
+    expect(screen.getByTestId('quota-warning')).toHaveTextContent('80% used')
+    expect(screen.getByTestId('quota-warning-title')).toHaveTextContent('Quota')
+    await user.click(screen.getByTestId('quota-warning-close'))
+    expect(onClose).toHaveBeenCalledOnce()
+  })
+
+  it.each([undefined, ''])(
+    'renders no test IDs for a data-testid of %j',
+    (testId) => {
+      const { container } = render(
+        <CubeInlineNotification title="Quota" data-testid={testId}>
+          80% used
+        </CubeInlineNotification>,
+      )
+
+      expect(container.querySelector('[data-testid]')).toBeNull()
+    },
+  )
+})

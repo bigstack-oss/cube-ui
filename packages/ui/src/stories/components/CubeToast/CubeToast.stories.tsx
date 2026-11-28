@@ -49,7 +49,7 @@ const meta: Meta<CubeToastStoryArgs> = {
     controls: { expanded: true },
     docs: {
       description: {
-        component: `A notification that pops up at the bottom right and closes itself. Wrap the app in \`CubeToastProvider\`, then call \`useCubeToast().addToast(toast)\` with the fields below plus a unique \`id\`; call \`removeToast(id)\` to close one from code. At most ${MAX_VISIBLE_TOASTS_AMOUNT} toasts are shown at once, each for ${TOAST_LIFETIME / 1000} seconds; adding more removes the oldest.`,
+        component: `A notification that pops up at the bottom right and closes itself. Wrap the app in \`CubeToastProvider\`, then call \`useCubeToast().addToast(toast)\` with the fields below plus a unique \`id\`; call \`removeToast(id)\` to close one from code. At most ${MAX_VISIBLE_TOASTS_AMOUNT} toasts are shown at once, each for ${TOAST_LIFETIME / 1000} seconds; adding more removes the oldest.\n\n**Test IDs:** pass \`data-testid\` to \`CubeToastProvider\`. It goes on the list of toasts; each toast gets \`<test-id>-item\` with \`data-key\` set to its \`id\`, and its close icon \`<test-id>-item-close\`. See Overview / Test IDs.`,
       },
       page: CubeToastDocs,
     },

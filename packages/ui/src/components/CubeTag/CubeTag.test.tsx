@@ -65,3 +65,41 @@ describe('CubeTag', () => {
     expect(await axe(container)).toHaveNoViolations()
   })
 })
+
+describe('CubeTag test IDs', () => {
+  it('tags the tag, its key and its close icon', async () => {
+    const user = userEvent.setup()
+    const onClose = vi.fn()
+    render(
+      <CubeTag
+        variant="filled"
+        showCloseButton
+        onClose={onClose}
+        data-testid="volume-tag"
+        data-key="env:prod"
+      >
+        env:prod
+      </CubeTag>,
+    )
+
+    expect(screen.getByTestId('volume-tag')).toHaveAttribute(
+      'data-key',
+      'env:prod',
+    )
+    await user.click(screen.getByTestId('volume-tag-close'))
+    expect(onClose).toHaveBeenCalledOnce()
+  })
+
+  it.each([undefined, ''])(
+    'renders no test IDs for a data-testid of %j',
+    (testId) => {
+      const { container } = render(
+        <CubeTag variant="filled" showCloseButton data-testid={testId}>
+          env:prod
+        </CubeTag>,
+      )
+
+      expect(container.querySelector('[data-testid]')).toBeNull()
+    },
+  )
+})

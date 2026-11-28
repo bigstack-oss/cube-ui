@@ -101,3 +101,55 @@ describe('CubeToastProvider', () => {
     expect(() => toastApi.addToast(createToast(1))).not.toThrow()
   })
 })
+
+describe('CubeToastProvider test IDs', () => {
+  const renderWithToasts = (testId?: string) => {
+    let api: ReturnType<typeof useCubeToast> | undefined
+    const Capture = () => {
+      api = useCubeToast()
+      return null
+    }
+    render(
+      <CubeToastProvider data-testid={testId}>
+        <Capture />
+      </CubeToastProvider>,
+    )
+    if (!api) throw new Error('toast API not captured')
+    return api
+  }
+
+  it('tags the toast list, each toast keyed by its id, and its close icon', () => {
+    const api = renderWithToasts('toasts')
+    act(() =>
+      api.addToast({
+        id: 'saved-1',
+        type: 'positive',
+        title: 'Saved',
+        message: 'Network saved.',
+        time: 'now',
+      }),
+    )
+
+    expect(screen.getByTestId('toasts')).toBeInTheDocument()
+    const toast = screen.getByTestId('toasts-item')
+    expect(toast).toHaveAttribute('data-key', 'saved-1')
+    expect(toast).toHaveTextContent('Network saved.')
+    act(() =>
+      screen
+        .getByTestId('toasts-item-close')
+        .dispatchEvent(new MouseEvent('click', { bubbles: true })),
+    )
+    expect(screen.queryByTestId('toasts-item')).not.toBeInTheDocument()
+  })
+
+  it.each([undefined, ''])(
+    'renders no test IDs for a data-testid of %j',
+    (testId) => {
+      const api = renderWithToasts(testId)
+      act(() => api.addToast({ id: 't-1', message: 'Hello', time: 'now' }))
+
+      expect(document.body.querySelector('[data-testid]')).toBeNull()
+      expect(document.body.querySelector('[data-key]')).toBeNull()
+    },
+  )
+})

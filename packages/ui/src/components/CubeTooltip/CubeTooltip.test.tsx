@@ -326,3 +326,43 @@ describe('CubeTooltip', () => {
     ).toHaveNoViolations()
   })
 })
+
+describe('CubeTooltip test IDs', () => {
+  it('tags only the visible tooltip, and only while it is shown', async () => {
+    const user = userEvent.setup()
+    render(
+      <CubeTooltip
+        hoverContent={{ title: 'CIDR', message: 'The network range.' }}
+        data-testid="cidr-help"
+      >
+        <button type="button">?</button>
+      </CubeTooltip>,
+    )
+
+    expect(screen.queryByTestId('cidr-help')).not.toBeInTheDocument()
+    await user.hover(screen.getByRole('button', { name: '?' }))
+
+    const tip = screen.getByTestId('cidr-help')
+    expect(tip).toBe(screen.getByRole('tooltip'))
+    expect(tip).toHaveTextContent('The network range.')
+  })
+
+  it.each([undefined, ''])(
+    'renders no test IDs for a data-testid of %j',
+    async (testId) => {
+      const user = userEvent.setup()
+      render(
+        <CubeTooltip
+          hoverContent={{ message: 'The network range.' }}
+          data-testid={testId}
+        >
+          <button type="button">?</button>
+        </CubeTooltip>,
+      )
+
+      await user.hover(screen.getByRole('button', { name: '?' }))
+
+      expect(document.body.querySelector('[data-testid]')).toBeNull()
+    },
+  )
+})

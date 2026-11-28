@@ -1,3 +1,5 @@
+import type { CubeTestIdProps } from '@shared-types/test-id-types'
+
 export const cubeStatusNeutralValues = [
   'neutral',
   'in-use',
@@ -43,7 +45,7 @@ export type CubeStatusValue = (string & {}) | CubeStatusKnownValue
 
 export type CubeStatusType = (typeof cubeStatusTypes)[number]
 
-export type CubeStatusProps = {
+export type CubeStatusProps = CubeTestIdProps & {
   status: CubeStatusValue
   /**
    * Custom display text for the status text.

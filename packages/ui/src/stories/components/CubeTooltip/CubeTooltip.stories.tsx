@@ -55,7 +55,7 @@ const meta: Meta<CubeTooltipStoryArgs> = {
     docs: {
       description: {
         component:
-          'Tooltips display brief, informative text when users hover over or click an anchor element.',
+          'Tooltips display brief, informative text when users hover over or click an anchor element.\n\n**Test IDs:** `data-testid` goes on the visible tooltip, which exists only while it is shown. See Overview / Test IDs.',
       },
       page: CubeTooltipDocs,
     },

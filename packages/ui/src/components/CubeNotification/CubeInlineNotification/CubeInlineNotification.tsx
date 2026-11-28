@@ -1,6 +1,8 @@
 import { useState, type PropsWithChildren } from 'react'
 import { twMerge } from 'tailwind-merge'
 import type { PropsWithClassName } from '@shared-types/react-types'
+import type { CubeTestIdProps } from '@shared-types/test-id-types'
+import { testIdOf } from '@utils/testId'
 import type { CubeNotificationBaseProps } from '../cubeNotificationTypes'
 import {
   renderCloseButton,
@@ -13,7 +15,8 @@ import { CubeInlineNotificationSkeleton } from './CubeInlineNotificationSkeleton
 
 export type CubeInlineNotificationProps = PropsWithChildren<
   PropsWithClassName &
-    CubeNotificationBaseProps & {
+    CubeNotificationBaseProps &
+    CubeTestIdProps & {
       isLoading?: boolean
       skeletonClassName?: string
       /**
@@ -34,7 +37,10 @@ export const CubeInlineNotification = (props: CubeInlineNotificationProps) => {
     className: classNameProp,
     skeletonClassName,
     isClosable = true,
+    'data-testid': testIdProp,
   } = props
+
+  const testId = testIdProp || undefined
 
   const [close, setClose] = useState(false)
 
@@ -60,15 +66,17 @@ export const CubeInlineNotification = (props: CubeInlineNotificationProps) => {
         inlineNotification({ type, isClose: close }),
         classNameProp,
       )}
+      data-testid={testId}
     >
       <div className="flex flex-1 items-start gap-2">
         {renderIcon(type)}
-        {renderTitle(title)}
+        {renderTitle(title, testIdOf(testId, 'title'))}
         {children}
       </div>
       <div className="flex items-center gap-2 self-start">
         {renderLink(link)}
-        {isClosable && renderCloseButton(handleClose)}
+        {isClosable &&
+          renderCloseButton(handleClose, testIdOf(testId, 'close'))}
       </div>
     </div>
   )

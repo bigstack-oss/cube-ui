@@ -38,3 +38,25 @@ describe('CubeStatus', () => {
     expect(await axe(container)).toHaveNoViolations()
   })
 })
+
+describe('CubeStatus test IDs', () => {
+  it('tags the status and exposes its untranslated value as data-status', () => {
+    render(<CubeStatus status="active" data-testid="vm-status" />)
+
+    const status = screen.getByTestId('vm-status')
+    expect(status).toHaveTextContent('Active')
+    expect(status).toHaveAttribute('data-status', 'active')
+  })
+
+  it.each([undefined, ''])(
+    'renders no test IDs for a data-testid of %j',
+    (testId) => {
+      const { container } = render(
+        <CubeStatus status="active" data-testid={testId} />,
+      )
+
+      expect(container.querySelector('[data-testid]')).toBeNull()
+      expect(container.querySelector('[data-status]')).toBeNull()
+    },
+  )
+})

@@ -178,6 +178,38 @@ const COMPONENT_TEST_IDS: ComponentTestIds[] = [
       { suffix: 'all', element: 'the select-all checkbox' },
     ],
   },
+  {
+    component: 'CubeInlineNotification',
+    target: 'the notification',
+    parts: [
+      { suffix: 'title', element: 'the title' },
+      { suffix: 'close', element: 'the close icon' },
+    ],
+  },
+  {
+    component: 'CubeToastProvider',
+    target: 'the list of toasts, rendered in a portal',
+    parts: [
+      { suffix: 'item', element: "each toast, with data-key (the toast's id)" },
+      { suffix: 'item-close', element: "a toast's close icon" },
+    ],
+  },
+  {
+    component: 'CubeTag',
+    target: 'the tag (it also takes data-key)',
+    parts: [{ suffix: 'close', element: 'the close icon' }],
+  },
+  {
+    component: 'CubeStatus',
+    target:
+      'the status, with data-status: its untranslated value, such as "active"',
+    parts: [],
+  },
+  {
+    component: 'CubeTooltip',
+    target: 'the visible tooltip, only while it is shown',
+    parts: [],
+  },
 ]
 
 const PLAYWRIGHT_SAMPLE = `

@@ -59,7 +59,7 @@ const meta: Meta<CubeInlineNotificationStoryArgs> = {
     docs: {
       description: {
         component:
-          'A message shown inline on the page, e.g. above a form. Keep it to one line where possible. For messages that pop up and dismiss themselves, use the toast notification instead.',
+          'A message shown inline on the page, e.g. above a form. Keep it to one line where possible. For messages that pop up and dismiss themselves, use the toast notification instead.\n\n**Test IDs:** `data-testid` goes on the notification; its title gets `<test-id>-title` and its close icon `<test-id>-close`. See Overview / Test IDs.',
       },
       page: CubeInlineNotificationDocs,
     },
